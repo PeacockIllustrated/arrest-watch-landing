@@ -1,0 +1,213 @@
+/* MOBILE OVERRIDES */
+@media (max-width: 768px) {
+
+    /* GLOBAL LAYOUT */
+    body {
+        overflow-y: auto !important;
+        /* Allow vertical scroll on body */
+        height: auto !important;
+    }
+
+    /* INVESTOR PACK SCROLL CONTAINER */
+    .brand-scroll-container {
+        flex-direction: column !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        height: auto !important;
+        scroll-snap-type: y mandatory !important;
+        width: 100% !important;
+    }
+
+    /* SECTIONS */
+    .brand-section {
+        flex: 0 0 auto !important;
+        /* Don't force 100vw width in flex row */
+        width: 100% !important;
+        height: auto !important;
+        min-height: 100vh !important;
+        padding: 4rem 1.5rem !important;
+        /* Reduce padding */
+        border-right: none !important;
+        border-bottom: 1px solid var(--color-grid);
+        scroll-snap-align: start !important;
+    }
+
+    /* GRIDS */
+    .grid-2 {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+    }
+
+    /* TYPOGRAPHY */
+    .text-huge {
+        font-size: 3rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .text-large {
+        font-size: 1.8rem !important;
+    }
+
+    /* COMPONENTS */
+    .panel {
+        padding: 1.5rem !important;
+    }
+
+    /* BRAND PACK SPECIFIC */
+    .brand-pack-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .brand-sidebar {
+        position: relative !important;
+        width: 100% !important;
+        height: auto !important;
+        border-right: none !important;
+        border-bottom: 1px solid var(--color-grid);
+        padding: 1rem !important;
+    }
+
+    .brand-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    /* ADMIN DASHBOARD */
+    .admin-root {
+        flex-direction: column !important;
+    }
+
+    /* Hide Sidebar by default (will need JS toggle) */
+    .admin-sidebar {
+        display: none;
+        /* Placeholder, will need state */
+        position: fixed;
+        top: 0;
+
+        /* MOBILE OVERRIDES */
+        @media (max-width: 768px) {
+
+            /* GLOBAL LAYOUT */
+            body {
+                overflow-y: auto !important;
+                /* Allow vertical scroll on body */
+                height: auto !important;
+            }
+
+            /* INVESTOR PACK SCROLL CONTAINER */
+            .brand-scroll-container {
+                flex-direction: column !important;
+                overflow-x: hidden !important;
+                overflow-y: auto !important;
+                height: auto !important;
+                scroll-snap-type: y mandatory !important;
+                width: 100% !important;
+            }
+
+            /* SECTIONS */
+            .brand-section {
+                flex: 0 0 auto !important;
+                /* Don't force 100vw width in flex row */
+                width: 100% !important;
+                height: auto !important;
+                min-height: 100vh !important;
+                padding: 4rem 1.5rem !important;
+                /* Reduce padding */
+                border-right: none !important;
+                border-bottom: 1px solid var(--color-grid);
+                scroll-snap-align: start !important;
+            }
+
+            /* GRIDS */
+            .grid-2 {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+
+            /* TYPOGRAPHY */
+            .text-huge {
+                font-size: 3rem !important;
+                margin-bottom: 1.5rem !important;
+            }
+
+            .text-large {
+                font-size: 1.8rem !important;
+            }
+
+            /* COMPONENTS */
+            .panel {
+                padding: 1.5rem !important;
+            }
+
+            /* BRAND PACK SPECIFIC */
+            .brand-pack-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .brand-sidebar {
+                position: relative !important;
+                width: 100% !important;
+                height: auto !important;
+                border-right: none !important;
+                border-bottom: 1px solid var(--color-grid);
+                padding: 1rem !important;
+            }
+
+            .brand-content {
+                margin-left: 0 !important;
+                width: 100% !important;
+            }
+
+            /* ADMIN DASHBOARD */
+            .admin-root {
+                flex-direction: column !important;
+            }
+
+            /* Hide Sidebar by default (will need JS toggle) */
+            .admin-sidebar {
+                display: none;
+                /* Placeholder, will need state */
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1000;
+            }
+
+            .admin-sidebar.open {
+                display: flex;
+            }
+
+            /* DASHBOARD WIDGETS */
+            .dashboard-widgets-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+
+            .stat-card {
+                grid-column: auto !important;
+                /* Reset colSpan */
+                width: 100% !important;
+            }
+
+            /* ADMIN HEADER */
+            .admin-header {
+                padding: 0 1rem !important;
+                height: 60px !important;
+            }
+
+            .admin-header>div {
+                gap: 0.5rem !important;
+            }
+
+            /* Adjust font sizes in header */
+            .admin-header .mobile-menu-btn {
+                padding: 0.25rem !important;
+            }
+
+            /* Ensure main content has padding */
+            main {
+                padding: 1rem !important;
+            }
+        }
