@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import NavigationArrows from '../components/NavigationArrows';
 import InvestorIntro from '../components/investor/InvestorIntro';
 import ProblemSection from '../components/investor/ProblemSection';
@@ -64,7 +63,6 @@ const InvestorPack: React.FC = () => {
 
     return (
         <>
-            <Link to="/" className="back-link">← RETURN TO INTEL</Link>
 
             <div className="brand-scroll-container" id="scrollContainer" ref={scrollContainerRef}>
                 <InvestorIntro />

@@ -1,6 +1,5 @@
 
 import React, { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import BrandIntro from '../components/brand/BrandIntro';
 import LogoSection from '../components/brand/LogoSection';
 import ColorsSection from '../components/brand/ColorsSection';
@@ -66,7 +65,6 @@ const BrandPack: React.FC = () => {
 
     return (
         <>
-            <Link to="/" className="back-link">← RETURN TO INTEL</Link>
 
             <div className="brand-scroll-container" id="scrollContainer" ref={scrollContainerRef}>
                 <BrandIntro />

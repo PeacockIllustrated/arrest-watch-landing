@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import NavigationArrows from '../components/NavigationArrows';
 import UberIntro from '../components/uber/UberIntro';
 import UberProblem from '../components/uber/UberProblem';
@@ -64,7 +63,6 @@ const UberPack: React.FC = () => {
 
     return (
         <>
-            <Link to="/" className="back-link">← RETURN TO INTEL</Link>
 
             <div className="brand-scroll-container" id="scrollContainer" ref={scrollContainerRef}>
                 <UberIntro />
