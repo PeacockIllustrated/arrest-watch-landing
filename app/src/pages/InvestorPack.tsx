@@ -1,18 +1,28 @@
 import React, { useRef, useState, useEffect } from 'react';
 import NavigationArrows from '../components/NavigationArrows';
-import InvestorIntro from '../components/investor/InvestorIntro';
-import ProblemSection from '../components/investor/ProblemSection';
-import SolutionSection from '../components/investor/SolutionSection';
-import MarketSection from '../components/investor/MarketSection';
-import BusinessSection from '../components/investor/BusinessSection';
-import TechSection from '../components/investor/TechSection';
-import AskSection from '../components/investor/AskSection';
+import Slide01_Problem from '../components/investor/slides/Slide01_Problem';
+import Slide02_Solution from '../components/investor/slides/Slide02_Solution';
+import Slide03_Product from '../components/investor/slides/Slide03_Product';
+import Slide04_Customers from '../components/investor/slides/Slide04_Customers';
+import Slide05_MarketSize from '../components/investor/slides/Slide05_MarketSize';
+import Slide06_BusinessModel from '../components/investor/slides/Slide06_BusinessModel';
+import Slide07_Pricing from '../components/investor/slides/Slide07_Pricing';
+import Slide08_WhyWeWin from '../components/investor/slides/Slide08_WhyWeWin';
+import Slide09_ARR_Early from '../components/investor/slides/Slide09_ARR_Early';
+import Slide10_ARR_Platform from '../components/investor/slides/Slide10_ARR_Platform';
+import Slide11_ARR_Leader from '../components/investor/slides/Slide11_ARR_Leader';
+import Slide12_Valuation from '../components/investor/slides/Slide12_Valuation';
+import Slide13_Raise from '../components/investor/slides/Slide13_Raise';
+import Slide14_WhyNow from '../components/investor/slides/Slide14_WhyNow';
+import Slide15_Closing from '../components/investor/slides/Slide15_Closing';
 
 const InvestorPack: React.FC = () => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showPrev, setShowPrev] = useState(false);
     const [showNext, setShowNext] = useState(true);
     const [activeIndex, setActiveIndex] = useState(0);
+
+    const SLIDE_COUNT = 15;
 
     const handleScroll = () => {
         if (scrollContainerRef.current) {
@@ -63,19 +73,26 @@ const InvestorPack: React.FC = () => {
 
     return (
         <>
-
             <div className="brand-scroll-container" id="scrollContainer" ref={scrollContainerRef}>
-                <InvestorIntro />
-                <ProblemSection />
-                <SolutionSection />
-                <MarketSection />
-                <BusinessSection />
-                <TechSection />
-                <AskSection />
+                <Slide01_Problem />
+                <Slide02_Solution />
+                <Slide03_Product />
+                <Slide04_Customers />
+                <Slide05_MarketSize />
+                <Slide06_BusinessModel />
+                <Slide07_Pricing />
+                <Slide08_WhyWeWin />
+                <Slide09_ARR_Early />
+                <Slide10_ARR_Platform />
+                <Slide11_ARR_Leader />
+                <Slide12_Valuation />
+                <Slide13_Raise />
+                <Slide14_WhyNow />
+                <Slide15_Closing />
             </div>
 
             <div className="nav-indicators">
-                {[...Array(7)].map((_, i) => (
+                {[...Array(SLIDE_COUNT)].map((_, i) => (
                     <button
                         key={i}
                         className={`nav-dot ${i === activeIndex ? 'active' : ''}`}

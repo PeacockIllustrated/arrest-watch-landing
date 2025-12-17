@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import OnboardingModal from '../investor/OnboardingModal';
+import OnboardingModal from "../investor/_legacy/OnboardingModal";
 
 const UberAsk: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
