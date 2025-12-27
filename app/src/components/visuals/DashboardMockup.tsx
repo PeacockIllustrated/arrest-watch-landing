@@ -17,7 +17,25 @@ const MOCK_EVENTS = [
     "BOOKING UPDATE - WA - SYNCED"
 ];
 
+// Hook to track mobile breakpoint
+const useMediaQuery = (query: string) => {
+    const [matches, setMatches] = useState(false);
+
+    useEffect(() => {
+        const media = window.matchMedia(query);
+        if (media.matches !== matches) {
+            setMatches(media.matches);
+        }
+        const listener = () => setMatches(media.matches);
+        media.addEventListener('change', listener);
+        return () => media.removeEventListener('change', listener);
+    }, [matches, query]);
+
+    return matches;
+};
+
 const DashboardMockup: React.FC<DashboardMockupProps> = ({ isScanning }) => {
+    const isMobile = useMediaQuery('(max-width: 768px)');
     const [logs, setLogs] = useState<string[]>([]);
     const [activeTab, setActiveTab] = useState<'feed' | 'coverage'>('feed');
     const [selectedStateId, setSelectedStateId] = useState<string | null>(null);
@@ -68,9 +86,15 @@ const DashboardMockup: React.FC<DashboardMockupProps> = ({ isScanning }) => {
     );
 
     return (
-        <div className="dashboard-mockup">
+        <div className="dashboard-mockup" style={{ flexDirection: isMobile ? 'column-reverse' : 'row', height: isMobile ? 'auto' : '100%' }}>
             {/* LEFT SIDEBAR */}
-            <div className="dashboard-sidebar">
+            <div className="dashboard-sidebar" style={{
+                width: isMobile ? '100%' : '30%',
+                minWidth: isMobile ? '0' : '250px',
+                height: isMobile ? '350px' : 'auto',
+                borderRight: isMobile ? 'none' : '1px solid var(--color-grid)',
+                borderTop: isMobile ? '1px solid var(--color-grid)' : 'none'
+            }}>
                 {/* TABS HEADER */}
                 <div style={{ display: 'flex', borderBottom: '1px solid var(--color-grid)' }}>
                     <button
@@ -222,7 +246,10 @@ const DashboardMockup: React.FC<DashboardMockupProps> = ({ isScanning }) => {
             </div>
 
             {/* MAIN AREA - MAP */}
-            <div className="dashboard-main">
+            <div className="dashboard-main" style={{
+                flex: isMobile ? 'none' : 1,
+                width: isMobile ? '100%' : 'auto'
+            }}>
                 <USAMapViz
                     isScanning={isScanning}
                     selectedStateId={selectedStateId}
