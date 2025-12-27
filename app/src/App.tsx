@@ -4,6 +4,7 @@ import Landing from './pages/Landing';
 import BrandPack from './pages/BrandPack';
 import InvestorPack from './pages/InvestorPack';
 import UberPack from './pages/UberPack';
+import ComponentsPage from './pages/ComponentsPage';
 
 import AdminLogin from './pages/admin/AdminLogin';
 // import AdminDashboard from './pages/admin/AdminDashboard'; // Deprecated in favor of nested routes
@@ -24,6 +25,7 @@ function App() {
           <Route path="/brand" element={<BrandPack />} />
           <Route path="/investor" element={<InvestorPack />} />
           <Route path="/uber" element={<UberPack />} />
+          <Route path="/components" element={<ComponentsPage />} />
         </Route>
 
         {/* Admin Routes */}
