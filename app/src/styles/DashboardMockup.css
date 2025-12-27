@@ -33,19 +33,18 @@
 }
 
 /* MOBILE RESPONSIVE OVERRIDES */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .dashboard-mockup {
         flex-direction: column-reverse;
         /* Map on top, sidebar below */
         height: auto !important;
-        /* Allow growing */
         aspect-ratio: auto;
     }
 
     .dashboard-sidebar {
         width: 100% !important;
-        height: 300px;
-        /* Fixed height for log/coverage on mobile */
+        height: 500px;
+        /* Increased height for visibility */
         min-width: 0;
         border-right: none;
         border-top: 1px solid var(--color-grid);
@@ -56,6 +55,6 @@
         width: 100%;
         height: auto;
         aspect-ratio: 1000 / 589;
-        /* Keep map shape correct */
+        z-index: 1;
     }
 }
