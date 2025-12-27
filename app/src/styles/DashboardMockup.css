@@ -1,6 +1,5 @@
 /* DashboardMockup.css */
 
-/* BASE STYLES */
 .dashboard-mockup {
     display: flex;
     width: 100%;
@@ -25,36 +24,31 @@
     flex: 1;
     position: relative;
     overflow: hidden;
-    aspect-ratio: 1000 / 589;
+    aspect-ratio: 1000/589;
 }
 
-.state-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-/* MOBILE RESPONSIVE OVERRIDES */
-@media (max-width: 1024px) {
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
     .dashboard-mockup {
         flex-direction: column-reverse;
-        /* Map on top, sidebar below */
-        height: auto !important;
+        /* Map on top, Sidebar below */
+        height: auto;
+        /* Allow container to grow to fit stacked content */
         aspect-ratio: auto;
     }
 
     .dashboard-sidebar {
-        width: 100% !important;
-        height: 500px;
-        /* Increased height for visibility */
+        width: 100%;
         min-width: 0;
+        height: 350px;
+        /* Give enough space for the list */
         border-right: none;
         border-top: 1px solid var(--color-grid);
     }
 
     .dashboard-main {
-        flex: none;
         width: 100%;
-        height: auto;
-        aspect-ratio: 1000 / 589;
-        z-index: 1;
+        flex: none;
+        /* Don't flex, just take up width/aspect ratio */
     }
 }
