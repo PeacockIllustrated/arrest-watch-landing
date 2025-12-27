@@ -101,8 +101,15 @@ const Landing: React.FC = () => {
                         <span className="text-mono text-muted" style={{ fontSize: '0.8rem' }}>// SECURE CONNECTION</span>
                     </div>
                 </div>
-                <div className="container no-padding-mobile" style={{ width: '100%' }}>
-                    <div className="panel dashboard-panel" style={{ position: 'relative', overflow: 'hidden', border: '1px solid var(--color-grid)', padding: 0 }}>
+                <div className="container no-padding-mobile" style={{ width: '100%', maxWidth: '1000px', margin: '0 auto' }}>
+                    <div className="panel dashboard-panel" style={{
+                        position: 'relative',
+                        overflow: 'hidden',
+                        border: '1px solid var(--color-grid)',
+                        padding: 0,
+                        width: '100%',
+                        aspectRatio: '1000/589'
+                    }}>
                         <DashboardMockup isScanning={isScanning} />
                     </div>
                 </div>
