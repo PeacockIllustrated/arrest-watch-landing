@@ -399,20 +399,15 @@ const Landing: React.FC = () => {
                     <div className="grid-4" style={{ marginBottom: '4rem' }}>
                         <div>
                             <div className="text-mono text-red" style={{ marginBottom: '1rem' }}>ARRESTWATCH_</div>
-                            <div className="text-muted" style={{ fontSize: '0.8rem', lineHeight: '1.6' }}>
+                            <div className="text-muted" style={{ fontSize: '0.9rem', marginBottom: '2rem' }}>
                                 Continuous criminal intelligence for the modern enterprise.
                             </div>
-                        </div>
-                        {[1, 2, 3].map((i) => (
-                            <div key={i}>
-                                <div className="text-label">COLUMN 0{i}</div>
-                                <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '0.9rem', color: '#666', lineHeight: '2' }}>
-                                    <li>Link Item 01</li>
-                                    <li>Link Item 02</li>
-                                    <li>Link Item 03</li>
-                                </ul>
+                            <div className="text-mono text-muted" style={{ fontSize: '0.8rem' }}>
+                                <a href="mailto:investors@arrestwatch.com" style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px solid #333', paddingBottom: '2px' }}>investors@arrestwatch.com</a>
+                                <span style={{ margin: '0 1rem', opacity: 0.3 }}>|</span>
+                                © 2025 ArrestWatch
                             </div>
-                        ))}
+                        </div>
                     </div>
                     <div className="footer-bottom">
                         <div>
