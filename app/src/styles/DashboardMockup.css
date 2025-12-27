@@ -1,26 +1,61 @@
 /* DashboardMockup.css */
+
+/* BASE STYLES */
+.dashboard-mockup {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--color-grid);
+    background: #050505;
+    font-family: monospace;
+}
+
+.dashboard-sidebar {
+    width: 30%;
+    min-width: 250px;
+    border-right: 1px solid var(--color-grid);
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.dashboard-main {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1000 / 589;
+}
+
 .state-item:hover {
     background: rgba(255, 255, 255, 0.05);
 }
 
-@media (max-width: 1024px) {
+/* MOBILE RESPONSIVE OVERRIDES */
+@media (max-width: 768px) {
     .dashboard-mockup {
-        flex-direction: column-reverse !important;
-        /* Map on top, logs below */
+        flex-direction: column-reverse;
+        /* Map on top, sidebar below */
+        height: auto !important;
+        /* Allow growing */
+        aspect-ratio: auto;
     }
 
     .dashboard-sidebar {
         width: 100% !important;
-        height: 250px !important;
-        border-right: none !important;
-        border-top: 1px solid var(--color-grid) !important;
+        height: 300px;
+        /* Fixed height for log/coverage on mobile */
+        min-width: 0;
+        border-right: none;
+        border-top: 1px solid var(--color-grid);
     }
 
     .dashboard-main {
-        height: auto !important;
-        aspect-ratio: 1.7 !important;
-        /* Matches SVG 1000/589 */
-        flex: none !important;
-        width: 100% !important;
+        flex: none;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1000 / 589;
+        /* Keep map shape correct */
     }
 }

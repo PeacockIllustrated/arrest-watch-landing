@@ -68,25 +68,9 @@ const DashboardMockup: React.FC<DashboardMockupProps> = ({ isScanning }) => {
     );
 
     return (
-        <div className="dashboard-mockup" style={{
-            display: 'flex',
-            width: '100%',
-            height: '100%',
-            border: '1px solid var(--color-grid)',
-            background: '#050505',
-            fontFamily: 'monospace'
-        }}>
+        <div className="dashboard-mockup">
             {/* LEFT SIDEBAR */}
-            <div className="dashboard-sidebar" style={{
-                width: '30%',
-                minWidth: '250px',
-                borderRight: '1px solid var(--color-grid)',
-                display: 'flex',
-                flexDirection: 'column',
-                background: 'rgba(0,0,0,0.3)',
-                transition: 'all 0.3s ease',
-                overflow: 'hidden'
-            }}>
+            <div className="dashboard-sidebar">
                 {/* TABS HEADER */}
                 <div style={{ display: 'flex', borderBottom: '1px solid var(--color-grid)' }}>
                     <button
@@ -238,7 +222,7 @@ const DashboardMockup: React.FC<DashboardMockupProps> = ({ isScanning }) => {
             </div>
 
             {/* MAIN AREA - MAP */}
-            <div className="dashboard-main" style={{ flex: 1, position: 'relative', overflow: 'hidden', aspectRatio: '1000/589' }}>
+            <div className="dashboard-main">
                 <USAMapViz
                     isScanning={isScanning}
                     selectedStateId={selectedStateId}
