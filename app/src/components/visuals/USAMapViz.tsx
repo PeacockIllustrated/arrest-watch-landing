@@ -266,7 +266,7 @@ interface USAMapVizProps {
 }
 
 const USAMapViz: React.FC<USAMapVizProps> = ({ isScanning = false, selectedStateId = null, onStateSelect }) => {
-    const [pings, setPings] = useState<{ id: number; stateId: string }[]>([]);
+    const [, setPings] = useState<{ id: number; stateId: string }[]>([]);
     const [activeStates, setActiveStates] = useState<Set<string>>(new Set());
     const [nodeCount, setNodeCount] = useState(3124);
     const [viewBox, setViewBox] = useState("0 0 1000 589");
