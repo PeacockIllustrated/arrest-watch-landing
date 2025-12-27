@@ -86,14 +86,27 @@ const DashboardMockup: React.FC<DashboardMockupProps> = ({ isScanning }) => {
     );
 
     return (
-        <div className="dashboard-mockup" style={{ flexDirection: isMobile ? 'column-reverse' : 'row', height: isMobile ? 'auto' : '100%' }}>
+        <div className="dashboard-mockup" style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column-reverse' : 'row',
+            height: isMobile ? 'auto' : '100%',
+            width: '100%',
+            background: '#050505',
+            border: '1px solid var(--color-grid)',
+            position: 'relative', // Ensure containment
+            overflow: 'hidden'    // Prevent spill
+        }}>
             {/* LEFT SIDEBAR */}
             <div className="dashboard-sidebar" style={{
                 width: isMobile ? '100%' : '30%',
                 minWidth: isMobile ? '0' : '250px',
-                height: isMobile ? '350px' : 'auto',
+                height: isMobile ? '350px' : 'auto', // Fixed height on mobile for scroll
                 borderRight: isMobile ? 'none' : '1px solid var(--color-grid)',
-                borderTop: isMobile ? '1px solid var(--color-grid)' : 'none'
+                borderTop: isMobile ? '1px solid var(--color-grid)' : 'none',
+                display: 'flex',
+                flexDirection: 'column',
+                background: 'rgba(0,0,0,0.3)',
+                overflow: 'hidden'
             }}>
                 {/* TABS HEADER */}
                 <div style={{ display: 'flex', borderBottom: '1px solid var(--color-grid)' }}>
@@ -248,7 +261,10 @@ const DashboardMockup: React.FC<DashboardMockupProps> = ({ isScanning }) => {
             {/* MAIN AREA - MAP */}
             <div className="dashboard-main" style={{
                 flex: isMobile ? 'none' : 1,
-                width: isMobile ? '100%' : 'auto'
+                width: isMobile ? '100%' : 'auto',
+                aspectRatio: isMobile ? 'auto' : '1000/589', // RESTORE THIS for desktop stability
+                position: 'relative',
+                overflow: 'hidden'
             }}>
                 <USAMapViz
                     isScanning={isScanning}
