@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import logoMain from '../assets/logo_main.png';
 import mugshot from '../assets/mugshot.jpg';
+import founder from '../assets/founder.png';
 import OnboardingModal from '../components/investor/_legacy/OnboardingModal';
 import DashboardMockup from '../components/visuals/DashboardMockup';
 import '../styles/landing.css';
@@ -367,6 +368,43 @@ const Landing: React.FC = () => {
                     </div>
                 </div>
             </section >
+
+            {/* FOUNDER SECTION */}
+            <section className="section" id="founder">
+                <div className="container" style={{ textAlign: 'center' }}>
+                    <span className="text-label">Secure Channel</span>
+                    <h2 className="text-large" style={{ marginBottom: '3rem' }}>Build the new standard in workforce safety.</h2>
+
+                    <div className="grid-2" style={{ maxWidth: '1000px', margin: '0 auto', gap: '2rem' }}>
+                        {/* MICHAEL KING */}
+                        <div className="panel" style={{ display: 'flex', textAlign: 'left', gap: '1.5rem', alignItems: 'center' }}>
+                            <img src={founder} alt="Michael King" style={{ width: '100px', height: '100px', objectFit: 'cover', border: '1px solid var(--color-grid)', filter: 'grayscale(100%)' }} />
+                            <div>
+                                <div className="text-mono" style={{ marginBottom: '0.2rem', fontSize: '1.1rem' }}>MICHAEL KING</div>
+                                <div className="text-muted" style={{ fontSize: '0.8rem', marginBottom: '1rem' }}>FOUNDER & CEO</div>
+                                <div style={{ paddingTop: '0.5rem', borderTop: '1px solid var(--color-grid)' }}>
+                                    <div className="text-mono" style={{ fontSize: '0.8rem' }}>mking@arrestwatch.io</div>
+                                    <div className="text-mono" style={{ fontSize: '0.8rem' }}>+44 7963 520703</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* TOM PEACOCK */}
+                        <div className="panel" style={{ display: 'flex', textAlign: 'left', gap: '1.5rem', alignItems: 'center' }}>
+                            <div style={{ width: '100px', height: '100px', background: '#111', border: '1px dashed var(--color-grid)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <span className="text-muted" style={{ fontSize: '0.8rem' }}>IMG</span>
+                            </div>
+                            <div>
+                                <div className="text-mono" style={{ marginBottom: '0.2rem', fontSize: '1.1rem' }}>TOM PEACOCK</div>
+                                <div className="text-muted" style={{ fontSize: '0.8rem', marginBottom: '1rem' }}>CO-FOUNDER & CTO</div>
+                                <div style={{ paddingTop: '0.5rem', borderTop: '1px solid var(--color-grid)' }}>
+                                    <div className="text-mono" style={{ fontSize: '0.8rem' }}>tom@arrestwatch.io</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             {/* CTA (UPGRADED) */}
             < section className="section" id="contact" style={{ background: '#0a0a0a', overflow: 'hidden', position: 'relative', borderBottom: 'none' }}>
