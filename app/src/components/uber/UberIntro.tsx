@@ -12,7 +12,7 @@ const UberIntro: React.FC = () => {
                             <span className="text-red">Rider Safety.</span>
                         </h1>
                         <p className="text-muted" style={{ fontSize: '1.5rem', marginTop: '2rem', maxWidth: '600px' }}>
-                            ArrestWatch offers Uber the first true real-time criminal risk detection layer, closing the gap between annual background checks and daily operations.
+                            ArrestDelta offers Uber the first true real-time criminal risk detection layer, closing the gap between annual background checks and daily operations.
                         </p>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '2rem' }}>
@@ -25,7 +25,7 @@ const UberIntro: React.FC = () => {
                             </div>
                         </div>
                         <p className="text-muted" style={{ fontSize: '1.1rem' }}>
-                            Uber has set the standard for safety in the gig economy. ArrestWatch provides the technology to maintain that leadership by detecting off-platform risks the moment they happen.
+                            Uber has set the standard for safety in the gig economy. ArrestDelta provides the technology to maintain that leadership by detecting off-platform risks the moment they happen.
                         </p>
                     </div>
                 </div>

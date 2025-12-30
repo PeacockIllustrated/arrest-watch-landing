@@ -9,7 +9,7 @@ const ProblemSection: React.FC = () => {
                         <span className="label">02. The Enterprise Risk</span>
                         <h2 className="text-large">Discovery takes months.<br /><span className="text-red">Liability is instant.</span></h2>
                         <p className="text-muted" style={{ marginTop: '2rem', fontSize: '1.2rem' }}>
-                            If a driver or courier commits a violent or sexual offence while active on the platform, discovery can take months. ArrestWatch closes that window to minutes.
+                            If a driver or courier commits a violent or sexual offence while active on the platform, discovery can take months. ArrestDelta closes that window to minutes.
                         </p>
                     </div>
                     <div className="flex-col" style={{ gap: '1.5rem' }}>

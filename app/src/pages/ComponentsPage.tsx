@@ -55,7 +55,7 @@ const ComponentsPage: React.FC = () => {
                 </div>
 
                 <div style={{ marginTop: 'auto', paddingTop: '2rem', borderTop: '1px solid var(--color-grid)', fontSize: '0.7rem', color: '#555' }}>
-                    ARRESTWATCH DESIGN <br />
+                    ARRESTDELTA DESIGN <br />
                     SYSTEM V2.0 <br />
                     STATUS: LIVE
                 </div>
@@ -118,7 +118,7 @@ const ComponentsPage: React.FC = () => {
                                 VISIBILITY BEYOND <br /> THE BACKGROUND CHECK
                             </h1>
                             <p className="text-muted" style={{ maxWidth: '600px', margin: '0 auto 3rem auto' }}>
-                                ArrestWatch is the continuous intelligence layer for the modern trust economy.
+                                ArrestDelta is the continuous intelligence layer for the modern trust economy.
                                 Stop relying on expired data. Start watching the real-time stream.
                             </p>
                             <button className="btn btn-cta" style={{ padding: '1.5rem 3rem', fontSize: '1.2rem' }}>REQUEST ACCESS</button>
@@ -129,7 +129,7 @@ const ComponentsPage: React.FC = () => {
                     <div className="section-label" style={labelStyle}>LAYOUT_03: MINIMAL TERMINAL</div>
                     <section className="section" style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', padding: '4rem' }}>
                         <div style={{ borderBottom: '1px solid var(--color-grid)', paddingBottom: '2rem', marginBottom: 'auto' }}>
-                            <span className="text-mono" style={{ letterSpacing: '2px', fontSize: '1.5rem' }}>ARRESTWATCH_</span>
+                            <span className="text-mono" style={{ letterSpacing: '2px', fontSize: '1.5rem' }}>ARRESTDELTA_</span>
                         </div>
 
                         <div style={{ maxWidth: '800px' }}>
@@ -215,7 +215,7 @@ const ComponentsPage: React.FC = () => {
                                 <h2 className="text-large">Why "Clean" Records <br /> Are Dangerous.</h2>
                                 <p className="text-muted" style={{ marginTop: '1rem' }}>
                                     A background check is a snapshot of the past. It expires the moment it is printed.
-                                    ArrestWatch is a live feed of the present.
+                                    ArrestDelta is a live feed of the present.
                                 </p>
                             </div>
                             <div style={{ position: 'relative', height: '400px' }}>
@@ -228,7 +228,7 @@ const ComponentsPage: React.FC = () => {
                                     <div style={{ fontSize: '3rem', color: '#444', textAlign: 'center', marginTop: '3rem' }}>static_check.pdf</div>
                                 </div>
 
-                                {/* Front Card (ArrestWatch) */}
+                                {/* Front Card (ArrestDelta) */}
                                 <div className="panel" style={{
                                     position: 'absolute', top: '40px', right: '40px', width: '80%', height: '300px',
                                     background: '#0a0a0a', zIndex: 2, border: '1px solid var(--color-alert-red)',
@@ -383,7 +383,7 @@ const ComponentsPage: React.FC = () => {
                                 {/* Nodes */}
                                 {[
                                     { title: 'COUNTY SOURCE', sub: 'RAW DATA' },
-                                    { title: 'ARRESTWATCH', sub: 'PROCESSING' },
+                                    { title: 'ARRESTDELTA', sub: 'PROCESSING' },
                                     { title: 'CLIENT SYSTEM', sub: 'ALERT' }
                                 ].map((node, i) => (
                                     <div key={i} className="panel" style={{ width: '200px', height: '120px', display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', zIndex: 1, background: '#050505' }}>
@@ -585,7 +585,7 @@ const ComponentsPage: React.FC = () => {
                     <section className="section" style={{ textAlign: 'center' }}>
                         <div className="container" style={{ maxWidth: '900px' }}>
                             <blockquote style={{ fontSize: '2rem', fontStyle: 'italic', lineHeight: '1.6', marginBottom: '2rem' }}>
-                                "ArrestWatch identified a <span style={{ background: 'white', color: 'black', padding: '0 0.5rem' }}>violent felony</span> within 12 minutes of booking. Our legacy provider missed it for <span style={{ textDecoration: 'line-through', color: 'var(--color-alert-red)' }}>two weeks</span>."
+                                "ArrestDelta identified a <span style={{ background: 'white', color: 'black', padding: '0 0.5rem' }}>violent felony</span> within 12 minutes of booking. Our legacy provider missed it for <span style={{ textDecoration: 'line-through', color: 'var(--color-alert-red)' }}>two weeks</span>."
                             </blockquote>
                             <div className="text-mono">
                                 — DIRECTOR OF SECURITY, <span style={{ background: '#333', color: 'transparent', borderRadius: '2px' }}>FORTUNE 500 LOGISTICS</span>
@@ -606,7 +606,7 @@ const ComponentsPage: React.FC = () => {
                                     <div className="text-mono text-muted" style={{ fontSize: '0.8rem' }}>LVL: CLEARANCE_TOP</div>
                                 </div>
                                 <div style={{ marginLeft: 'auto' }}>
-                                    <div style={{ writingMode: 'vertical-rl', fontFamily: 'monospace', fontSize: '0.6rem', color: '#555' }}>ARRESTWATCH {'>>'} AUTH</div>
+                                    <div style={{ writingMode: 'vertical-rl', fontFamily: 'monospace', fontSize: '0.6rem', color: '#555' }}>ARRESTDELTA {'>>'} AUTH</div>
                                 </div>
                             </div>
                         </div>
@@ -696,7 +696,7 @@ const ComponentsPage: React.FC = () => {
                         <div className="container">
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '2rem', marginBottom: '4rem' }}>
                                 <div>
-                                    <div className="text-mono text-red" style={{ marginBottom: '1rem' }}>ARRESTWATCH_</div>
+                                    <div className="text-mono text-red" style={{ marginBottom: '1rem' }}>ARRESTDELTA_</div>
                                     <div className="text-muted" style={{ fontSize: '0.8rem', lineHeight: '1.6' }}>
                                         Continuous criminal intelligence for the modern enterprise.
                                     </div>
@@ -730,7 +730,7 @@ const ComponentsPage: React.FC = () => {
                     <footer style={{ borderTop: '1px solid var(--color-grid)', padding: '4rem 2rem', background: '#050505' }}>
                         <div className="container grid-3">
                             <div>
-                                <div className="text-mono" style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>ARRESTWATCH_</div>
+                                <div className="text-mono" style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>ARRESTDELTA_</div>
                                 <div className="text-muted" style={{ fontSize: '0.8rem' }}>
                                     © 2025 ANTI-GRAVITY S.A.S<br />
                                     ALL RIGHTS RESERVED.<br />

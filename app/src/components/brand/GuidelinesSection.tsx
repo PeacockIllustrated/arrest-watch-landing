@@ -10,7 +10,7 @@ const GuidelinesSection: React.FC = () => {
                         <span className="label">04. Usage</span>
                         <h2 className="text-large">Directives</h2>
                         <p className="text-muted" style={{ maxWidth: '500px' }}>
-                            Strict adherence to these protocols ensures the integrity of the ArrestWatch signal.
+                            Strict adherence to these protocols ensures the integrity of the ArrestDelta signal.
                         </p>
                     </div>
                     <a href="#" className="btn magnetic">DOWNLOAD FULL PDF</a>

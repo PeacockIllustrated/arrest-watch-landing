@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import RadarNode from '../ui/RadarNode';
+import ScanLine from '../ui/ScanLine';
 import OnboardingModal from '../_legacy/OnboardingModal';
 
 const Slide15_Closing: React.FC = () => {
@@ -6,50 +8,60 @@ const Slide15_Closing: React.FC = () => {
 
     return (
         <section className="brand-section" id="slide-15">
-            <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', textAlign: 'center', minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                <h2 className="text-huge" style={{ marginBottom: '4rem' }}>
-                    We don’t re-check the past. <br />
-                    <span className="text-red">We monitor the present.</span>
-                </h2>
+            <OnboardingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <div className="grid-bg-overlay" />
+            <div style={{ maxWidth: '1600px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
-                <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
-                    <p className="text-mono text-muted" style={{ marginBottom: '2rem' }}>
-                        ArrestWatch is not a background check company.
-                    </p>
-
-                    <p className="text-white" style={{ marginBottom: '3rem', fontWeight: '600' }}>
-                        We are a real-time arrest intelligence platform that:
-                    </p>
-
-                    <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
-                        <li className="text-mono text-muted" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <span className="text-red">+</span> Prevents bad actors at onboarding
-                        </li>
-                        <li className="text-mono text-muted" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <span className="text-red">+</span> Protects platforms continuously
-                        </li>
-                        <li className="text-mono text-muted" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <span className="text-red">+</span> Scales to hundreds of millions in ARR
-                        </li>
-                    </ul>
+                <div style={{ position: 'absolute', opacity: 0.4 }}>
+                    <RadarNode size="800px" type="radar" />
                 </div>
 
-                <div style={{ marginTop: '5rem' }}>
-                    <button
-                        onClick={() => setIsModalOpen(true)}
-                        className="btn pulse-active"
-                        style={{ padding: '1rem 3rem', cursor: 'pointer' }}
-                    >
-                        REQUEST ACCESS
-                    </button>
-                    <p className="text-muted text-mono" style={{ marginTop: '1.5rem' }}>
-                        SECURE YOUR PLATFORM TODAY
-                    </p>
+                <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: '1000px' }}>
+                    <div className="animate-fade-in-up">
+                        <h2 className="text-huge" style={{ fontSize: '6rem', lineHeight: 1, marginBottom: '4rem' }}>
+                            WE DON'T RE-CHECK THE PAST.<br />
+                            <span className="text-red text-glow">WE MONITOR THE PRESENT.</span>
+                        </h2>
+
+                        <div className="mobile-stack" style={{ display: 'flex', justifyContent: 'center', gap: '3rem', marginBottom: '5rem' }}>
+                            <div className="glass-panel" style={{ padding: '1rem 2rem' }}>
+                                <span className="text-mono text-white">REAL-TIME</span>
+                            </div>
+                            <div className="glass-panel" style={{ padding: '1rem 2rem' }}>
+                                <span className="text-mono text-white">NATIONWIDE</span>
+                            </div>
+                            <div className="glass-panel" style={{ padding: '1rem 2rem' }}>
+                                <span className="text-mono text-white">SECURE</span>
+                            </div>
+                        </div>
+
+                        <button
+                            className="btn pulse-active"
+                            style={{
+                                fontSize: '1.5rem',
+                                padding: '1.5rem 4rem',
+                                background: 'var(--color-alert-red)',
+                                border: 'none',
+                                color: 'white',
+                                cursor: 'pointer',
+                                letterSpacing: '0.1em'
+                            }}
+                            onClick={() => setIsModalOpen(true)}
+                        >
+                            REQUEST ACCESS
+                        </button>
+                    </div>
                 </div>
             </div>
-            <OnboardingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
+            {/* Footer Scan Line */}
+            <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}>
+                <ScanLine />
+            </div>
+
         </section>
     );
 };
 
 export default Slide15_Closing;
+

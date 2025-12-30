@@ -1,33 +1,82 @@
 import React from 'react';
+import HeatTiles from '../ui/HeatTiles';
 
 const Slide03_Product: React.FC = () => {
     return (
         <section className="brand-section" id="slide-03">
-            <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
-                <div className="grid-2">
-                    <div>
-                        <span className="label">03. Product Overview</span>
-                        <h2 className="text-large">Comprehensive <span className="text-red">Platform.</span></h2>
-                    </div>
-                    <div className="bento-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>
-                        <div className="panel" style={{ gridColumn: 'span 2' }}>
-                            <div className="text-mono text-white" style={{ marginBottom: '1rem' }}>SECTION 1: TRANSACTIONAL ARREST SEARCH (VERIFICATION)</div>
-                            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                <li className="text-mono text-muted">+ Continuously updated arrest data</li>
-                                <li className="text-mono text-muted">+ Identity-aware & fuzzy matching (false / incomplete identities)</li>
-                                <li className="text-mono text-muted">+ API-first, sub-second response times</li>
-                            </ul>
+            <div className="grid-bg-overlay" />
+            <div style={{ maxWidth: '1600px', margin: '0 auto', width: '100%' }}>
+
+                <div style={{ marginBottom: '3rem' }}>
+                    <span className="label">03. THE PLATFORM</span>
+                    <h2 className="text-large" style={{ fontSize: '3rem' }}>COMPREHENSIVE <span className="text-red">COVERAGE</span></h2>
+                </div>
+
+                {/* Control Room Layout: 3 Columns */}
+                <div className="grid-3 mobile-stack" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.2fr 0.8fr', gap: '2rem' }}>
+
+                    {/* PANEL 1: Transactional */}
+                    <div className="glass-panel animate-fade-in-up" style={{ padding: '2rem', animationDelay: '0.1s' }}>
+                        <div className="text-mono text-muted" style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--color-grid)', paddingBottom: '0.5rem' }}>
+                            ENGINE_A: SEARCH
                         </div>
-                        <div className="panel" style={{ gridColumn: 'span 2' }}>
-                            <div className="text-mono text-white" style={{ marginBottom: '1rem' }}>SECTION 2: LIVE ARREST MONITORING</div>
-                            <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
-                                <li className="text-mono text-muted">+ Real-time arrest alerts</li>
-                                <li className="text-mono text-muted">+ Nationwide coverage</li>
-                                <li className="text-mono text-muted">+ Notifications delivered in minutes</li>
-                                <li className="text-mono text-muted">+ Webhooks, dashboards, and audit logs</li>
-                            </ul>
+                        <h3 className="text-white text-large" style={{ fontSize: '1.8rem' }}>Transactional Verification</h3>
+                        <ul style={{ listStyle: 'none', padding: 0, marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <li className="text-mono text-muted" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <span>Identity Fuzzy Match</span>
+                                <span className="text-white">ACTIVE</span>
+                            </li>
+                            <li className="text-mono text-muted" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <span>Nationwide Sources</span>
+                                <span className="text-white">CONNECTED</span>
+                            </li>
+                            <li className="text-mono text-muted" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <span>Response Time</span>
+                                <span className="text-green" style={{ color: '#4CAF50' }}>&lt;500ms</span>
+                            </li>
+                        </ul>
+                        <div style={{ marginTop: '3rem', height: '100px', border: '1px solid var(--color-grid)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <span className="text-mono" style={{ fontSize: '3rem', opacity: 0.2 }}>JSON</span>
                         </div>
                     </div>
+
+                    {/* PANEL 2: Monitoring */}
+                    <div className="glass-panel border-glow animate-fade-in-up" style={{ padding: '2rem', animationDelay: '0.2s' }}>
+                        <div className="text-mono text-red" style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--color-alert-red)', paddingBottom: '0.5rem' }}>
+                            ENGINE_B: MONITOR
+                        </div>
+                        <h3 className="text-white text-large" style={{ fontSize: '1.8rem' }}>Live Arrest Events</h3>
+
+                        <div style={{ margin: '2rem 0' }}>
+                            <HeatTiles />
+                        </div>
+
+                        <div className="text-muted" style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
+                            Push-based alert system detecting bookings, warrants, and releases in real-time.
+                        </div>
+                        <div style={{ marginTop: '2rem', padding: '1rem', background: 'rgba(228, 0, 40, 0.1)', border: '1px dashed var(--color-alert-red)' }}>
+                            <span className="text-mono text-red" style={{ fontSize: '0.8rem' }}>ALERT ROUTING: WEBHOOK / EMAIL / SLACK</span>
+                        </div>
+                    </div>
+
+                    {/* PANEL 3: Stats Side Rail */}
+                    <div className="flex-col" style={{ gap: '1rem' }}>
+                        <div className="glass-panel animate-fade-in-up" style={{ padding: '1.5rem', animationDelay: '0.3s', flex: 1 }}>
+                            <div className="text-mono text-muted" style={{ fontSize: '0.8rem' }}>COVERAGE GOAL</div>
+                            <div className="text-huge" style={{ fontSize: '2.5rem', margin: '0.5rem 0' }}>100% US</div>
+                            <div className="text-muted" style={{ fontSize: '0.8rem' }}>County-by-County, State-by-State</div>
+                        </div>
+                        <div className="glass-panel animate-fade-in-up" style={{ padding: '1.5rem', animationDelay: '0.4s', flex: 1 }}>
+                            <div className="text-mono text-muted" style={{ fontSize: '0.8rem' }}>TARGET SLA</div>
+                            <div className="text-huge" style={{ fontSize: '2.5rem', margin: '0.5rem 0' }}>99.9%</div>
+                            <div className="text-muted" style={{ fontSize: '0.8rem' }}>Enterprise Uptime</div>
+                        </div>
+                        <div className="glass-panel animate-fade-in-up" style={{ padding: '1.5rem', animationDelay: '0.5s', flex: 1 }}>
+                            <div className="text-mono text-muted" style={{ fontSize: '0.8rem' }}>COMPLIANCE</div>
+                            <div className="text-huge text-white" style={{ fontSize: '1.5rem', margin: '0.5rem 0' }}>BUILT FOR FCRA</div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>

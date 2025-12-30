@@ -9,7 +9,7 @@ const BrandIntro: React.FC = () => {
                 <div>
                     <img
                         src={logoMain}
-                        alt="ArrestWatch Logo"
+                        alt="ArrestDelta Logo"
                         style={{ maxWidth: '200px', marginBottom: '2rem' }}
                     />
                     <span className="label">Brand Identity</span>
@@ -18,7 +18,7 @@ const BrandIntro: React.FC = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <p className="text-large text-muted">Precision. Speed. Authority.</p>
                     <p className="text-muted" style={{ marginTop: '2rem', maxWidth: '500px', lineHeight: 1.6 }}>
-                        The ArrestWatch brand is built on the principles of immediate clarity and unshakeable
+                        The ArrestDelta brand is built on the principles of immediate clarity and unshakeable
                         reliability.
                         Our visual language reflects the critical nature of our intelligence layer—high contrast,
                         data-driven, and devoid of noise.

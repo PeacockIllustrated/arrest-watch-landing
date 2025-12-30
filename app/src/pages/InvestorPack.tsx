@@ -16,11 +16,18 @@ import Slide13_Raise from '../components/investor/slides/Slide13_Raise';
 import Slide14_WhyNow from '../components/investor/slides/Slide14_WhyNow';
 import Slide15_Closing from '../components/investor/slides/Slide15_Closing';
 
+const SLIDE_TITLES = [
+    "Problem", "Solution", "Product", "Customers", "Market",
+    "Model", "Pricing", "Advantage", "Traction", "Platform",
+    "Leader", "Valuation", "Raise", "Timing", "Close"
+];
+
 const InvestorPack: React.FC = () => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showPrev, setShowPrev] = useState(false);
     const [showNext, setShowNext] = useState(true);
     const [activeIndex, setActiveIndex] = useState(0);
+    const [progress, setProgress] = useState(0);
 
     const SLIDE_COUNT = 15;
 
@@ -32,18 +39,13 @@ const InvestorPack: React.FC = () => {
             setShowPrev(scrollLeft > 10);
             setShowNext(scrollLeft < maxScroll - 10);
 
+            // Calc precise progress for bar
+            const currentProgress = (scrollLeft / maxScroll) * 100;
+            setProgress(currentProgress);
+
             // Update active index
             const width = window.innerWidth;
-            const height = window.innerHeight;
-            let index;
-
-            if (width <= 768) {
-                const scrollPos = scrollContainerRef.current.scrollTop;
-                index = Math.round(scrollPos / height);
-            } else {
-                const scrollPos = scrollLeft;
-                index = Math.round(scrollPos / width);
-            }
+            const index = Math.round(scrollLeft / width);
             setActiveIndex(index);
         }
     };
@@ -61,18 +63,41 @@ const InvestorPack: React.FC = () => {
         const container = scrollContainerRef.current;
         if (container) {
             container.addEventListener('scroll', handleScroll);
-            // Initial check
             handleScroll();
         }
+
+        // Keyboard Support
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'ArrowRight') scrollByAmount(window.innerWidth);
+            if (e.key === 'ArrowLeft') scrollByAmount(-window.innerWidth);
+        };
+        window.addEventListener('keydown', handleKeyDown);
+
         return () => {
             if (container) {
                 container.removeEventListener('scroll', handleScroll);
             }
+            window.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
 
+    const scrollToSlide = (index: number) => {
+        if (scrollContainerRef.current) {
+            const width = window.innerWidth;
+            scrollContainerRef.current.scrollTo({
+                left: width * index,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     return (
         <>
+            {/* Progress Bar */}
+            <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '4px', zIndex: 100, background: 'rgba(255,255,255,0.1)' }}>
+                <div style={{ height: '100%', width: `${progress}%`, background: 'var(--color-alert-red)', transition: 'width 0.1s linear', boxShadow: '0 0 10px var(--color-alert-red)' }} />
+            </div>
+
             <div className="brand-scroll-container" id="scrollContainer" ref={scrollContainerRef}>
                 <Slide01_Problem />
                 <Slide02_Solution />
@@ -91,21 +116,30 @@ const InvestorPack: React.FC = () => {
                 <Slide15_Closing />
             </div>
 
-            <div className="nav-indicators">
-                {[...Array(SLIDE_COUNT)].map((_, i) => (
-                    <button
-                        key={i}
-                        className={`nav-dot ${i === activeIndex ? 'active' : ''}`}
-                        onClick={() => {
-                            if (scrollContainerRef.current) {
-                                const width = window.innerWidth;
-                                scrollContainerRef.current.scrollTo({
-                                    left: width * i,
-                                    behavior: 'smooth'
-                                });
-                            }
-                        }}
-                    />
+            <div className="nav-indicators" style={{ display: 'flex', gap: '8px', zIndex: 99 }}>
+                {SLIDE_TITLES.map((title, i) => (
+                    <div key={i} className="nav-group" style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <button
+                            className={`nav-dot ${i === activeIndex ? 'active' : ''}`}
+                            onClick={() => scrollToSlide(i)}
+                            title={title}
+                            style={{
+                                width: i === activeIndex ? '24px' : '8px',
+                                height: '8px',
+                                borderRadius: '4px',
+                                border: 'none',
+                                background: i === activeIndex ? 'var(--color-alert-red)' : 'rgba(255,255,255,0.2)',
+                                transition: 'all 0.3s ease',
+                                cursor: 'pointer',
+                                boxShadow: i === activeIndex ? '0 0 10px var(--color-alert-red)' : 'none'
+                            }}
+                        />
+                        {i === activeIndex && (
+                            <span className="text-mono text-red animate-fade-in-up" style={{ position: 'absolute', bottom: '20px', fontSize: '0.6rem', whiteSpace: 'nowrap', textTransform: 'uppercase' }}>
+                                {title}
+                            </span>
+                        )}
+                    </div>
                 ))}
             </div>
 

@@ -69,11 +69,11 @@ const Landing: React.FC = () => {
                 }}></div>
 
                 <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-                    <img src={logoMain} alt="ArrestWatch" className="hero-logo reveal-text" />
-                    <span className="text-label reveal-text" style={{ transitionDelay: '0.1s' }}>ArrestWatch Intelligence Layer</span>
+                    <img src={logoMain} alt="ArrestDelta" className="hero-logo reveal-text" />
+                    <span className="text-label reveal-text" style={{ transitionDelay: '0.1s' }}>ArrestDelta Intelligence Layer</span>
                     <h1 className="text-huge reveal-text" style={{ transitionDelay: '0.2s' }}>From arrest<br />to alert...<br /><span className="text-red">Instantly.</span></h1>
                     <p className="reveal-text" style={{ maxWidth: '600px', margin: '2rem auto 0', fontSize: '1.2rem', color: 'var(--color-text-muted)', transitionDelay: '0.3s' }}>
-                        ArrestWatch is a continuous arrest intelligence layer. It operates before and after access is granted, preventing risk in real-time.
+                        ArrestDelta is a continuous arrest intelligence layer. It operates before and after access is granted, preventing risk in real-time.
                     </p>
                 </div>
                 <style>{`
@@ -101,15 +101,8 @@ const Landing: React.FC = () => {
                         <span className="text-mono text-muted" style={{ fontSize: '0.8rem' }}>// SECURE CONNECTION</span>
                     </div>
                 </div>
-                <div className="container no-padding-mobile" style={{ width: '100%', maxWidth: '1000px', margin: '0 auto' }}>
-                    <div className="panel dashboard-panel" style={{
-                        position: 'relative',
-                        overflow: 'hidden',
-                        border: '1px solid var(--color-grid)',
-                        padding: 0,
-                        width: '100%',
-                        aspectRatio: '1000/589'
-                    }}>
+                <div className="container no-padding-mobile" style={{ width: '100%' }}>
+                    <div className="panel dashboard-panel" style={{ position: 'relative', overflow: 'hidden', border: '1px solid var(--color-grid)', padding: 0 }}>
                         <DashboardMockup isScanning={isScanning} />
                     </div>
                 </div>
@@ -184,7 +177,7 @@ const Landing: React.FC = () => {
                         {/* Nodes */}
                         {[
                             { title: 'COUNTY SOURCE', sub: 'RAW DATA' },
-                            { title: 'ARRESTWATCH', sub: 'PROCESSING' },
+                            { title: 'ARRESTDELTA', sub: 'PROCESSING' },
                             { title: 'CLIENT SYSTEM', sub: 'ALERT' }
                         ].map((node, i) => (
                             <div key={i} className="panel capability-node">
@@ -259,7 +252,7 @@ const Landing: React.FC = () => {
                             </ul>
                         </div>
                         <div className="panel" style={{ border: '1px solid var(--color-alert-red)', boxShadow: '0 0 20px rgba(228, 0, 40, 0.1)' }}>
-                            <h3 className="text-mono text-red" style={{ fontSize: '1rem', marginBottom: '1rem', borderBottom: '1px solid var(--color-alert-red)', paddingBottom: '0.5rem' }}>ARRESTWATCH</h3>
+                            <h3 className="text-mono text-red" style={{ fontSize: '1rem', marginBottom: '1rem', borderBottom: '1px solid var(--color-alert-red)', paddingBottom: '0.5rem' }}>ARRESTDELTA</h3>
                             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                 <li className="text-white" style={{ display: 'flex', gap: '1rem' }}><span className="text-red">✓</span> <span>Continuous, event-driven monitoring</span></li>
                                 <li className="text-white" style={{ display: 'flex', gap: '1rem' }}><span className="text-red">✓</span> <span>Real-time alerts (minutes)</span></li>
@@ -405,14 +398,14 @@ const Landing: React.FC = () => {
                 <div className="container">
                     <div className="grid-4" style={{ marginBottom: '4rem' }}>
                         <div>
-                            <div className="text-mono text-red" style={{ marginBottom: '1rem' }}>ARRESTWATCH_</div>
+                            <div className="text-mono text-red" style={{ marginBottom: '1rem' }}>ARRESTDELTA_</div>
                             <div className="text-muted" style={{ fontSize: '0.9rem', marginBottom: '2rem' }}>
                                 Continuous criminal intelligence for the modern enterprise.
                             </div>
                             <div className="text-mono text-muted" style={{ fontSize: '0.8rem' }}>
-                                <a href="mailto:investors@arrestwatch.com" style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px solid #333', paddingBottom: '2px' }}>investors@arrestwatch.com</a>
+                                <a href="mailto:investors@arrestdelta.com" style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px solid #333', paddingBottom: '2px' }}>investors@arrestdelta.com</a>
                                 <span style={{ margin: '0 1rem', opacity: 0.3 }}>|</span>
-                                © 2025 ArrestWatch
+                                © 2025 ArrestDelta
                             </div>
                         </div>
                     </div>

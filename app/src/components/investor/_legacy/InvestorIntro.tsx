@@ -12,7 +12,7 @@ const InvestorIntro: React.FC = () => {
                             <span className="text-red">Risk Intelligence.</span>
                         </h1>
                         <p className="text-muted" style={{ fontSize: '1.5rem', marginTop: '2rem', maxWidth: '600px' }}>
-                            ArrestWatch is building the first real-time criminal risk detection layer for workforce platforms at national scale.
+                            ArrestDelta is building the first real-time criminal risk detection layer for workforce platforms at national scale.
                         </p>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '2rem' }}>

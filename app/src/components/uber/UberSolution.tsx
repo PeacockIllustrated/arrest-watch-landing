@@ -9,7 +9,7 @@ const UberSolution: React.FC = () => {
                         <span className="label">03. The Solution</span>
                         <h2 className="text-large">Real-Time Intelligence.</h2>
                         <p className="text-muted" style={{ marginTop: '2rem', fontSize: '1.2rem' }}>
-                            ArrestWatch integrates directly with your driver operations, matching booking data against your active fleet every hour, 24/7/365.
+                            ArrestDelta integrates directly with your driver operations, matching booking data against your active fleet every hour, 24/7/365.
                         </p>
                     </div>
                     <div className="bento-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>

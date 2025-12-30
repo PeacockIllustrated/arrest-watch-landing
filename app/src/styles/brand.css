@@ -23,6 +23,18 @@
 
     /* PHYSICS */
     --ease-snap: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+    /* INVESTOR PACK EXTENSIONS */
+    --glow-subtle: 0 0 20px rgba(228, 0, 40, 0.05);
+    --glow-strong: 0 0 30px rgba(228, 0, 40, 0.2);
+    --glow-text: 0 0 10px rgba(228, 0, 40, 0.4);
+    --glass-surface: rgba(26, 26, 26, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-border-highlight: rgba(255, 255, 255, 0.2);
+    --grid-pattern: linear-gradient(var(--color-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
 }
 
 * {
@@ -119,6 +131,9 @@ body.hovering #cursor {
 /* SECTIONS */
 .brand-section {
     flex: 0 0 100vw;
+    width: 100vw;
+    min-width: 100vw;
+    max-width: 100vw;
     height: 100vh;
     scroll-snap-align: start;
     position: relative;
@@ -127,6 +142,7 @@ body.hovering #cursor {
     justify-content: center;
     padding: 4rem 8rem;
     border-right: 1px solid var(--color-grid);
+    overflow-x: hidden;
     overflow-y: hidden;
 }
 
@@ -2043,4 +2059,277 @@ select.input-field option:hover {
     color: white !important;
     box-shadow: 0 0 10px 100px var(--color-alert-red) inset;
     /* Force override for some browsers */
+}
+
+/* INVESTOR PACK UTILITIES */
+.glass-panel {
+    background: var(--glass-surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-panel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--glass-border-highlight), transparent);
+    opacity: 0.5;
+}
+
+.text-glow {
+    text-shadow: var(--glow-text);
+}
+
+.border-glow {
+    box-shadow: var(--glow-strong);
+    border-color: var(--color-alert-red);
+}
+
+.grid-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background-image: var(--grid-pattern);
+    background-size: 40px 40px;
+    opacity: 0.08;
+    z-index: -1;
+    pointer-events: none;
+    transform: perspective(500px) rotateX(10deg) translateY(-50px) translateZ(-100px);
+    mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+/* ANIMATIONS */
+@keyframes scan-sweep {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(200%);
+        opacity: 0;
+    }
+}
+
+@keyframes pulse-node {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+        box-shadow: 0 0 0 0 rgba(228, 0, 40, 0.4);
+    }
+
+    70% {
+        transform: scale(1.1);
+        opacity: 1;
+        box-shadow: 0 0 20px 10px rgba(228, 0, 40, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.5;
+        box-shadow: 0 0 0 0 rgba(228, 0, 40, 0);
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes blink-red {
+
+    0%,
+    100% {
+        background: var(--color-alert-red);
+        box-shadow: 0 0 10px var(--color-alert-red);
+    }
+
+    50% {
+        background: #500;
+        box-shadow: none;
+    }
+}
+
+.animate-fade-in-up {
+    animation: fade-in-up 0.6s var(--ease-out-expo) forwards;
+}
+
+.animate-scan {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: var(--color-alert-red);
+    box-shadow: 0 0 15px var(--color-alert-red);
+    animation: scan-sweep 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    pointer-events: none;
+    z-index: 10;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .animate-fade-in-up,
+    .animate-scan,
+    .glitch-text::before,
+    .glitch-text::after {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* RESPONSIVE UTILITIES */
+@media (max-width: 1024px) {
+
+    /* 1. Unlock Body Scrolling & Disable "Sticky" Smooth Scroll */
+    html,
+    body {
+        overflow-y: auto !important;
+        height: auto !important;
+        position: relative !important;
+        scroll-behavior: auto !important;
+        /* Critical for "free" feel */
+        overscroll-behavior-y: none !important;
+        /* Prevent bounce */
+    }
+
+    /* 2. Convert Scroll Container to Vertical Stack / Kill Snapping */
+    .brand-scroll-container {
+        display: flex !important;
+        flex-direction: column !important;
+        height: auto !important;
+        width: 100% !important;
+        overflow: visible !important;
+        scroll-snap-type: none !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* 3. Section Sizing: "Only as tall as they need to be" */
+    /* 3. Section Sizing: "Only as tall as they need to be" */
+    .brand-section {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+
+        height: auto !important;
+        min-height: 0 !important;
+        flex: none !important;
+
+        display: block !important;
+        /* Switch to block to kill flex height stretching */
+
+        padding: 2rem 1rem !important;
+        /* Reduce padding significantly */
+        justify-content: flex-start !important;
+        border-right: none !important;
+        border-bottom: 1px solid var(--color-grid);
+
+        overflow-y: visible !important;
+        overflow-x: hidden !important;
+
+        scroll-snap-align: none !important;
+        scroll-stop-align: none !important;
+    }
+
+    .text-huge {
+        font-size: 2.5rem !important;
+        word-break: break-word;
+    }
+
+    .text-large {
+        font-size: 1.5rem !important;
+    }
+
+    /* Force specific elements to stack */
+    .mobile-stack {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: 1fr !important;
+        height: auto !important;
+        gap: 2rem !important;
+    }
+
+    .mobile-stack>* {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Reset width constraints */
+    .brand-section>div {
+        max-width: 100% !important;
+        height: auto !important;
+        /* CRITICAL: Override inline height: 100% */
+        min-height: 0 !important;
+        margin: 0 !important;
+        display: block !important;
+        /* Ensure block flow */
+    }
+
+    /* Utility to hide/show */
+    .mobile-hidden {
+        display: none !important;
+    }
+
+    /* New Mobile Utils */
+    .mobile-border-none {
+        border: none !important;
+        border-left: none !important;
+        border-right: none !important;
+    }
+
+    .mobile-padding-sm {
+        padding: 1rem !important;
+    }
+
+    .mobile-bg-none {
+        background: none !important;
+    }
+
+    .mobile-reset-transform {
+        transform: none !important;
+    }
+
+    .mobile-full-width {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    /* 2. FORCE margin reset to kill the desktop 'wave' offsets (200px, -100px) */
+    .mobile-reset-margin {
+        margin: 0 !important;
+        /* Zero out all margins */
+        margin-top: 0 !important;
+    }
+
+    /* 4. Reduce header margin */
+    .mobile-mb-2 {
+        margin-bottom: 2rem !important;
+    }
+
+    /* 5. Force container to behave as a simple block, not a flex container trying to center things */
+    .mobile-layout-block {
+        display: block !important;
+        height: auto !important;
+        padding: 0 !important;
+    }
 }

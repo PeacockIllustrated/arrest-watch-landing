@@ -10,7 +10,7 @@ const UberAsk: React.FC = () => {
                 <span className="label">07. Next Steps</span>
                 <h2 className="text-huge" style={{ marginBottom: '1.5rem', fontSize: 'clamp(1.2rem, 8vw, 4rem)', lineHeight: '1.1' }}>Lead the Industry. Again.</h2>
                 <p className="text-muted" style={{ fontSize: 'clamp(0.8rem, 4vw, 1.3rem)', maxWidth: '800px', margin: '0 auto 3rem auto', lineHeight: '1.5' }}>
-                    Partner with ArrestWatch to pilot the next generation of trust and safety infrastructure.
+                    Partner with ArrestDelta to pilot the next generation of trust and safety infrastructure.
                 </p>
 
                 <div className="grid-2" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'left', gap: '1.5rem' }}>
