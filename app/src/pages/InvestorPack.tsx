@@ -29,7 +29,7 @@ const InvestorPack: React.FC = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [progress, setProgress] = useState(0);
 
-    const SLIDE_COUNT = 15;
+
 
     const handleScroll = () => {
         if (scrollContainerRef.current) {
