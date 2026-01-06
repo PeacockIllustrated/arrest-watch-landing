@@ -383,7 +383,7 @@ const Landing: React.FC = () => {
                                 <div className="text-mono" style={{ marginBottom: '0.2rem', fontSize: '1.1rem' }}>MICHAEL KING</div>
                                 <div className="text-muted" style={{ fontSize: '0.8rem', marginBottom: '1rem' }}>FOUNDER & CEO</div>
                                 <div style={{ paddingTop: '0.5rem', borderTop: '1px solid var(--color-grid)' }}>
-                                    <div className="text-mono" style={{ fontSize: '0.8rem' }}>mking@arrestwatch.io</div>
+                                    <div className="text-mono" style={{ fontSize: '0.8rem' }}>mking@arrestdelta.com</div>
                                     <div className="text-mono" style={{ fontSize: '0.8rem' }}>+44 7963 520703</div>
                                 </div>
                             </div>
@@ -398,7 +398,7 @@ const Landing: React.FC = () => {
                                 <div className="text-mono" style={{ marginBottom: '0.2rem', fontSize: '1.1rem' }}>TOM PEACOCK</div>
                                 <div className="text-muted" style={{ fontSize: '0.8rem', marginBottom: '1rem' }}>CO-FOUNDER & CTO</div>
                                 <div style={{ paddingTop: '0.5rem', borderTop: '1px solid var(--color-grid)' }}>
-                                    <div className="text-mono" style={{ fontSize: '0.8rem' }}>tom@arrestwatch.io</div>
+                                    <div className="text-mono" style={{ fontSize: '0.8rem' }}>tom@arrestdelta.com</div>
                                 </div>
                             </div>
                         </div>
@@ -416,8 +416,9 @@ const Landing: React.FC = () => {
                 }}></div>
                 <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
                     <h2 className="text-huge" style={{ marginBottom: '2rem' }}>SECURE YOUR ACCESS</h2>
-                    <div className="flex-row" style={{ justifyContent: 'center', gap: '2rem' }}>
+                    <div className="flex-row" style={{ justifyContent: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
                         <button className="btn btn-cta" onClick={() => setIsModalOpen(true)}>REGISTER INTEREST</button>
+                        <a href="/decks" className="btn btn-secondary" style={{ textDecoration: 'none' }}>VIEW DECK LIBRARY →</a>
                     </div>
                 </div>
                 <style>{`
@@ -444,6 +445,14 @@ const Landing: React.FC = () => {
                                 <a href="mailto:investors@arrestdelta.com" style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px solid #333', paddingBottom: '2px' }}>investors@arrestdelta.com</a>
                                 <span style={{ margin: '0 1rem', opacity: 0.3 }}>|</span>
                                 © 2025 ArrestDelta
+                            </div>
+                        </div>
+                        <div>
+                            <div className="text-mono" style={{ fontSize: '0.8rem', color: '#666', marginBottom: '1rem' }}>RESOURCES</div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <a href="/decks" style={{ color: '#888', textDecoration: 'none', fontSize: '0.85rem' }}>Deck Library</a>
+                                <a href="/privacy" style={{ color: '#888', textDecoration: 'none', fontSize: '0.85rem' }}>Privacy Policy</a>
+                                <a href="/terms" style={{ color: '#888', textDecoration: 'none', fontSize: '0.85rem' }}>Terms of Service</a>
                             </div>
                         </div>
                     </div>

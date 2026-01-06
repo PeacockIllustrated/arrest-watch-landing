@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import LeadDeckAccess from './LeadDeckAccess';
 
 interface Lead {
     id: string;
@@ -17,6 +18,8 @@ interface LeadDetailsModalProps {
 }
 
 const LeadDetailsModal: React.FC<LeadDetailsModalProps> = ({ lead, onClose, onDelete }) => {
+    const [activeTab, setActiveTab] = useState<'details' | 'access'>('details');
+
     const handleDelete = async () => {
         if (!window.confirm('CONFIRM PURGE? This action is irreversible.')) return;
         await onDelete(lead.id);
@@ -38,8 +41,10 @@ const LeadDetailsModal: React.FC<LeadDetailsModalProps> = ({ lead, onClose, onDe
             zIndex: 1000
         }} onClick={onClose}>
             <div style={{
-                width: '600px',
+                width: '700px',
                 maxWidth: '90%',
+                maxHeight: '85vh',
+                overflow: 'auto',
                 background: '#0a0a0a',
                 border: '1px solid #333',
                 position: 'relative',
@@ -73,48 +78,96 @@ const LeadDetailsModal: React.FC<LeadDetailsModalProps> = ({ lead, onClose, onDe
                     </button>
                 </div>
 
-                {/* Content */}
-                <div style={{ padding: '2rem', display: 'grid', gap: '1.5rem' }}>
-
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                        <div>
-                            <label style={{ display: 'block', fontSize: '0.7rem', color: '#666', marginBottom: '0.5rem' }}>IDENTITY</label>
-                            <div style={{ fontSize: '1.1rem', color: 'white' }}>{lead.name}</div>
-                        </div>
-                        <div>
-                            <label style={{ display: 'block', fontSize: '0.7rem', color: '#666', marginBottom: '0.5rem' }}>TIMESTAMP</label>
-                            <div style={{ fontSize: '0.9rem', color: '#888' }}>{new Date(lead.created_at).toLocaleString()}</div>
-                        </div>
-                    </div>
-
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                        <div>
-                            <label style={{ display: 'block', fontSize: '0.7rem', color: '#666', marginBottom: '0.5rem' }}>CONTACT</label>
-                            <div style={{ fontSize: '0.9rem', color: '#e40028' }}>{lead.email}</div>
-                        </div>
-                        <div>
-                            <label style={{ display: 'block', fontSize: '0.7rem', color: '#666', marginBottom: '0.5rem' }}>WORKFORCE</label>
-                            <div style={{ fontSize: '0.9rem', color: 'white' }}>{lead.employee_count}</div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label style={{ display: 'block', fontSize: '0.7rem', color: '#666', marginBottom: '0.5rem' }}>TRANSMISSION</label>
-                        <div style={{
-                            background: 'rgba(255,255,255,0.05)',
+                {/* Tabs */}
+                <div style={{
+                    display: 'flex',
+                    borderBottom: '1px solid #333'
+                }}>
+                    <button
+                        onClick={() => setActiveTab('details')}
+                        style={{
+                            flex: 1,
                             padding: '1rem',
-                            border: '1px solid #333',
-                            fontSize: '0.9rem',
-                            lineHeight: '1.6',
-                            color: '#ccc',
-                            minHeight: '100px',
-                            whiteSpace: 'pre-wrap'
-                        }}>
-                            {lead.message || "NO MESSAGE CONTENT"}
-                        </div>
-                    </div>
-
+                            background: activeTab === 'details' ? 'rgba(228, 0, 40, 0.1)' : 'transparent',
+                            border: 'none',
+                            borderBottom: activeTab === 'details' ? '2px solid #e40028' : '2px solid transparent',
+                            color: activeTab === 'details' ? '#e40028' : '#666',
+                            cursor: 'pointer',
+                            fontSize: '0.8rem',
+                            letterSpacing: '1px',
+                            transition: 'all 0.2s'
+                        }}
+                    >
+                        LEAD DETAILS
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('access')}
+                        style={{
+                            flex: 1,
+                            padding: '1rem',
+                            background: activeTab === 'access' ? 'rgba(228, 0, 40, 0.1)' : 'transparent',
+                            border: 'none',
+                            borderBottom: activeTab === 'access' ? '2px solid #e40028' : '2px solid transparent',
+                            color: activeTab === 'access' ? '#e40028' : '#666',
+                            cursor: 'pointer',
+                            fontSize: '0.8rem',
+                            letterSpacing: '1px',
+                            transition: 'all 0.2s'
+                        }}
+                    >
+                        DECK ACCESS
+                    </button>
                 </div>
+
+                {/* Tab Content */}
+                {activeTab === 'details' ? (
+                    <>
+                        {/* Details Content */}
+                        <div style={{ padding: '2rem', display: 'grid', gap: '1.5rem' }}>
+
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '0.7rem', color: '#666', marginBottom: '0.5rem' }}>IDENTITY</label>
+                                    <div style={{ fontSize: '1.1rem', color: 'white' }}>{lead.name}</div>
+                                </div>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '0.7rem', color: '#666', marginBottom: '0.5rem' }}>TIMESTAMP</label>
+                                    <div style={{ fontSize: '0.9rem', color: '#888' }}>{new Date(lead.created_at).toLocaleString()}</div>
+                                </div>
+                            </div>
+
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '0.7rem', color: '#666', marginBottom: '0.5rem' }}>CONTACT</label>
+                                    <div style={{ fontSize: '0.9rem', color: '#e40028' }}>{lead.email}</div>
+                                </div>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '0.7rem', color: '#666', marginBottom: '0.5rem' }}>WORKFORCE</label>
+                                    <div style={{ fontSize: '0.9rem', color: 'white' }}>{lead.employee_count}</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label style={{ display: 'block', fontSize: '0.7rem', color: '#666', marginBottom: '0.5rem' }}>TRANSMISSION</label>
+                                <div style={{
+                                    background: 'rgba(255,255,255,0.05)',
+                                    padding: '1rem',
+                                    border: '1px solid #333',
+                                    fontSize: '0.9rem',
+                                    lineHeight: '1.6',
+                                    color: '#ccc',
+                                    minHeight: '100px',
+                                    whiteSpace: 'pre-wrap'
+                                }}>
+                                    {lead.message || "NO MESSAGE CONTENT"}
+                                </div>
+                            </div>
+
+                        </div>
+                    </>
+                ) : (
+                    <LeadDeckAccess leadId={lead.id} leadEmail={lead.email} />
+                )}
 
                 {/* Footer */}
                 <div style={{
@@ -165,3 +218,4 @@ const LeadDetailsModal: React.FC<LeadDetailsModalProps> = ({ lead, onClose, onDe
 };
 
 export default LeadDetailsModal;
+

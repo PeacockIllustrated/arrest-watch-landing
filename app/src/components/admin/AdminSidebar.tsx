@@ -50,7 +50,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onClose }) => {
                 justifyContent: 'space-between',
                 alignItems: 'center'
             }}>
-                ARRESTWATCH
+                ARRESTDELTA
                 {/* Mobile Close Button */}
                 <button
                     onClick={onClose}

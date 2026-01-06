@@ -33,7 +33,7 @@ const Slide12_Valuation: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Box 3: ArrestWatch Target */}
+                    {/* Box 3: ArrestDelta Target */}
                     <div className="glass-panel border-glow animate-fade-in-up" style={{ padding: '2rem', background: 'rgba(228, 0, 40, 0.05)', animationDelay: '0.2s' }}>
                         <div className="text-mono text-red" style={{ marginBottom: '1rem' }}>ARRESTDELTA TARGET</div>
                         <MetricTicker value="$300M+" label="SERIES B TARGET" />

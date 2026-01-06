@@ -24,7 +24,7 @@ const UberRealWorldCases: React.FC = () => {
                             </p>
                         </div>
                         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem' }}>
-                            <div className="text-mono text-white" style={{ fontSize: '0.8rem' }}>HOW ARRESTWATCH HELPS</div>
+                            <div className="text-mono text-white" style={{ fontSize: '0.8rem' }}>HOW ARRESTDELTA HELPS</div>
                             <ul className="text-white" style={{ fontSize: '0.9rem', marginTop: '0.5rem', paddingLeft: '1.2rem', listStyleType: 'disc' }}>
                                 <li>Continuous criminal-event monitoring.</li>
                                 <li>Multi-source, cross-jurisdiction data fusion.</li>
@@ -43,7 +43,7 @@ const UberRealWorldCases: React.FC = () => {
                             </p>
                         </div>
                         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem' }}>
-                            <div className="text-mono text-white" style={{ fontSize: '0.8rem' }}>HOW ARRESTWATCH HELPS</div>
+                            <div className="text-mono text-white" style={{ fontSize: '0.8rem' }}>HOW ARRESTDELTA HELPS</div>
                             <ul className="text-white" style={{ fontSize: '0.9rem', marginTop: '0.5rem', paddingLeft: '1.2rem', listStyleType: 'disc' }}>
                                 <li>Enhanced identity matching across aliases and jurisdictions.</li>
                                 <li>Clear risk categorisation for sensitive offence types.</li>
@@ -62,7 +62,7 @@ const UberRealWorldCases: React.FC = () => {
                             </p>
                         </div>
                         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem' }}>
-                            <div className="text-mono text-white" style={{ fontSize: '0.8rem' }}>HOW ARRESTWATCH HELPS</div>
+                            <div className="text-mono text-white" style={{ fontSize: '0.8rem' }}>HOW ARRESTDELTA HELPS</div>
                             <ul className="text-white" style={{ fontSize: '0.9rem', marginTop: '0.5rem', paddingLeft: '1.2rem', listStyleType: 'disc' }}>
                                 <li>Live alerts when new arrests, charges, or court filings appear.</li>
                                 <li>Automated policy triggers (e.g., temporary suspension).</li>

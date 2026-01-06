@@ -24,7 +24,7 @@ const UberCaseStudies: React.FC = () => {
                             </p>
                         </div>
                         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem' }}>
-                            <div className="text-mono text-white" style={{ fontSize: '0.8rem' }}>WITH ARRESTWATCH</div>
+                            <div className="text-mono text-white" style={{ fontSize: '0.8rem' }}>WITH ARRESTDELTA</div>
                             <p className="text-white" style={{ fontSize: '1rem', marginTop: '0.5rem' }}>
                                 Booking detected Saturday 3:00 AM.<br />
                                 <span className="text-green">Account paused before Saturday shift begins.</span>
@@ -42,7 +42,7 @@ const UberCaseStudies: React.FC = () => {
                             </p>
                         </div>
                         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem' }}>
-                            <div className="text-mono text-white" style={{ fontSize: '0.8rem' }}>WITH ARRESTWATCH</div>
+                            <div className="text-mono text-white" style={{ fontSize: '0.8rem' }}>WITH ARRESTDELTA</div>
                             <p className="text-white" style={{ fontSize: '1rem', marginTop: '0.5rem' }}>
                                 Scrapers monitor all surrounding county booking logs.<br />
                                 <span className="text-green">Cross-jurisdictional match found instantly.</span>
@@ -60,7 +60,7 @@ const UberCaseStudies: React.FC = () => {
                             </p>
                         </div>
                         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem' }}>
-                            <div className="text-mono text-white" style={{ fontSize: '0.8rem' }}>WITH ARRESTWATCH</div>
+                            <div className="text-mono text-white" style={{ fontSize: '0.8rem' }}>WITH ARRESTDELTA</div>
                             <p className="text-white" style={{ fontSize: '1rem', marginTop: '0.5rem' }}>
                                 Arrest event flagged immediately.<br />
                                 <span className="text-green">Safety team reviews pending charges proactively.</span>

@@ -38,7 +38,7 @@ const Slide08_WhyWeWin: React.FC = () => {
                         </ul>
                     </div>
 
-                    {/* ARRESTWATCH SIDE */}
+                    {/* ARRESTDELTA SIDE */}
                     <div className="glass-panel border-glow" style={{
                         height: '110%', padding: '3rem', display: 'flex', flexDirection: 'column',
                         border: '1px solid var(--color-alert-red)',
@@ -46,7 +46,7 @@ const Slide08_WhyWeWin: React.FC = () => {
                         zIndex: 2, boxShadow: '0 0 50px rgba(0,0,0,0.5)'
                     }}>
                         <div className="text-mono text-red" style={{ marginBottom: '2rem', fontSize: '0.9rem', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <span>ARRESTWATCH INTELLIGENCE</span>
+                            <span>ARRESTDELTA INTELLIGENCE</span>
                             <span className="pulse-active" style={{ width: '8px', height: '8px', background: 'var(--color-alert-red)', borderRadius: '50%' }}></span>
                         </div>
                         <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '2rem' }}>

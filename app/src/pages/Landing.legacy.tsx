@@ -74,11 +74,11 @@ const Landing: React.FC = () => {
                     <img src={iconWhite} alt="" style={{ width: '100%', height: 'auto' }} />
                 </div>
                 <div className="container">
-                    <img src={logoMain} alt="ArrestWatch" className="hero-logo reveal-text" />
-                    <span className="text-label reveal-text" style={{ transitionDelay: '0.1s' }}>ArrestWatch Intelligence Layer</span>
+                    <img src={logoMain} alt="ArrestDelta" className="hero-logo reveal-text" />
+                    <span className="text-label reveal-text" style={{ transitionDelay: '0.1s' }}>ArrestDelta Intelligence Layer</span>
                     <h1 className="text-huge reveal-text" style={{ transitionDelay: '0.2s' }}>From arrest<br />to alert...<br /><span className="text-red">Instantly.</span></h1>
                     <p className="reveal-text" style={{ maxWidth: '600px', margin: '2rem auto 0', fontSize: '1.2rem', color: 'var(--color-text-muted)', transitionDelay: '0.3s' }}>
-                        ArrestWatch is the only platform connecting nationwide arrest data, facial recognition, and HR systems
+                        ArrestDelta is the only platform connecting nationwide arrest data, facial recognition, and HR systems
                         into one continuous safety layer.
                     </p>
                 </div>
@@ -278,13 +278,13 @@ const Landing: React.FC = () => {
                             <div className="text-mono" style={{ marginBottom: '0.5rem', fontSize: '1.2rem' }}>MICHAEL KING</div>
                             <div className="text-muted" style={{ fontSize: '0.9rem', marginBottom: '1rem' }}>FOUNDER & CEO</div>
                             <div style={{ paddingTop: '1rem', borderTop: '1px solid var(--color-grid)' }}>
-                                <div className="text-mono">mking@arrestwatch.io</div>
+                                <div className="text-mono">mking@arrestdelta.com</div>
                                 <div className="text-mono">+44 7963 520703</div>
                             </div>
                         </div>
                     </div>
                     <div style={{ marginTop: '4rem' }}>
-                        <a href="mailto:mking@arrestwatch.io" className="btn pulse-active" style={{ fontSize: '1.2rem', padding: '1.5rem 4rem', textDecoration: 'none' }}>INITIATE PARTNERSHIP</a>
+                        <a href="mailto:mking@arrestdelta.com" className="btn pulse-active" style={{ fontSize: '1.2rem', padding: '1.5rem 4rem', textDecoration: 'none' }}>INITIATE PARTNERSHIP</a>
                     </div>
                 </div>
             </section>

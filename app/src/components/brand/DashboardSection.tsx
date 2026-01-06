@@ -11,7 +11,7 @@ const DashboardSection: React.FC = () => {
                 <div className="dashboard-mockup">
                     {/* Sidebar */}
                     <div className="dash-sidebar">
-                        <div className="text-mono text-white" style={{ fontWeight: 700 }}>ARRESTWATCH</div>
+                        <div className="text-mono text-white" style={{ fontWeight: 700 }}>ARRESTDELTA</div>
                         <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                             <div className="dash-nav-item active">
                                 <div className="dash-icon" style={{ background: 'var(--color-alert-red)' }}></div>

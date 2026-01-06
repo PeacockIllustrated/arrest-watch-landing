@@ -1,0 +1,482 @@
+/* Import brand fonts - MUST be first */
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@300;400;500;600&family=Roboto+Mono:wght@400;500;700&display=swap');
+
+/* Uber fonts - loaded from Google Fonts alternative (similar to UberMove) */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* =============================================================================
+   ArrestDelta Portal — Theme System
+   CSS Variables-based multi-theme system with 4 themes
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   Theme: ArrestDelta (Default)
+   Official brand theme matching index/investor pages
+   Palette: Void (#000), Gunmetal (#1A1A1A), Grid (#333), Alert Red (#E40028)
+   ----------------------------------------------------------------------------- */
+[data-theme="intel-dark"],
+:root {
+  /* Backgrounds - Void & Gunmetal */
+  --bg-base: #000000;
+  --bg-surface: #0a0a0a;
+  --bg-elevated: #1a1a1a;
+  --bg-overlay: rgba(0, 0, 0, 0.95);
+
+  /* Text - Signal White & Muted */
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --text-muted: #888888;
+  --text-inverse: #000000;
+
+  /* Borders - Grid colour */
+  --border-subtle: #1a1a1a;
+  --border-default: #333333;
+  --border-strong: #444444;
+
+  /* Accent - Alert Red (Primary brand) */
+  --accent: #e40028;
+  --accent-hover: #ff1a3d;
+  --accent-muted: rgba(228, 0, 40, 0.15);
+
+  /* Status colours */
+  --success: #10b981;
+  --success-muted: rgba(16, 185, 129, 0.15);
+  --warning: #f59e0b;
+  --warning-muted: rgba(245, 158, 11, 0.15);
+  --danger: #e40028;
+  --danger-muted: rgba(228, 0, 40, 0.15);
+  --info: #3b82f6;
+  --info-muted: rgba(59, 130, 246, 0.15);
+
+  /* Focus ring - Alert Red glow */
+  --focus-ring: rgba(228, 0, 40, 0.5);
+
+  /* Sidebar - Deep black */
+  --sidebar-bg: #000000;
+  --sidebar-border: #1a1a1a;
+  --sidebar-item-hover: rgba(255, 255, 255, 0.05);
+  --sidebar-item-active: rgba(228, 0, 40, 0.15);
+
+  /* Topbar */
+  --topbar-bg: #0a0a0a;
+  --topbar-border: #1a1a1a;
+
+  /* Cards - Gunmetal surface */
+  --card-bg: #0a0a0a;
+  --card-border: #1a1a1a;
+  --card-hover: #111111;
+
+  /* Inputs */
+  --input-bg: #000000;
+  --input-border: #333333;
+  --input-focus-border: var(--accent);
+  --input-placeholder: #666666;
+
+  /* Skeleton loading */
+  --skeleton-base: #1a1a1a;
+  --skeleton-shine: #333333;
+
+  /* Brand-specific glows */
+  --glow-subtle: 0 0 20px rgba(228, 0, 40, 0.05);
+  --glow-strong: 0 0 30px rgba(228, 0, 40, 0.2);
+
+  /* Border radius - Terminal aesthetic (sharp) */
+  --border-radius-sm: 0px;
+  --border-radius: 0px;
+  --border-radius-lg: 0px;
+  --border-radius-full: 0px;
+
+  /* Typography - ArrestDelta brand fonts */
+  --font-head: 'Inter Tight', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-wide: 0.1em;
+  --text-transform-heading: uppercase;
+}
+
+/* -----------------------------------------------------------------------------
+   Theme: Intel Light
+   Bright, enterprise-safe theme for professional environments
+   ----------------------------------------------------------------------------- */
+[data-theme="intel-light"] {
+  /* Backgrounds */
+  --bg-base: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-overlay: rgba(248, 250, 252, 0.95);
+
+  /* Text */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-inverse: #ffffff;
+
+  /* Borders */
+  --border-subtle: #e2e8f0;
+  --border-default: #cbd5e1;
+  --border-strong: #94a3b8;
+
+  /* Accent (Primary brand) */
+  --accent: #dc2626;
+  --accent-hover: #b91c1c;
+  --accent-muted: rgba(220, 38, 38, 0.1);
+
+  /* Status colours */
+  --success: #059669;
+  --success-muted: rgba(5, 150, 105, 0.1);
+  --warning: #d97706;
+  --warning-muted: rgba(217, 119, 6, 0.1);
+  --danger: #dc2626;
+  --danger-muted: rgba(220, 38, 38, 0.1);
+  --info: #2563eb;
+  --info-muted: rgba(37, 99, 235, 0.1);
+
+  /* Focus ring */
+  --focus-ring: rgba(220, 38, 38, 0.4);
+
+  /* Sidebar */
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #e2e8f0;
+  --sidebar-item-hover: #f1f5f9;
+  --sidebar-item-active: rgba(220, 38, 38, 0.08);
+
+  /* Topbar */
+  --topbar-bg: #ffffff;
+  --topbar-border: #e2e8f0;
+
+  /* Cards */
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --card-hover: #f8fafc;
+
+  /* Inputs */
+  --input-bg: #ffffff;
+  --input-border: #cbd5e1;
+  --input-focus-border: var(--accent);
+  --input-placeholder: #94a3b8;
+
+  /* Skeleton loading */
+  --skeleton-base: #e2e8f0;
+  --skeleton-shine: #f1f5f9;
+
+  /* Border radius */
+  --border-radius-sm: 4px;
+  --border-radius: 6px;
+  --border-radius-lg: 8px;
+  --border-radius-full: 9999px;
+}
+
+/* -----------------------------------------------------------------------------
+   Theme: Uber
+   BaseUI-aligned dark theme — White primary, subtle blue highlights
+   ----------------------------------------------------------------------------- */
+[data-theme="stealth"] {
+  /* Backgrounds - Uber Black + BaseUI grays */
+  --bg-base: #000000;
+  --bg-surface: #141414;
+  --bg-elevated: #1F1F1F;
+  --bg-overlay: rgba(0, 0, 0, 0.95);
+
+  /* Text - Uber-style opacity levels */
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(255, 255, 255, 0.78);
+  --text-muted: rgba(255, 255, 255, 0.56);
+  --text-inverse: #000000;
+
+  /* Borders - Very subtle, BaseUI style */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.14);
+  --border-strong: rgba(255, 255, 255, 0.22);
+
+  /* Accent - White primary (Uber's actual button style) */
+  --accent: #FFFFFF;
+  --accent-hover: #E5E5E5;
+  --accent-muted: rgba(255, 255, 255, 0.12);
+
+  /* Status colours - BaseUI aligned */
+  --success: #05944F;
+  --success-muted: rgba(5, 148, 79, 0.18);
+  --warning: #FFC043;
+  --warning-muted: rgba(255, 192, 67, 0.18);
+  --danger: #E11900;
+  --danger-muted: rgba(225, 25, 0, 0.18);
+  --info: #276EF1;
+  --info-muted: rgba(39, 110, 241, 0.18);
+
+  /* Focus ring - Subtle white */
+  --focus-ring: rgba(255, 255, 255, 0.35);
+
+  /* Sidebar */
+  --sidebar-bg: #000000;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-item-hover: rgba(255, 255, 255, 0.06);
+  --sidebar-item-active: rgba(255, 255, 255, 0.12);
+
+  /* Topbar */
+  --topbar-bg: #000000;
+  --topbar-border: rgba(255, 255, 255, 0.08);
+
+  /* Cards */
+  --card-bg: #141414;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-hover: #1F1F1F;
+
+  /* Inputs */
+  --input-bg: #1F1F1F;
+  --input-border: rgba(255, 255, 255, 0.14);
+  --input-focus-border: rgba(255, 255, 255, 0.5);
+  --input-placeholder: rgba(255, 255, 255, 0.42);
+
+  /* Skeleton loading */
+  --skeleton-base: #1F1F1F;
+  --skeleton-shine: #2A2A2A;
+
+  /* Glows - Subtle white */
+  --glow-subtle: 0 0 20px rgba(255, 255, 255, 0.05);
+  --glow-strong: 0 0 30px rgba(255, 255, 255, 0.12);
+
+  /* Border radius - Uber rounded style */
+  --border-radius-sm: 8px;
+  --border-radius: 12px;
+  --border-radius-lg: 16px;
+  --border-radius-full: 9999px;
+
+  /* Typography - Uber style (Plus Jakarta Sans mimics UberMove) */
+  --font-head: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --letter-spacing-tight: -0.01em;
+  --letter-spacing-wide: 0em;
+  --text-transform-heading: none;
+}
+
+/* -----------------------------------------------------------------------------
+   Theme: High Contrast
+   Accessibility-forward theme with maximum contrast
+   ----------------------------------------------------------------------------- */
+[data-theme="high-contrast"] {
+  /* Backgrounds */
+  --bg-base: #000000;
+  --bg-surface: #0a0a0a;
+  --bg-elevated: #141414;
+  --bg-overlay: rgba(0, 0, 0, 0.98);
+
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: #e0e0e0;
+  --text-muted: #a0a0a0;
+  --text-inverse: #000000;
+
+  /* Borders */
+  --border-subtle: #333333;
+  --border-default: #555555;
+  --border-strong: #888888;
+
+  /* Accent (High visibility yellow) */
+  --accent: #ffcc00;
+  --accent-hover: #ffe066;
+  --accent-muted: rgba(255, 204, 0, 0.2);
+
+  /* Status colours */
+  --success: #00ff66;
+  --success-muted: rgba(0, 255, 102, 0.2);
+  --warning: #ffcc00;
+  --warning-muted: rgba(255, 204, 0, 0.2);
+  --danger: #ff3333;
+  --danger-muted: rgba(255, 51, 51, 0.2);
+  --info: #00ccff;
+  --info-muted: rgba(0, 204, 255, 0.2);
+
+  /* Focus ring */
+  --focus-ring: rgba(255, 204, 0, 0.6);
+
+  /* Sidebar */
+  --sidebar-bg: #000000;
+  --sidebar-border: #555555;
+  --sidebar-item-hover: rgba(255, 255, 255, 0.1);
+  --sidebar-item-active: rgba(255, 204, 0, 0.15);
+
+  /* Topbar */
+  --topbar-bg: #000000;
+  --topbar-border: #555555;
+
+  /* Cards */
+  --card-bg: #0a0a0a;
+  --card-border: #555555;
+  --card-hover: #141414;
+
+  /* Inputs */
+  --input-bg: #000000;
+  --input-border: #555555;
+  --input-focus-border: var(--accent);
+  --input-placeholder: #888888;
+
+  /* Skeleton loading */
+  --skeleton-base: #1a1a1a;
+  --skeleton-shine: #333333;
+
+  /* Border radius - Sharp for high contrast */
+  --border-radius-sm: 0px;
+  --border-radius: 0px;
+  --border-radius-lg: 0px;
+  --border-radius-full: 9999px;
+}
+
+/* =============================================================================
+   Base Portal Styles
+   ============================================================================= */
+
+.portal-root {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body, 'Inter', sans-serif);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 
+ * CURSOR FIX: Override brand.css cursor: none !important
+ * Using maximum specificity to ensure cursor is always visible
+ */
+html body .portal-root,
+html body .portal-root *,
+html body .portal-root *::before,
+html body .portal-root *::after {
+  cursor: auto !important;
+}
+
+html body .portal-root a,
+html body .portal-root button,
+html body .portal-root [role="button"],
+html body .portal-root label,
+html body .portal-root select,
+html body .portal-root [onclick],
+html body .portal-root input[type="submit"],
+html body .portal-root input[type="button"],
+html body .portal-root input[type="checkbox"],
+html body .portal-root input[type="radio"] {
+  cursor: pointer !important;
+}
+
+html body .portal-root input[type="text"],
+html body .portal-root input[type="email"],
+html body .portal-root input[type="password"],
+html body .portal-root input[type="search"],
+html body .portal-root input[type="tel"],
+html body .portal-root input[type="url"],
+html body .portal-root input[type="number"],
+html body .portal-root input:not([type]),
+html body .portal-root textarea {
+  cursor: text !important;
+}
+
+/* Typography — Theme-responsive */
+.portal-root h1,
+.portal-root h2,
+.portal-root h3,
+.portal-root h4,
+.portal-root h5,
+.portal-root h6 {
+  font-family: var(--font-head);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-bold, 700);
+  text-transform: var(--text-transform-heading, uppercase);
+  letter-spacing: var(--letter-spacing-tight, -0.02em);
+  line-height: 1.1;
+  margin: 0;
+}
+
+.portal-root h1 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.portal-root h2 {
+  font-size: 1.5rem;
+}
+
+.portal-root h3 {
+  font-size: 1.125rem;
+}
+
+.portal-root h4 {
+  font-size: 1rem;
+}
+
+/* Labels and small text */
+.portal-root .label,
+.portal-root label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-medium, 600);
+  letter-spacing: var(--letter-spacing-wide, 0.1em);
+  color: var(--text-muted);
+  text-transform: var(--text-transform-heading, uppercase);
+}
+
+/* Monospace text */
+.portal-root .mono,
+.portal-root code,
+.portal-root pre {
+  font-family: var(--font-mono);
+  letter-spacing: -0.05em;
+}
+
+/* Focus states */
+.portal-root *:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Scrollbar styling */
+.portal-root ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.portal-root ::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+
+.portal-root ::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 4px;
+}
+
+.portal-root ::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* Skeleton animation */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg,
+      var(--skeleton-base) 25%,
+      var(--skeleton-shine) 50%,
+      var(--skeleton-base) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+/* Transitions for theme changes */
+.portal-root,
+.portal-root * {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
