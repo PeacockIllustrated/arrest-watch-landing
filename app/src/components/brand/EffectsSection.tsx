@@ -9,13 +9,14 @@ const EffectsSection: React.FC = () => {
     useEffect(() => {
         const typeWriter = () => {
             if (typeTargetRef.current && typeIndexRef.current < typeText.length) {
-                typeTargetRef.current.innerHTML += typeText.charAt(typeIndexRef.current);
+                // Use textContent instead of innerHTML to prevent XSS
+                typeTargetRef.current.textContent = (typeTargetRef.current.textContent || '') + typeText.charAt(typeIndexRef.current);
                 typeIndexRef.current++;
                 setTimeout(typeWriter, 50 + Math.random() * 50);
             } else if (typeTargetRef.current) {
                 setTimeout(() => {
                     if (typeTargetRef.current) {
-                        typeTargetRef.current.innerHTML = "";
+                        typeTargetRef.current.textContent = '';
                         typeIndexRef.current = 0;
                         typeWriter();
                     }

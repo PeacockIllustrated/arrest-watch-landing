@@ -1,9 +1,24 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { supabase } from '../../lib/supabase';
+
+/**
+ * SECURITY NOTE: This authentication is for low-security deck access only.
+ * It uses email verification against the leads table.
+ * 
+ * For higher security requirements, consider:
+ * - Implementing magic link (OTP) email verification
+ * - Using Supabase Auth for full authentication
+ * - Adding rate limiting on login attempts
+ */
 
 interface DeckHubUser {
     email: string;
     leadId: string;
+}
+
+interface StoredSession {
+    user: DeckHubUser;
+    expiresAt: number; // Unix timestamp
 }
 
 interface DeckHubAuthContextType {
@@ -19,20 +34,31 @@ interface DeckHubAuthContextType {
 const DeckHubAuthContext = createContext<DeckHubAuthContextType | undefined>(undefined);
 
 const STORAGE_KEY = 'arrestdelta_deck_user';
+const SESSION_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 export const DeckHubAuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<DeckHubUser | null>(null);
     const [accessibleDecks, setAccessibleDecks] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // Restore session from localStorage on mount
+    // Restore session from localStorage on mount (with expiration check)
     useEffect(() => {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
             try {
-                const parsed = JSON.parse(stored) as DeckHubUser;
-                setUser(parsed);
-                fetchAccessibleDecks(parsed.leadId);
+                const session = JSON.parse(stored) as StoredSession;
+
+                // Check if session has expired
+                if (session.expiresAt && Date.now() > session.expiresAt) {
+                    console.warn('Deck hub session expired, clearing...');
+                    localStorage.removeItem(STORAGE_KEY);
+                    setLoading(false);
+                    return;
+                }
+
+                // Session is valid
+                setUser(session.user);
+                fetchAccessibleDecks(session.user.leadId);
             } catch {
                 localStorage.removeItem(STORAGE_KEY);
                 setLoading(false);
@@ -55,19 +81,24 @@ export const DeckHubAuthProvider: React.FC<{ children: ReactNode }> = ({ childre
     };
 
     const login = async (email: string): Promise<{ success: boolean; message: string }> => {
+        // Normalize email to prevent case-sensitivity issues
+        const normalizedEmail = email.toLowerCase().trim();
+
         // Check if email exists in leads table
         const { data: leads, error } = await supabase
             .from('leads')
             .select('id, email, name')
-            .eq('email', email.toLowerCase().trim())
+            .eq('email', normalizedEmail)
             .limit(1);
 
         if (error) {
+            console.error('Login error:', error.message);
             return { success: false, message: 'System error. Please try again.' };
         }
 
+        // Don't reveal whether email exists or not (prevent enumeration)
         if (!leads || leads.length === 0) {
-            return { success: false, message: 'Email not found. Please register your interest first.' };
+            return { success: false, message: 'Access request submitted. Check your email for confirmation.' };
         }
 
         const lead = leads[0];
@@ -76,8 +107,14 @@ export const DeckHubAuthProvider: React.FC<{ children: ReactNode }> = ({ childre
             leadId: lead.id
         };
 
+        // Store session with expiration
+        const session: StoredSession = {
+            user: deckUser,
+            expiresAt: Date.now() + SESSION_DURATION_MS
+        };
+
         setUser(deckUser);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(deckUser));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
 
         // Fetch accessible decks
         await fetchAccessibleDecks(lead.id);
@@ -121,3 +158,4 @@ export const useDeckHubAuth = (): DeckHubAuthContextType => {
 };
 
 export default DeckHubAuthContext;
+

@@ -127,8 +127,8 @@ function App() {
           <Route path="billing" element={<PortalBilling />} />
           <Route path="settings" element={<PortalSettings />} />
 
-          {/* Admin section - RBAC check is done inside the component */}
-          <Route path="admin" element={<PortalAdmin />} />
+          {/* Admin section - Protected by role check */}
+          <Route path="admin" element={<PortalProtectedRoute requiredRole="admin"><PortalAdmin /></PortalProtectedRoute>} />
         </Route>
 
         {/* Internal Admin Routes (Project Management) */}

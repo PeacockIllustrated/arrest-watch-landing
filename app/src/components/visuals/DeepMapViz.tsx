@@ -440,7 +440,10 @@ const DeepMapViz: React.FC<DeepMapVizProps> = ({
                     const svgElement = doc.querySelector('svg');
 
                     if (svgElement) {
-                        svgContainerRef.current.innerHTML = '';
+                        // Clear container safely without innerHTML
+                        while (svgContainerRef.current.firstChild) {
+                            svgContainerRef.current.removeChild(svgContainerRef.current.firstChild);
+                        }
 
                         // Clean
                         svgElement.querySelectorAll('style').forEach(s => s.remove());
@@ -460,16 +463,42 @@ const DeepMapViz: React.FC<DeepMapVizProps> = ({
                         filter.setAttribute('y', '-10%');
                         filter.setAttribute('width', '120%');
                         filter.setAttribute('height', '120%');
-                        filter.innerHTML = `
-                            <feMorphology in="SourceAlpha" operator="dilate" radius="1.2" result="dilated"/>
-                            <feComposite in="dilated" in2="SourceAlpha" operator="out" result="outline"/>
-                            <feFlood flood-color="#E40028" flood-opacity="0.8" result="color"/>
-                            <feComposite in="color" in2="outline" operator="in" result="coloredOutline"/>
-                            <feMerge>
-                                <feMergeNode in="coloredOutline"/>
-                                <feMergeNode in="SourceGraphic"/>
-                            </feMerge>
-                        `;
+                        // Build filter elements programmatically (safer than innerHTML)
+                        const feMorphology = document.createElementNS('http://www.w3.org/2000/svg', 'feMorphology');
+                        feMorphology.setAttribute('in', 'SourceAlpha');
+                        feMorphology.setAttribute('operator', 'dilate');
+                        feMorphology.setAttribute('radius', '1.2');
+                        feMorphology.setAttribute('result', 'dilated');
+                        filter.appendChild(feMorphology);
+
+                        const feComposite1 = document.createElementNS('http://www.w3.org/2000/svg', 'feComposite');
+                        feComposite1.setAttribute('in', 'dilated');
+                        feComposite1.setAttribute('in2', 'SourceAlpha');
+                        feComposite1.setAttribute('operator', 'out');
+                        feComposite1.setAttribute('result', 'outline');
+                        filter.appendChild(feComposite1);
+
+                        const feFlood = document.createElementNS('http://www.w3.org/2000/svg', 'feFlood');
+                        feFlood.setAttribute('flood-color', '#E40028');
+                        feFlood.setAttribute('flood-opacity', '0.8');
+                        feFlood.setAttribute('result', 'color');
+                        filter.appendChild(feFlood);
+
+                        const feComposite2 = document.createElementNS('http://www.w3.org/2000/svg', 'feComposite');
+                        feComposite2.setAttribute('in', 'color');
+                        feComposite2.setAttribute('in2', 'outline');
+                        feComposite2.setAttribute('operator', 'in');
+                        feComposite2.setAttribute('result', 'coloredOutline');
+                        filter.appendChild(feComposite2);
+
+                        const feMerge = document.createElementNS('http://www.w3.org/2000/svg', 'feMerge');
+                        const feMergeNode1 = document.createElementNS('http://www.w3.org/2000/svg', 'feMergeNode');
+                        feMergeNode1.setAttribute('in', 'coloredOutline');
+                        feMerge.appendChild(feMergeNode1);
+                        const feMergeNode2 = document.createElementNS('http://www.w3.org/2000/svg', 'feMergeNode');
+                        feMergeNode2.setAttribute('in', 'SourceGraphic');
+                        feMerge.appendChild(feMergeNode2);
+                        filter.appendChild(feMerge);
                         defs.appendChild(filter);
 
                         // Styles

@@ -23,11 +23,15 @@ const LeadTable: React.FC = () => {
 
     const fetchLeads = async () => {
         setLoading(true);
-        const { data } = await supabase
+        const { data, error } = await supabase
             .from('leads')
             .select('*')
             .order('created_at', { ascending: false });
 
+        if (error) {
+            console.error('Error fetching leads:', error);
+        }
+        console.log('Fetched leads:', data);
         if (data) setLeads(data);
         setLoading(false);
     };
