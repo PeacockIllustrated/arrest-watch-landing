@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { Button, Input, Card, CardBody } from '../../components/ui';
-import logoMain from '../../assets/logo_main.png';
 import '../../styles/portal.css';
 
 const Login: React.FC = () => {
@@ -27,179 +25,141 @@ const Login: React.FC = () => {
             });
 
             if (error) {
-                setError(error.message);
+                setError(error.message.toUpperCase());
             } else {
                 navigate(from, { replace: true });
             }
         } catch (err) {
-            setError('An unexpected error occurred');
+            setError('AN UNEXPECTED ERROR OCCURRED');
         } finally {
             setLoading(false);
         }
     };
 
-    const handleMagicLink = async () => {
-        if (!email) {
-            setError('Please enter your email address');
-            return;
-        }
-
-        setLoading(true);
-        setError(null);
-
-        try {
-            const { error } = await supabase.auth.signInWithOtp({
-                email,
-                options: {
-                    emailRedirectTo: `${window.location.origin}/auth/callback`,
-                },
-            });
-
-            if (error) {
-                setError(error.message);
-            } else {
-                setError(null);
-                alert('Check your email for the login link!');
-            }
-        } catch (err) {
-            setError('Failed to send magic link');
-        } finally {
-            setLoading(false);
-        }
-    };
+    // Custom Red Arrow Cursor SVG
+    const cursorUrl = `url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3L10.5 20.5L13.5 13.5L20.5 10.5L3 3Z" fill="%23E40028" stroke="white" stroke-width="1.5" stroke-linejoin="round"/></svg>') 2 2, auto`;
 
     return (
         <div
-            className="portal-root"
-            data-theme="intel-dark"
+            className="portal-login-root"
             style={{
-                minHeight: '100vh',
+                height: '100vh',
+                width: '100vw',
+                background: '#0a0a0a',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                padding: '24px',
-                background: 'var(--bg-base)',
+                fontFamily: "'Space Mono', monospace",
+                color: '#e40028',
+                cursor: cursorUrl
             }}
         >
-            <div style={{ width: '100%', maxWidth: '400px' }}>
-                {/* Logo */}
-                <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-                    <img
-                        src={logoMain}
-                        alt="ArrestDelta"
+            <style>{`
+                /* Override global cursor: none !important from brand.css */
+                .portal-login-root, .portal-login-root * {
+                    cursor: ${cursorUrl} !important;
+                }
+                /* Ensure interactive elements keep the cursor */
+                .portal-login-root button, 
+                .portal-login-root input {
+                    cursor: ${cursorUrl} !important;
+                }
+            `}</style>
+            <div style={{
+                width: '100%',
+                maxWidth: '400px',
+                padding: '2rem',
+                border: '1px solid #333',
+                position: 'relative'
+            }}>
+                {/* Decorative Corner Markers */}
+                <div style={{ position: 'absolute', top: '-1px', left: '-1px', width: '10px', height: '10px', borderTop: '2px solid #e40028', borderLeft: '2px solid #e40028' }} />
+                <div style={{ position: 'absolute', top: '-1px', right: '-1px', width: '10px', height: '10px', borderTop: '2px solid #e40028', borderRight: '2px solid #e40028' }} />
+                <div style={{ position: 'absolute', bottom: '-1px', left: '-1px', width: '10px', height: '10px', borderBottom: '2px solid #e40028', borderLeft: '2px solid #e40028' }} />
+                <div style={{ position: 'absolute', bottom: '-1px', right: '-1px', width: '10px', height: '10px', borderBottom: '2px solid #e40028', borderRight: '2px solid #e40028' }} />
+
+                <h2 style={{
+                    fontSize: '1.2rem',
+                    marginBottom: '2rem',
+                    textAlign: 'center',
+                    letterSpacing: '2px',
+                    borderBottom: '1px solid #333',
+                    paddingBottom: '1rem'
+                }}>
+                    PORTAL ACCESS // SECURE
+                </h2>
+
+                <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    <div>
+                        <label style={{ display: 'block', fontSize: '0.7rem', marginBottom: '0.5rem', opacity: 0.7 }}>OPERATOR ID</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            style={{
+                                width: '100%',
+                                background: 'rgba(255,255,255,0.05)',
+                                border: '1px solid #333',
+                                padding: '0.8rem',
+                                color: 'white',
+                                fontFamily: 'inherit',
+                                outline: 'none'
+                            }}
+                        />
+                    </div>
+
+                    <div>
+                        <label style={{ display: 'block', fontSize: '0.7rem', marginBottom: '0.5rem', opacity: 0.7 }}>ACCESS KEY</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            style={{
+                                width: '100%',
+                                background: 'rgba(255,255,255,0.05)',
+                                border: '1px solid #333',
+                                padding: '0.8rem',
+                                color: 'white',
+                                fontFamily: 'inherit',
+                                outline: 'none'
+                            }}
+                        />
+                    </div>
+
+                    {error && (
+                        <div style={{
+                            color: '#e40028',
+                            fontSize: '0.8rem',
+                            textAlign: 'center',
+                            border: '1px solid #e40028',
+                            padding: '0.5rem',
+                            background: 'rgba(228, 0, 40, 0.1)'
+                        }}>
+                            ERROR: {error}
+                        </div>
+                    )}
+
+                    <button
+                        type="submit"
+                        disabled={loading}
                         style={{
-                            height: '48px',
-                            width: 'auto',
-                            margin: '0 auto 16px',
-                            display: 'block',
+                            background: '#e40028',
+                            color: 'white',
+                            border: 'none',
+                            padding: '1rem',
+                            fontFamily: 'inherit',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            marginTop: '1rem',
+                            opacity: loading ? 0.7 : 1,
+                            transition: 'all 0.2s'
                         }}
-                    />
-                    <h1 style={{ margin: '0 0 8px', fontSize: '1.5rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                        ArrestDelta Portal
-                    </h1>
-                    <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-                        Sign in to access the intelligence portal
-                    </p>
-                </div>
-
-                <Card>
-                    <CardBody>
-                        <form onSubmit={handleLogin}>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                                <Input
-                                    label="Email"
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="you@example.com"
-                                    required
-                                    fullWidth
-                                />
-                                <Input
-                                    label="Password"
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="••••••••"
-                                    fullWidth
-                                />
-
-                                {error && (
-                                    <div
-                                        style={{
-                                            padding: '12px',
-                                            background: 'var(--danger-muted)',
-                                            border: '1px solid var(--danger)',
-                                            borderRadius: '6px',
-                                            color: 'var(--danger)',
-                                            fontSize: '0.875rem',
-                                        }}
-                                    >
-                                        {error}
-                                    </div>
-                                )}
-
-                                <Button variant="primary" fullWidth loading={loading} type="submit">
-                                    Sign In
-                                </Button>
-
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '12px',
-                                        color: 'var(--text-muted)',
-                                        fontSize: '0.8rem',
-                                    }}
-                                >
-                                    <div style={{ flex: 1, height: '1px', background: 'var(--border-default)' }} />
-                                    or
-                                    <div style={{ flex: 1, height: '1px', background: 'var(--border-default)' }} />
-                                </div>
-
-                                <Button
-                                    variant="secondary"
-                                    fullWidth
-                                    type="button"
-                                    onClick={handleMagicLink}
-                                    disabled={loading}
-                                >
-                                    Send Magic Link
-                                </Button>
-                            </div>
-                        </form>
-                    </CardBody>
-                </Card>
-
-                <p
-                    style={{
-                        marginTop: '24px',
-                        textAlign: 'center',
-                        color: 'var(--text-muted)',
-                        fontSize: '0.8rem',
-                    }}
-                >
-                    Need access?{' '}
-                    <a href="mailto:contact@arrestdelta.com" style={{ color: 'var(--accent)', textDecoration: 'none' }}>
-                        Contact your administrator
-                    </a>
-                </p>
-
-                <div
-                    style={{
-                        marginTop: '48px',
-                        textAlign: 'center',
-                        fontSize: '0.7rem',
-                        color: 'var(--text-muted)',
-                    }}
-                >
-                    <a href="/privacy" style={{ color: 'var(--text-muted)', textDecoration: 'none', marginRight: '16px' }}>
-                        Privacy Policy
-                    </a>
-                    <a href="/terms" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>
-                        Terms of Service
-                    </a>
-                </div>
+                    >
+                        {loading ? 'AUTHENTICATING...' : 'INITIATE SESSION'}
+                    </button>
+                </form>
             </div>
         </div>
     );
