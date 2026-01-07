@@ -7,12 +7,12 @@ const Slide06_BusinessModel: React.FC = () => {
             <section className="brand-section" id="slide-06">
                 <div className="grid-bg-overlay" />
                 <div style={{ maxWidth: '1600px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '4rem' }}>
+                    <div className="mobile-stack" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '4rem' }}>
 
                         {/* LEFT: Heading */}
                         <div className="animate-fade-in-up" style={{ animationDelay: '0.1s', maxWidth: '600px' }}>
                             <span className="label text-mono text-muted" style={{ display: 'block', marginBottom: '1rem' }}>06. BUSINESS MODEL</span>
-                            <h2 className="text-huge" style={{ fontSize: '3.5rem', lineHeight: 1 }}>
+                            <h2 className="text-huge" style={{ fontSize: 'clamp(2rem, 8vw, 3.5rem)', lineHeight: 1 }}>
                                 FOUNDATION FOR SCALE.
                             </h2>
                             <p className="text-muted" style={{ marginTop: '2rem', fontSize: '1.2rem', lineHeight: 1.6 }}>
@@ -21,7 +21,7 @@ const Slide06_BusinessModel: React.FC = () => {
                         </div>
 
                         {/* RIGHT: Model Boxes */}
-                        <div className="animate-fade-in-up" style={{ animationDelay: '0.3s', display: 'flex', gap: '2rem' }}>
+                        <div className="animate-fade-in-up mobile-stack" style={{ animationDelay: '0.3s', display: 'flex', gap: '2rem' }}>
 
                             {/* Box 1 */}
                             <div className="glass-panel" style={{ padding: '2rem', width: '300px', border: '1px solid var(--border-color)' }}>

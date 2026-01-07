@@ -297,7 +297,7 @@ const ValuationRationale: React.FC = () => {
                             </div>
 
                             {/* Input Row */}
-                            <div className="mobile-stack" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
+                            <div className="mobile-stack" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', marginBottom: '2.5rem', flexWrap: 'wrap', textAlign: 'center', width: '100%' }}>
                                 <div style={{ textAlign: 'center', padding: '1.5rem 2rem', background: 'rgba(0,0,0,0.5)', border: '1px solid var(--color-grid)' }}>
                                     <div className="text-mono text-muted" style={{ fontSize: '0.65rem', marginBottom: '0.5rem', letterSpacing: '0.1em' }}>PLATFORMS</div>
                                     <div className="text-mono text-white" style={{ fontSize: '2rem', fontWeight: 700 }}>1</div>
@@ -597,24 +597,17 @@ const ValuationRationale: React.FC = () => {
 
                         {/* CTAs */}
                         <div className="animate-fade-in-up" style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', justifyContent: 'center', animationDelay: '0.35s' }}>
-                            <button
-                                className="btn btn-cta pulse-active"
-                                style={{
-                                    fontSize: '1.1rem',
-                                    padding: '1rem 2.5rem',
-                                    boxShadow: '0 0 30px rgba(228, 0, 40, 0.3)',
-                                    cursor: 'pointer',
-                                    border: 'none'
-                                }}
-                                onClick={() => setIsModalOpen(true)}
-                            >
-                                REQUEST ACCESS
-                            </button>
-                            <Link to="/investor-delta" className="btn btn-secondary" style={{
+                            <Link to="/decks" className="btn btn-secondary" style={{
                                 fontSize: '0.95rem',
                                 padding: '1rem 2rem'
                             }}>
-                                ← Back to Investor Pack
+                                ← Back to Decks
+                            </Link>
+                            <Link to="/" className="btn btn-secondary" style={{
+                                fontSize: '0.95rem',
+                                padding: '1rem 2rem'
+                            }}>
+                                Visit Website
                             </Link>
                         </div>
 

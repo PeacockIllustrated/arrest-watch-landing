@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
 import RadarNode from '../../components/investor/ui/RadarNode';
-import OnboardingModal from '../../components/investor/_legacy/OnboardingModal';
 import '../../styles/brand.css';
 
 const SLIDE_TITLES = [
@@ -15,7 +14,6 @@ const InvestorQuestions: React.FC = () => {
     const [showNext, setShowNext] = useState(true);
     const [activeIndex, setActiveIndex] = useState(0);
     const [progress, setProgress] = useState(0);
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleScroll = () => {
         if (scrollContainerRef.current) {
@@ -433,27 +431,12 @@ const InvestorQuestions: React.FC = () => {
                                 <span className="text-red text-glow">WE MONITOR THE PRESENT.</span>
                             </h2>
 
-                            <button
-                                className="btn btn-cta pulse-active"
-                                style={{
-                                    fontSize: '1.2rem',
-                                    padding: '1rem 3rem',
-                                    boxShadow: '0 0 30px rgba(228, 0, 40, 0.3)',
-                                    cursor: 'pointer',
-                                    border: 'none',
-                                    marginBottom: '2rem'
-                                }}
-                                onClick={() => setIsModalOpen(true)}
-                            >
-                                REQUEST ACCESS
-                            </button>
-
                             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                                <Link to="/investor-delta" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
-                                    ← Back to Investor Pack
+                                <Link to="/decks" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
+                                    ← Back to Decks
                                 </Link>
-                                <Link to="/investor-delta/appendix/valuation" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
-                                    Valuation Rationale →
+                                <Link to="/" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
+                                    Visit Website
                                 </Link>
                             </div>
                         </div>
@@ -504,8 +487,6 @@ const InvestorQuestions: React.FC = () => {
                 showPrev={showPrev}
                 showNext={showNext}
             />
-
-            <OnboardingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </>
     );
 };

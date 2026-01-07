@@ -97,8 +97,8 @@ const UberEconomics: React.FC = () => {
                             <p className="text-mono text-muted" style={{ fontSize: '1.5rem', marginBottom: '4rem' }}>
                                 Why ArrestDelta Pays for Itself Immediately
                             </p>
-                            <Link to="/uber" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
-                                ← Back to Uber Pack
+                            <Link to="/decks" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
+                                ← Back to Decks
                             </Link>
                         </div>
                     </div>
@@ -271,18 +271,18 @@ const UberEconomics: React.FC = () => {
                             <h2 className="text-large" style={{ fontSize: '2.5rem' }}>WHY THIS IS A <span className="text-red">ROUNDING ERROR</span></h2>
                         </div>
 
-                        <div className="mobile-stack" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4rem' }}>
-                            <div style={{ textAlign: 'center' }}>
+                        <div className="mobile-stack" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4rem', textAlign: 'center', width: '100%' }}>
+                            <div style={{ textAlign: 'center', width: '100%' }}>
                                 <div className="text-mono text-green" style={{ fontSize: '3rem', fontWeight: 700 }}>$17.4M</div>
                                 <div className="text-mono text-muted">PILOT COST</div>
                             </div>
 
-                            <div style={{ fontSize: '2rem', color: '#666' }}>vs</div>
+                            <div style={{ fontSize: '2rem', color: '#666', textAlign: 'center', width: '100%' }}>vs</div>
 
-                            <div style={{ textAlign: 'center', position: 'relative' }}>
+                            <div style={{ textAlign: 'center', position: 'relative', width: '100%' }}>
                                 <div className="text-mono text-red text-glow" style={{ fontSize: '4rem', fontWeight: 700 }}>$100M+</div>
                                 <div className="text-mono text-muted">SINGLE TRUST INCIDENT</div>
-                                <div style={{ position: 'absolute', top: '-10%', right: '-10%', fontSize: '3rem', opacity: 0.2 }}>⚠</div>
+                                <div style={{ position: 'absolute', top: '-10%', right: '20%', fontSize: '3rem', opacity: 0.2 }}>⚠</div>
                             </div>
                         </div>
 
@@ -391,8 +391,8 @@ const UberEconomics: React.FC = () => {
                                 And blind spots are where Uber’s real risk lives.
                             </p>
 
-                            <Link to="/uber" className="btn btn-secondary" style={{ fontSize: '1.1rem', padding: '1rem 3rem' }}>
-                                ← Back to Uber Pack
+                            <Link to="/decks" className="btn btn-secondary" style={{ fontSize: '1.1rem', padding: '1rem 3rem' }}>
+                                ← Back to Decks
                             </Link>
                         </div>
                     </div>

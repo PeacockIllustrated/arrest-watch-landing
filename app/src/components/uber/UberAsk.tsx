@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import OnboardingModal from "../investor/_legacy/OnboardingModal";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const UberAsk: React.FC = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
     return (
         <section className="brand-section" id="ask">
             <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%', textAlign: 'center' }}>
@@ -27,19 +25,27 @@ const UberAsk: React.FC = () => {
                 </div>
 
                 <div style={{ marginTop: '3rem' }}>
-                    <button
-                        onClick={() => setIsModalOpen(true)}
-                        className="btn pulse-active"
-                        style={{ fontSize: 'clamp(0.8rem, 4vw, 1.2rem)', padding: '1rem 2rem', textDecoration: 'none', cursor: 'pointer', maxWidth: '100%', width: '100%' }}
-                    >
-                        SCHEDULE BRIEFING
-                    </button>
-                    <p className="text-muted text-mono" style={{ marginTop: '1.5rem', fontSize: '0.7rem' }}>
+                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
+                        <Link
+                            to="/decks"
+                            className="btn btn-secondary"
+                            style={{ fontSize: 'clamp(0.8rem, 4vw, 1rem)', padding: '1rem 2rem' }}
+                        >
+                            ← Back to Decks
+                        </Link>
+                        <Link
+                            to="/"
+                            className="btn btn-secondary"
+                            style={{ fontSize: 'clamp(0.8rem, 4vw, 1rem)', padding: '1rem 2rem' }}
+                        >
+                            Visit Website
+                        </Link>
+                    </div>
+                    <p className="text-muted text-mono" style={{ fontSize: '0.7rem' }}>
                         EXCLUSIVE PARTNERSHIP OPPORTUNITY
                     </p>
                 </div>
             </div>
-            <OnboardingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </section>
     );
 };

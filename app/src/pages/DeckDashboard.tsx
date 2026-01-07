@@ -387,31 +387,33 @@ const DeckHubContent: React.FC = () => {
             {/* Content */}
             <div style={{ position: 'relative', zIndex: 2, padding: '4rem 2rem' }}>
                 {/* Auth Status Bar */}
-                <div style={{
+                <div className="deck-hub-navbar" style={{
                     position: 'fixed',
                     top: 0,
                     left: 0,
                     right: 0,
-                    padding: '1rem 2rem',
-                    background: 'rgba(0,0,0,0.8)',
+                    padding: '0.75rem 1rem',
+                    background: 'rgba(0,0,0,0.9)',
                     backdropFilter: 'blur(10px)',
                     borderBottom: '1px solid var(--color-grid)',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    zIndex: 100
+                    gap: '0.5rem',
+                    zIndex: 100,
+                    flexWrap: 'wrap'
                 }}>
-                    <Link to="/" className="text-mono" style={{ color: '#888', textDecoration: 'none', fontSize: '0.8rem' }}>
+                    <Link to="/" className="text-mono" style={{ color: '#888', textDecoration: 'none', fontSize: '0.75rem', whiteSpace: 'nowrap' }}>
                         ← ARRESTDELTA
                     </Link>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
                         {isAuthenticated ? (
                             <>
-                                <span className="text-mono" style={{ fontSize: '0.75rem', color: '#4CAF50' }}>
+                                <span className="deck-hub-email text-mono" style={{ fontSize: '0.65rem', color: '#4CAF50', maxWidth: '120px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                     ● {user?.email}
                                 </span>
-                                <span className="text-mono text-muted" style={{ fontSize: '0.75rem' }}>
-                                    {unlockedCount}/{DECKS.length} UNLOCKED
+                                <span className="text-mono text-muted" style={{ fontSize: '0.65rem', whiteSpace: 'nowrap' }}>
+                                    {unlockedCount}/{DECKS.length}
                                 </span>
                                 <button
                                     onClick={logout}
@@ -419,10 +421,11 @@ const DeckHubContent: React.FC = () => {
                                         background: 'transparent',
                                         border: '1px solid #333',
                                         color: '#666',
-                                        padding: '0.5rem 1rem',
+                                        padding: '0.4rem 0.75rem',
                                         fontFamily: 'var(--font-mono)',
-                                        fontSize: '0.7rem',
-                                        cursor: 'pointer'
+                                        fontSize: '0.6rem',
+                                        cursor: 'pointer',
+                                        whiteSpace: 'nowrap'
                                     }}
                                 >
                                     LOGOUT
@@ -432,17 +435,19 @@ const DeckHubContent: React.FC = () => {
                             <>
                                 <button
                                     onClick={() => setShowOnboardingModal(true)}
+                                    className="deck-hub-register-btn"
                                     style={{
                                         background: 'transparent',
                                         border: '1px solid #333',
                                         color: '#888',
-                                        padding: '0.5rem 1rem',
+                                        padding: '0.4rem 0.75rem',
                                         fontFamily: 'var(--font-mono)',
-                                        fontSize: '0.7rem',
-                                        cursor: 'pointer'
+                                        fontSize: '0.6rem',
+                                        cursor: 'pointer',
+                                        whiteSpace: 'nowrap'
                                     }}
                                 >
-                                    REGISTER INTEREST
+                                    REGISTER
                                 </button>
                                 <button
                                     onClick={() => setShowLoginModal(true)}
@@ -450,13 +455,14 @@ const DeckHubContent: React.FC = () => {
                                         background: '#e40028',
                                         border: 'none',
                                         color: 'white',
-                                        padding: '0.5rem 1rem',
+                                        padding: '0.4rem 0.75rem',
                                         fontFamily: 'var(--font-mono)',
-                                        fontSize: '0.7rem',
-                                        cursor: 'pointer'
+                                        fontSize: '0.6rem',
+                                        cursor: 'pointer',
+                                        whiteSpace: 'nowrap'
                                     }}
                                 >
-                                    ACCESS DECKS
+                                    ACCESS
                                 </button>
                             </>
                         )}

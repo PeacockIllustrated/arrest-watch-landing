@@ -97,8 +97,8 @@ const UberClosePlan: React.FC = () => {
                                 <span className="badge outline">Account: Uber</span>
                                 <span className="badge outline">Product: ArrestDelta</span>
                             </div>
-                            <Link to="/uber" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
-                                ← Back to Uber Pack
+                            <Link to="/decks" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
+                                ← Back to Decks
                             </Link>
                         </div>
                     </div>
@@ -471,8 +471,8 @@ const UberClosePlan: React.FC = () => {
                         </div>
 
                         <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-                            <Link to="/uber" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
-                                ← Back to Uber Pack
+                            <Link to="/decks" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
+                                ← Back to Decks
                             </Link>
                         </div>
                     </div>

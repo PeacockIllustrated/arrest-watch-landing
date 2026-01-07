@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Slide07_Pricing: React.FC = () => {
     return (
@@ -34,11 +35,16 @@ const Slide07_Pricing: React.FC = () => {
 
                 </div>
 
-                {/* Footer / CTA */}
+                {/* Footer / Navigation */}
                 <div style={{ width: '100%', maxWidth: '1000px', borderTop: '1px solid var(--border-color)', paddingTop: '2rem', textAlign: 'center' }}>
-                    <button className="btn-primary" style={{ background: '#fff', color: '#000', padding: '1rem 3rem', fontSize: '1.2rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', marginBottom: '1rem' }}>
-                        REQUEST ACCESS
-                    </button>
+                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '1rem' }}>
+                        <Link to="/decks" className="btn btn-secondary" style={{ fontSize: '0.9rem', padding: '0.75rem 1.5rem' }}>
+                            ← Back to Decks
+                        </Link>
+                        <Link to="/" className="btn btn-secondary" style={{ fontSize: '0.9rem', padding: '0.75rem 1.5rem' }}>
+                            Visit Website
+                        </Link>
+                    </div>
                     <div className="text-mono text-muted" style={{ fontSize: '0.8rem' }}>SECURE YOUR PLATFORM TODAY</div>
                 </div>
 

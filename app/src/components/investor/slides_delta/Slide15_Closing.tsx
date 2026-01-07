@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import RadarNode from '../ui/RadarNode';
 import ScanLine from '../ui/ScanLine';
-import OnboardingModal from '../_legacy/OnboardingModal';
 
 const Slide15_Closing: React.FC = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
     return (
         <section className="brand-section" id="slide-15">
-            <OnboardingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
             <div className="grid-bg-overlay" />
             <div style={{ maxWidth: '1600px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
@@ -36,43 +32,27 @@ const Slide15_Closing: React.FC = () => {
                             </div>
                         </div>
 
-                        <button
-                            className="btn pulse-active"
-                            style={{
-                                fontSize: '1.5rem',
-                                padding: '1.5rem 4rem',
-                                background: 'var(--color-alert-red)',
-                                border: 'none',
-                                color: 'white',
-                                cursor: 'pointer',
-                                letterSpacing: '0.1em'
-                            }}
-                            onClick={() => setIsModalOpen(true)}
-                        >
-                            REQUEST ACCESS
-                        </button>
-
-                        {/* Appendix Links */}
-                        <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                        {/* Navigation Buttons */}
+                        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
                             <Link
-                                to="/investor-delta/why"
+                                to="/decks"
                                 className="btn btn-secondary"
                                 style={{
                                     fontSize: '0.9rem',
                                     padding: '0.75rem 1.5rem'
                                 }}
                             >
-                                Why ArrestDelta?
+                                ← Back to Decks
                             </Link>
                             <Link
-                                to="/investor-delta/appendix/valuation"
+                                to="/"
                                 className="btn btn-secondary"
                                 style={{
                                     fontSize: '0.9rem',
                                     padding: '0.75rem 1.5rem'
                                 }}
                             >
-                                Valuation Rationale
+                                Visit Website
                             </Link>
                         </div>
                     </div>
