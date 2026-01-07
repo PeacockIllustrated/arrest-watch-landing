@@ -1,6 +1,4 @@
 import React from 'react';
-import SecureBadgeRow from '../ui/SecureBadgeRow';
-import RadarNode from '../ui/RadarNode';
 
 const Slide04_Customers: React.FC = () => {
     return (

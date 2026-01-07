@@ -1,5 +1,4 @@
 import React from 'react';
-import MetricTicker from '../ui/MetricTicker';
 
 const Slide07_Pricing: React.FC = () => {
     return (

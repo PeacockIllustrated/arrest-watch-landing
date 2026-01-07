@@ -1,5 +1,4 @@
 import React from 'react';
-import ScanLine from '../ui/ScanLine';
 
 const Slide02_Solution: React.FC = () => {
     return (

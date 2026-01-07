@@ -1,5 +1,4 @@
 import React from 'react';
-import LiveTerminal from '../ui/LiveTerminal';
 
 const Slide01_Problem: React.FC = () => {
     return (

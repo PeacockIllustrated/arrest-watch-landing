@@ -1,6 +1,4 @@
 import React from 'react';
-import RadarNode from '../ui/RadarNode';
-import MetricTicker from '../ui/MetricTicker';
 
 const Slide05_MarketSize: React.FC = () => {
     return (

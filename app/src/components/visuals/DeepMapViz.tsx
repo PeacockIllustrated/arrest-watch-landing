@@ -59,8 +59,8 @@ const DeepMapViz: React.FC<DeepMapVizProps> = ({
     height = '31rem',
     onStateSelect,
     onCountySelect,
-    stateData,
-    countyData,
+    stateData: _stateData,
+    countyData: _countyData,
 }) => {
     // Core state
     const [currentLevel, setCurrentLevel] = useState<ZoomLevel>('country');
