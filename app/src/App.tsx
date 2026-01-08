@@ -55,13 +55,21 @@ import AuthCallback from './pages/auth/Callback';
 // Public
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import EmailSignature from './pages/EmailSignature';
+
+// Site Gate (Auth wrapper for marketing pages)
+import SiteGatePage from './pages/SiteGatePage';
+import SiteProtectedRoute from './components/SiteProtectedRoute';
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Public Marketing Routes */}
-        <Route element={<Layout />}>
+        {/* Site Gate Route (must be OUTSIDE SiteProtectedRoute) */}
+        <Route path="/gate" element={<SiteGatePage />} />
+
+        {/* Protected Marketing Routes */}
+        <Route element={<SiteProtectedRoute><Layout /></SiteProtectedRoute>}>
           <Route path="/" element={<Landing />} />
           <Route path="/one-pager" element={<OnePager />} />
           <Route path="/brand" element={<BrandPack />} />
@@ -81,6 +89,7 @@ function App() {
         {/* Public Pages (no Layout wrapper) */}
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
+        <Route path="/signature" element={<EmailSignature />} />
 
         {/* Auth Routes */}
         <Route path="/auth/login" element={<AuthLogin />} />

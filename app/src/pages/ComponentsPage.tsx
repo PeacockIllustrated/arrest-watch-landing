@@ -732,7 +732,7 @@ const ComponentsPage: React.FC = () => {
                             <div>
                                 <div className="text-mono" style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>ARRESTDELTA_</div>
                                 <div className="text-muted" style={{ fontSize: '0.8rem' }}>
-                                    © 2025 ANTI-GRAVITY S.A.S<br />
+                                    © 2026 ANTI-GRAVITY S.A.S<br />
                                     ALL RIGHTS RESERVED.<br />
                                     FCRA COMPLIANT DATA.
                                 </div>

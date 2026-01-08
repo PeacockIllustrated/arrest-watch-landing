@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import logoMain from '../assets/logo_main.png';
 import mugshot from '../assets/mugshot.jpg';
 import founder from '../assets/founder.png';
+import cofounder from '../assets/co-founder.png';
 import OnboardingModal from '../components/investor/_legacy/OnboardingModal';
 import DashboardMockup from '../components/visuals/DashboardMockup';
+import { supabase } from '../lib/supabase';
 import '../styles/landing.css';
 
 const Landing: React.FC = () => {
@@ -74,7 +76,7 @@ const Landing: React.FC = () => {
                     <span className="text-label reveal-text" style={{ transitionDelay: '0.1s' }}>ArrestDelta Intelligence Layer</span>
                     <h1 className="text-huge reveal-text" style={{ transitionDelay: '0.2s' }}>From arrest<br />to alert...<br /><span className="text-red">Instantly.</span></h1>
                     <p className="reveal-text" style={{ maxWidth: '600px', margin: '2rem auto 0', fontSize: '1.2rem', color: 'var(--color-text-muted)', transitionDelay: '0.3s' }}>
-                        ArrestDelta is a continuous arrest intelligence layer. It operates before and after access is granted, preventing risk in real-time.
+                        ArrestDelta provides verified, identity-certain change intelligence for enterprises making high-stakes trust decisions.
                     </p>
                 </div>
                 <style>{`
@@ -215,23 +217,29 @@ const Landing: React.FC = () => {
                 </div>
             </section >
 
-            {/* REAL INFO / COVERAGE (REPLACES POLICIES) */}
+            {/* SCALE INTENT */}
             <section className="section">
                 <div className="container">
-                    <span className="text-label">Operational Reality</span>
-                    <h2 className="text-large" style={{ marginBottom: '3rem' }}>Coverage Magnitude.</h2>
+                    <span className="text-label">Scale Intent</span>
+                    <h2 className="text-large" style={{ marginBottom: '0.75rem' }}>Built for national magnitude</h2>
+                    <p className="text-muted" style={{ marginBottom: '3rem', maxWidth: '700px' }}>
+                        Our architecture is designed to expand coverage while keeping verification ahead of alerts.
+                    </p>
                     <div className="grid-3">
-                        <div className="panel" style={{ textAlign: 'center', padding: '3rem 2rem' }}>
-                            <div className="text-huge text-red" style={{ marginBottom: '0.5rem', fontSize: '3.5rem' }}>3,124</div>
-                            <div className="text-mono text-muted" style={{ letterSpacing: '2px' }}>JURISDICTIONS</div>
+                        <div className="panel" style={{ padding: '2rem' }}>
+                            <div className="text-mono text-red" style={{ fontSize: '0.8rem', marginBottom: '0.75rem' }}>COVERAGE</div>
+                            <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.5rem' }}>Nationwide-Ready</div>
+                            <p className="text-muted" style={{ fontSize: '0.9rem' }}>Designed to support thousands of local jurisdictions as coverage expands.</p>
                         </div>
-                        <div className="panel" style={{ textAlign: 'center', padding: '3rem 2rem' }}>
-                            <div className="text-huge text-white" style={{ marginBottom: '0.5rem', fontSize: '3.5rem' }}>&lt;15m</div>
-                            <div className="text-mono text-muted" style={{ letterSpacing: '2px' }}>MEAN TIME TO ALERT</div>
+                        <div className="panel" style={{ padding: '2rem' }}>
+                            <div className="text-mono text-red" style={{ fontSize: '0.8rem', marginBottom: '0.75rem' }}>SPEED</div>
+                            <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.5rem' }}>Alerts in Minutes</div>
+                            <p className="text-muted" style={{ fontSize: '0.9rem' }}>Engineered for fast state-change detection — timings depend on source latency and verification.</p>
                         </div>
-                        <div className="panel" style={{ textAlign: 'center', padding: '3rem 2rem' }}>
-                            <div className="text-huge text-white" style={{ marginBottom: '0.5rem', fontSize: '3.5rem' }}>99.9%</div>
-                            <div className="text-mono text-muted" style={{ letterSpacing: '2px' }}>DATA ACCURACY</div>
+                        <div className="panel" style={{ padding: '2rem' }}>
+                            <div className="text-mono text-red" style={{ fontSize: '0.8rem', marginBottom: '0.75rem' }}>CONFIDENCE</div>
+                            <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.5rem' }}>Verified Before Surfaced</div>
+                            <p className="text-muted" style={{ fontSize: '0.9rem' }}>Biometric/identity resolution reduces ambiguity before an alert is created.</p>
                         </div>
                     </div>
                 </div>
@@ -241,27 +249,32 @@ const Landing: React.FC = () => {
             <section className="section">
                 <div className="container">
                     <span className="text-label">The Advantage</span>
-                    <h2 className="text-large" style={{ marginBottom: '2rem' }}>Continuous Intelligence vs. Static Reports</h2>
+                    <h2 className="text-large" style={{ marginBottom: '2rem' }}>Decision-Grade Intelligence vs. Refreshed-Based Systems</h2>
                     <div className="grid-2">
                         <div className="panel" style={{ opacity: 0.6, border: '1px solid #333' }}>
-                            <h3 className="text-mono text-muted" style={{ fontSize: '1rem', marginBottom: '1rem', borderBottom: '1px solid #333', paddingBottom: '0.5rem' }}>LEGACY CHECKS</h3>
+                            <h3 className="text-mono text-muted" style={{ fontSize: '1rem', marginBottom: '1rem', borderBottom: '1px solid #333', paddingBottom: '0.5rem' }}>STATIC & REFRESH-BASED SYSTEMS</h3>
                             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                <li className="text-muted" style={{ display: 'flex', gap: '1rem' }}><span>❌</span> <span>Static, one-time snapshots</span></li>
-                                <li className="text-muted" style={{ display: 'flex', gap: '1rem' }}><span>❌</span> <span>Batch processing (days)</span></li>
-                                <li className="text-muted" style={{ display: 'flex', gap: '1rem' }}><span>❌</span> <span>Expensive manual re-checks</span></li>
-                                <li className="text-muted" style={{ display: 'flex', gap: '1rem' }}><span>❌</span> <span>Blind spots between screens</span></li>
+                                <li className="text-muted" style={{ display: 'flex', gap: '1rem' }}><span>❌</span> <span>Event detection without state awareness</span></li>
+                                <li className="text-muted" style={{ display: 'flex', gap: '1rem' }}><span>❌</span> <span>Refresh-driven updates that surface noise</span></li>
+                                <li className="text-muted" style={{ display: 'flex', gap: '1rem' }}><span>❌</span> <span>Identity ambiguity and false matches</span></li>
+                                <li className="text-muted" style={{ display: 'flex', gap: '1rem' }}><span>❌</span> <span>Manual verification required after alerts</span></li>
+                                <li className="text-muted" style={{ display: 'flex', gap: '1rem' }}><span>❌</span> <span>Blind spots between meaningful changes</span></li>
                             </ul>
                         </div>
                         <div className="panel" style={{ border: '1px solid var(--color-alert-red)', boxShadow: '0 0 20px rgba(228, 0, 40, 0.1)' }}>
                             <h3 className="text-mono text-red" style={{ fontSize: '1rem', marginBottom: '1rem', borderBottom: '1px solid var(--color-alert-red)', paddingBottom: '0.5rem' }}>ARRESTDELTA</h3>
                             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                <li className="text-white" style={{ display: 'flex', gap: '1rem' }}><span className="text-red">✓</span> <span>Continuous, event-driven monitoring</span></li>
-                                <li className="text-white" style={{ display: 'flex', gap: '1rem' }}><span className="text-red">✓</span> <span>Real-time alerts (minutes)</span></li>
-                                <li className="text-white" style={{ display: 'flex', gap: '1rem' }}><span className="text-red">✓</span> <span>Automated, low-cost persistence</span></li>
-                                <li className="text-white" style={{ display: 'flex', gap: '1rem' }}><span className="text-red">✓</span> <span>100% Post-access visibility</span></li>
+                                <li className="text-white" style={{ display: 'flex', gap: '1rem' }}><span className="text-red">✓</span> <span>Continuous, state-aware change detection</span></li>
+                                <li className="text-white" style={{ display: 'flex', gap: '1rem' }}><span className="text-red">✓</span> <span>Verified updates - not refresh noise</span></li>
+                                <li className="text-white" style={{ display: 'flex', gap: '1rem' }}><span className="text-red">✓</span> <span>Biometric identity confirmation</span></li>
+                                <li className="text-white" style={{ display: 'flex', gap: '1rem' }}><span className="text-red">✓</span> <span>Confidence-weighted signals for action</span></li>
+                                <li className="text-white" style={{ display: 'flex', gap: '1rem' }}><span className="text-red">✓</span> <span>Full visibility between formal checks</span></li>
                             </ul>
                         </div>
                     </div>
+                    <p className="text-muted" style={{ marginTop: '2rem', textAlign: 'center', maxWidth: '800px', marginLeft: 'auto', marginRight: 'auto', fontSize: '0.95rem' }}>
+                        ArrestDelta resolves identity and verifies state transitions before alerts are surfaced, ensuring only stable, high-confidence changes reach Trust & Safety teams.
+                    </p>
                 </div>
             </section >
 
@@ -275,6 +288,9 @@ const Landing: React.FC = () => {
                             <p className="text-muted" style={{ marginTop: '1rem' }}>
                                 The US workforce is massive, but the gap in safety intelligence is critical.
                                 Trust-critical roles require more than a "hired" stamp.
+                            </p>
+                            <p className="text-muted" style={{ marginTop: '0.75rem', fontSize: '0.9rem', fontStyle: 'italic' }}>
+                                ArrestDelta focuses on the subset of roles where arrest-related changes create immediate operational, legal, or reputational risk.
                             </p>
                         </div>
                         <div className="flex-col" style={{ justifyContent: 'center' }}>
@@ -383,7 +399,7 @@ const Landing: React.FC = () => {
                                 <div className="text-mono" style={{ marginBottom: '0.2rem', fontSize: '1.1rem' }}>MICHAEL KING</div>
                                 <div className="text-muted" style={{ fontSize: '0.8rem', marginBottom: '1rem' }}>FOUNDER & CEO</div>
                                 <div style={{ paddingTop: '0.5rem', borderTop: '1px solid var(--color-grid)' }}>
-                                    <div className="text-mono" style={{ fontSize: '0.8rem' }}>mking@arrestdelta.com</div>
+                                    <div className="text-mono" style={{ fontSize: '0.8rem' }}>michael@arrestdelta.com</div>
                                     <div className="text-mono" style={{ fontSize: '0.8rem' }}>+44 7963 520703</div>
                                 </div>
                             </div>
@@ -391,9 +407,7 @@ const Landing: React.FC = () => {
 
                         {/* TOM PEACOCK */}
                         <div className="panel" style={{ display: 'flex', textAlign: 'left', gap: '1.5rem', alignItems: 'center' }}>
-                            <div style={{ width: '100px', height: '100px', background: '#111', border: '1px dashed var(--color-grid)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <span className="text-muted" style={{ fontSize: '0.8rem' }}>IMG</span>
-                            </div>
+                            <img src={cofounder} alt="Tom Peacock" style={{ width: '100px', height: '100px', objectFit: 'cover', border: '1px solid var(--color-grid)', filter: 'grayscale(100%)' }} />
                             <div>
                                 <div className="text-mono" style={{ marginBottom: '0.2rem', fontSize: '1.1rem' }}>TOM PEACOCK</div>
                                 <div className="text-muted" style={{ fontSize: '0.8rem', marginBottom: '1rem' }}>CO-FOUNDER & CTO</div>
@@ -406,16 +420,22 @@ const Landing: React.FC = () => {
                 </div>
             </section>
 
-            {/* CTA (UPGRADED) */}
-            < section className="section" id="contact" style={{ background: '#0a0a0a', overflow: 'hidden', position: 'relative', borderBottom: 'none' }}>
+            {/* PHILOSOPHICAL CLOSE */}
+            <section className="section" id="contact" style={{ background: '#0a0a0a', overflow: 'hidden', position: 'relative', borderBottom: 'none', paddingTop: '6rem', paddingBottom: '3rem' }}>
                 <div style={{
                     position: 'absolute', top: 0, left: '-100%', width: '50%', height: '100%',
-                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent)',
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent)',
                     transform: 'skewX(-20deg)',
-                    animation: 'scan-x 3s infinite linear'
+                    animation: 'scan-x 4s infinite linear'
                 }}></div>
-                <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
-                    <h2 className="text-huge" style={{ marginBottom: '2rem' }}>SECURE YOUR ACCESS</h2>
+                <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 2, maxWidth: '900px' }}>
+                    <div className="text-mono text-red" style={{ marginBottom: '1.5rem', fontSize: '0.85rem', letterSpacing: '3px' }}>// CORE PRINCIPLE</div>
+                    <h2 className="text-huge" style={{ marginBottom: '1.5rem', lineHeight: '1.2' }}>
+                        Speed without certainty<br />creates risk.
+                    </h2>
+                    <p style={{ fontSize: '1.25rem', color: 'var(--color-text-muted)', marginBottom: '3rem', maxWidth: '700px', marginLeft: 'auto', marginRight: 'auto' }}>
+                        ArrestDelta is built to ensure decisions are based on <span className="text-white">verified change</span>, not noisy data.
+                    </p>
                     <div className="flex-row" style={{ justifyContent: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
                         <button className="btn btn-cta" onClick={() => setIsModalOpen(true)}>REGISTER INTEREST</button>
                         <a href="/decks" className="btn btn-secondary" style={{ textDecoration: 'none' }}>VIEW DECK LIBRARY →</a>
@@ -433,7 +453,7 @@ const Landing: React.FC = () => {
             <OnboardingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
             {/* FOOTER (NEW) */}
-            <footer style={{ background: '#000', borderTop: '2px solid var(--color-alert-red)', padding: '5rem 0' }}>
+            <footer style={{ background: '#000', borderTop: '2px solid var(--color-alert-red)', padding: '3rem 0 5rem 0' }}>
                 <div className="container">
                     <div className="grid-4" style={{ marginBottom: '4rem' }}>
                         <div>
@@ -442,9 +462,9 @@ const Landing: React.FC = () => {
                                 Continuous criminal intelligence for the modern enterprise.
                             </div>
                             <div className="text-mono text-muted" style={{ fontSize: '0.8rem' }}>
-                                <a href="mailto:investors@arrestdelta.com" style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px solid #333', paddingBottom: '2px' }}>investors@arrestdelta.com</a>
+                                <a href="mailto:info@arrestdelta.com" style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px solid #333', paddingBottom: '2px' }}>info@arrestdelta.com</a>
                                 <span style={{ margin: '0 1rem', opacity: 0.3 }}>|</span>
-                                © 2025 ArrestDelta
+                                © 2026 ArrestDelta
                             </div>
                         </div>
                         <div>
@@ -464,6 +484,33 @@ const Landing: React.FC = () => {
                             <span>LATENCY: 12ms</span>
                             <span>UPSTREAM: OK</span>
                             <span style={{ color: '#4CAF50' }}>ALL SYSTEMS NORMAL</span>
+                            <button
+                                onClick={async () => {
+                                    await supabase.auth.signOut();
+                                    window.location.href = '/gate';
+                                }}
+                                style={{
+                                    background: 'transparent',
+                                    border: '1px solid #333',
+                                    color: '#666',
+                                    padding: '0.25rem 0.75rem',
+                                    fontFamily: 'inherit',
+                                    fontSize: '0.75rem',
+                                    cursor: 'pointer',
+                                    marginLeft: '1rem',
+                                    transition: 'all 0.2s'
+                                }}
+                                onMouseOver={(e) => {
+                                    e.currentTarget.style.borderColor = '#e40028';
+                                    e.currentTarget.style.color = '#e40028';
+                                }}
+                                onMouseOut={(e) => {
+                                    e.currentTarget.style.borderColor = '#333';
+                                    e.currentTarget.style.color = '#666';
+                                }}
+                            >
+                                LOG OUT
+                            </button>
                         </div>
                     </div>
                 </div>

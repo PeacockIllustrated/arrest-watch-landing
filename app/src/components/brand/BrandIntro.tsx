@@ -24,7 +24,7 @@ const BrandIntro: React.FC = () => {
                         data-driven, and devoid of noise.
                     </p>
                     <div style={{ marginTop: '3rem' }}>
-                        <span className="text-mono text-muted">EST. 2025</span>
+                        <span className="text-mono text-muted">EST. 2026</span>
                     </div>
                 </div>
             </div>

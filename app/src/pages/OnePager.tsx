@@ -328,7 +328,7 @@ const OnePager: React.FC = () => {
                                 <div>
                                     <div className="text-white" style={{ fontWeight: 'bold', fontSize: '1.3rem', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>MICHAEL KING</div>
                                     <div className="text-mono text-muted" style={{ fontSize: '0.9rem', marginBottom: '1.5rem' }}>FOUNDER & CEO</div>
-                                    <div className="text-mono text-white" style={{ fontSize: '1rem', marginBottom: '0.3rem' }}>mking@arrestdelta.io</div>
+                                    <div className="text-mono text-white" style={{ fontSize: '1rem', marginBottom: '0.3rem' }}>michael@arrestdelta.com</div>
                                     <div className="text-mono text-muted" style={{ fontSize: '1rem' }}>+44 7963 520703</div>
                                 </div>
                             </div>
