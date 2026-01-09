@@ -3,72 +3,99 @@ import { supabase } from '../../lib/supabase';
 import { DECKS } from '../../lib/decks';
 import { usePageTitle } from '../../hooks/usePageTitle';
 
-interface ProvisionedUser {
-    id: string;
+interface ProvisionedAccess {
     email: string;
-    name: string;
-    organization: string;
-    password: string;
     decks: string[];
-    created_at: string;
+    grantedAt: string;
 }
 
-// Generate a random password
-const generatePassword = (): string => {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
-    let password = '';
-    for (let i = 0; i < 12; i++) {
-        password += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return password;
-};
+interface UserWithAccess {
+    id: string;
+    email: string;
+    name: string | null;
+    created_at: string;
+    decks: string[];
+}
+
+// Toggle Switch Component
+const ToggleSwitch: React.FC<{
+    checked: boolean;
+    onChange: () => void;
+    disabled?: boolean;
+}> = ({ checked, onChange, disabled }) => (
+    <div
+        onClick={disabled ? undefined : onChange}
+        style={{
+            width: '36px',
+            height: '20px',
+            background: checked ? '#e40028' : '#333',
+            borderRadius: '10px',
+            position: 'relative',
+            cursor: disabled ? 'not-allowed' : 'pointer',
+            transition: 'background 0.2s',
+            opacity: disabled ? 0.5 : 1,
+            flexShrink: 0
+        }}
+    >
+        <div
+            style={{
+                width: '16px',
+                height: '16px',
+                background: 'white',
+                borderRadius: '50%',
+                position: 'absolute',
+                top: '2px',
+                left: checked ? '18px' : '2px',
+                transition: 'left 0.2s',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.3)'
+            }}
+        />
+    </div>
+);
 
 const ProvisionPage: React.FC = () => {
     usePageTitle('Provision Access');
+
     // Form state
     const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [organization, setOrganization] = useState('');
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
     const [selectedDecks, setSelectedDecks] = useState<string[]>([]);
+    const [existingAccess, setExistingAccess] = useState<string[]>([]);
 
     // UI state
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [success, setSuccess] = useState<ProvisionedUser | null>(null);
-    const [recentProvisions, setRecentProvisions] = useState<ProvisionedUser[]>([]);
-    const [copied, setCopied] = useState(false);
+    const [success, setSuccess] = useState<ProvisionedAccess | null>(null);
+    const [recentUsers, setRecentUsers] = useState<UserWithAccess[]>([]);
+    const [userExists, setUserExists] = useState<boolean | null>(null);
+    const [checkingUser, setCheckingUser] = useState(false);
 
-    // Fetch recent provisions on mount
+    // Fetch recent provisioned users on mount
     useEffect(() => {
-        fetchRecentProvisions();
+        fetchRecentUsers();
     }, []);
 
-    const fetchRecentProvisions = async () => {
-        const { data: leads } = await supabase
-            .from('leads')
-            .select('id, email, name, organization, created_at')
-            .not('password', 'is', null)
-            .order('created_at', { ascending: false })
-            .limit(5);
+    const fetchRecentUsers = async () => {
+        try {
+            const { data, error } = await supabase
+                .rpc('get_recent_users_with_access', { p_limit: 10 });
 
-        if (leads) {
-            // Fetch deck access for each lead
-            const provisioned: ProvisionedUser[] = [];
-            for (const lead of leads) {
-                const { data: access } = await supabase
-                    .from('user_deck_access')
-                    .select('deck_id')
-                    .eq('lead_id', lead.id);
-
-                provisioned.push({
-                    ...lead,
-                    password: '••••••••',
-                    decks: access?.map(a => a.deck_id) || []
-                });
+            if (error) {
+                console.error('Error fetching recent users:', error);
+                return;
             }
-            setRecentProvisions(provisioned);
+
+            if (data) {
+                const usersWithAccess: UserWithAccess[] = data.map((user: { user_id: string; email: string; name: string | null; created_at: string; deck_count: number }) => ({
+                    id: user.user_id,
+                    email: user.email,
+                    name: user.name,
+                    created_at: user.created_at,
+                    decks: Array(user.deck_count).fill('')
+                }));
+                setRecentUsers(usersWithAccess);
+            }
+        } catch (err) {
+            console.error('Error fetching recent users:', err);
         }
     };
 
@@ -88,19 +115,70 @@ const ProvisionPage: React.FC = () => {
         setSelectedDecks([]);
     };
 
-    const handleGeneratePassword = () => {
-        setPassword(generatePassword());
-        setShowPassword(true);
-    };
+    // Check if user exists and fetch their current deck access
+    const checkUserAndFetchAccess = async (emailToCheck: string) => {
+        if (!emailToCheck.trim() || !emailToCheck.includes('@')) {
+            setUserExists(null);
+            setExistingAccess([]);
+            setSelectedDecks([]);
+            return;
+        }
 
-    const handleCopyCredentials = () => {
-        if (success) {
-            const text = `ArrestDelta Deck Access\n\nEmail: ${success.email}\nPassword: ${success.password}\n\nLogin at: ${window.location.origin}/decks`;
-            navigator.clipboard.writeText(text);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
+        setCheckingUser(true);
+        try {
+            const normalizedEmail = emailToCheck.toLowerCase().trim();
+
+            // Check if user exists
+            const { data: exists, error: existsError } = await supabase
+                .rpc('check_user_exists', { p_email: normalizedEmail });
+
+            if (existsError) {
+                console.error('Error checking user:', existsError);
+                setUserExists(null);
+                setExistingAccess([]);
+                return;
+            }
+
+            setUserExists(exists);
+
+            if (exists) {
+                // Fetch their existing deck access
+                const { data: accessData, error: accessError } = await supabase
+                    .rpc('get_user_deck_access', { p_email: normalizedEmail });
+
+                if (accessError) {
+                    console.error('Error fetching deck access:', accessError);
+                    setExistingAccess([]);
+                    setSelectedDecks([]);
+                } else if (accessData) {
+                    const deckIds = accessData.map((item: { deck_id: string }) => item.deck_id);
+                    setExistingAccess(deckIds);
+                    setSelectedDecks(deckIds); // Pre-select their existing access
+                } else {
+                    setExistingAccess([]);
+                    setSelectedDecks([]);
+                }
+            } else {
+                setExistingAccess([]);
+                setSelectedDecks([]);
+            }
+        } catch (err) {
+            console.error('Error checking user:', err);
+            setUserExists(null);
+            setExistingAccess([]);
+        } finally {
+            setCheckingUser(false);
         }
     };
+
+    // Debounce email check
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            checkUserAndFetchAccess(email);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [email]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -108,98 +186,61 @@ const ProvisionPage: React.FC = () => {
         setError(null);
         setSuccess(null);
 
-        if (!password) {
-            setError('Password is required');
+        const normalizedEmail = email.toLowerCase().trim();
+
+        // Find decks to grant (newly selected) and revoke (deselected from existing)
+        const decksToGrant = selectedDecks.filter(d => !existingAccess.includes(d));
+        const decksToRevoke = existingAccess.filter(d => !selectedDecks.includes(d));
+
+        if (decksToGrant.length === 0 && decksToRevoke.length === 0) {
+            setError('No changes to apply');
             setLoading(false);
             return;
         }
 
         try {
-            const normalizedEmail = email.toLowerCase().trim();
+            // Grant new access
+            for (const deckId of decksToGrant) {
+                const { error } = await supabase
+                    .rpc('grant_deck_access_by_email', {
+                        p_email: normalizedEmail,
+                        p_deck_id: deckId,
+                        p_granted_by: 'admin'
+                    });
 
-            // Check if lead already exists
-            const { data: existingLeads } = await supabase
-                .from('leads')
-                .select('id')
-                .eq('email', normalizedEmail)
-                .limit(1);
-
-            let leadId: number;
-
-            if (existingLeads && existingLeads.length > 0) {
-                // Update existing lead
-                leadId = existingLeads[0].id;
-                await supabase
-                    .from('leads')
-                    .update({
-                        name,
-                        organization: organization || null,
-                        password
-                    })
-                    .eq('id', leadId);
-
-                // Clear existing deck access to replace with new selection
-                await supabase
-                    .from('user_deck_access')
-                    .delete()
-                    .eq('lead_id', leadId);
-            } else {
-                // Create new lead
-                const { data: newLead, error: leadError } = await supabase
-                    .from('leads')
-                    .insert({
-                        email: normalizedEmail,
-                        name,
-                        organization: organization || null,
-                        password,
-                        source: 'admin_provision'
-                    })
-                    .select('id')
-                    .single();
-
-                if (leadError) throw new Error(leadError.message);
-                leadId = newLead.id;
+                if (error) {
+                    throw new Error(`Failed to grant access to ${deckId}: ${error.message}`);
+                }
             }
 
-            // Grant deck access
-            if (selectedDecks.length > 0) {
-                const deckAccessRecords = selectedDecks.map(deckId => ({
-                    lead_id: leadId,
-                    deck_id: deckId,
-                    granted_by: 'admin'
-                }));
+            // Revoke removed access
+            for (const deckId of decksToRevoke) {
+                const { error } = await supabase
+                    .rpc('revoke_deck_access_by_email', {
+                        p_email: normalizedEmail,
+                        p_deck_id: deckId
+                    });
 
-                const { error: accessError } = await supabase
-                    .from('user_deck_access')
-                    .insert(deckAccessRecords);
-
-                if (accessError) throw new Error(accessError.message);
+                if (error) {
+                    throw new Error(`Failed to revoke access to ${deckId}: ${error.message}`);
+                }
             }
 
             // Success!
-            const provisionedUser: ProvisionedUser = {
-                id: String(leadId),
+            setSuccess({
                 email: normalizedEmail,
-                name,
-                organization: organization || '',
-                password,
                 decks: selectedDecks,
-                created_at: new Date().toISOString()
-            };
+                grantedAt: new Date().toISOString()
+            });
 
-            setSuccess(provisionedUser);
-            setRecentProvisions(prev => [{ ...provisionedUser, password: '••••••••' }, ...prev.slice(0, 4)]);
+            // Update existing access to match current selection
+            setExistingAccess(selectedDecks);
 
-            // Reset form
-            setEmail('');
-            setName('');
-            setOrganization('');
-            setPassword('');
-            setSelectedDecks([]);
-            setShowPassword(false);
+            // Refresh the recent users list
+            fetchRecentUsers();
 
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to provision user');
+            setError(err instanceof Error ? err.message : 'Failed to update access');
         } finally {
             setLoading(false);
         }
@@ -209,13 +250,18 @@ const ProvisionPage: React.FC = () => {
         return DECKS.find(d => d.id === deckId)?.title || deckId;
     };
 
+    // Calculate changes for display
+    const newlyGranted = selectedDecks.filter(d => !existingAccess.includes(d));
+    const toBeRevoked = existingAccess.filter(d => !selectedDecks.includes(d));
+    const hasChanges = newlyGranted.length > 0 || toBeRevoked.length > 0;
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: 'white' }}>
-                PROVISION INVESTOR ACCESS
+                PROVISION DECK ACCESS
             </h2>
             <p style={{ color: '#666', fontSize: '0.85rem', marginTop: 0 }}>
-                Create site and deck access for investors and partners. Share the login credentials with them.
+                Grant or revoke deck access for registered users. Users must sign up at the site gate first.
             </p>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
@@ -233,144 +279,77 @@ const ProvisionPage: React.FC = () => {
                         paddingBottom: '1rem',
                         borderBottom: '1px solid #333'
                     }}>
-                        NEW INVESTOR
+                        MANAGE ACCESS
                     </div>
 
                     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         {/* Email */}
                         <div>
                             <label style={{ display: 'block', fontSize: '0.75rem', color: '#666', marginBottom: '0.5rem' }}>
-                                EMAIL *
+                                USER EMAIL *
                             </label>
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                placeholder="investor@company.com"
-                                style={{
-                                    width: '100%',
-                                    padding: '0.75rem',
-                                    background: 'rgba(255, 255, 255, 0.05)',
-                                    border: '1px solid #333',
-                                    color: 'white',
-                                    fontFamily: 'inherit',
-                                    fontSize: '0.9rem'
-                                }}
-                            />
-                        </div>
-
-                        {/* Password */}
-                        <div>
-                            <div style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                marginBottom: '0.5rem'
-                            }}>
-                                <label style={{ fontSize: '0.75rem', color: '#666' }}>
-                                    PASSWORD *
-                                </label>
-                                <button
-                                    type="button"
-                                    onClick={handleGeneratePassword}
-                                    style={{
-                                        background: 'none',
-                                        border: 'none',
-                                        color: '#e40028',
-                                        fontSize: '0.7rem',
-                                        cursor: 'pointer',
-                                        fontFamily: 'inherit'
-                                    }}
-                                >
-                                    GENERATE
-                                </button>
-                            </div>
                             <div style={{ position: 'relative' }}>
                                 <input
-                                    type={showPassword ? 'text' : 'password'}
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     required
-                                    placeholder="••••••••••••"
+                                    placeholder="user@example.com"
                                     style={{
                                         width: '100%',
                                         padding: '0.75rem',
-                                        paddingRight: '3rem',
+                                        paddingRight: '6rem',
                                         background: 'rgba(255, 255, 255, 0.05)',
-                                        border: '1px solid #333',
+                                        border: userExists === false
+                                            ? '1px solid #e40028'
+                                            : userExists === true
+                                                ? '1px solid #4CAF50'
+                                                : '1px solid #333',
                                         color: 'white',
                                         fontFamily: 'inherit',
                                         fontSize: '0.9rem'
                                     }}
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    style={{
-                                        position: 'absolute',
-                                        right: '0.75rem',
-                                        top: '50%',
-                                        transform: 'translateY(-50%)',
-                                        background: 'none',
-                                        border: 'none',
-                                        color: '#666',
-                                        cursor: 'pointer',
-                                        fontSize: '0.7rem',
-                                        fontFamily: 'inherit'
-                                    }}
-                                >
-                                    {showPassword ? 'HIDE' : 'SHOW'}
-                                </button>
+                                <div style={{
+                                    position: 'absolute',
+                                    right: '0.75rem',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    fontSize: '0.65rem',
+                                    fontFamily: 'inherit'
+                                }}>
+                                    {checkingUser && (
+                                        <span style={{ color: '#666' }}>CHECKING...</span>
+                                    )}
+                                    {!checkingUser && userExists === true && (
+                                        <span style={{ color: '#4CAF50' }}>✓ REGISTERED</span>
+                                    )}
+                                    {!checkingUser && userExists === false && (
+                                        <span style={{ color: '#e40028' }}>✗ NOT FOUND</span>
+                                    )}
+                                </div>
                             </div>
+                            {userExists === false && (
+                                <div style={{
+                                    fontSize: '0.7rem',
+                                    color: '#e40028',
+                                    marginTop: '0.5rem'
+                                }}>
+                                    This user hasn't signed up yet. They need to register at /gate first.
+                                </div>
+                            )}
+                            {userExists && existingAccess.length > 0 && (
+                                <div style={{
+                                    fontSize: '0.7rem',
+                                    color: '#4CAF50',
+                                    marginTop: '0.5rem'
+                                }}>
+                                    User has access to {existingAccess.length} deck{existingAccess.length !== 1 ? 's' : ''}
+                                </div>
+                            )}
                         </div>
 
-                        {/* Name */}
-                        <div>
-                            <label style={{ display: 'block', fontSize: '0.75rem', color: '#666', marginBottom: '0.5rem' }}>
-                                NAME *
-                            </label>
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                                placeholder="John Smith"
-                                style={{
-                                    width: '100%',
-                                    padding: '0.75rem',
-                                    background: 'rgba(255, 255, 255, 0.05)',
-                                    border: '1px solid #333',
-                                    color: 'white',
-                                    fontFamily: 'inherit',
-                                    fontSize: '0.9rem'
-                                }}
-                            />
-                        </div>
-
-                        {/* Organization */}
-                        <div>
-                            <label style={{ display: 'block', fontSize: '0.75rem', color: '#666', marginBottom: '0.5rem' }}>
-                                ORGANIZATION
-                            </label>
-                            <input
-                                type="text"
-                                value={organization}
-                                onChange={(e) => setOrganization(e.target.value)}
-                                placeholder="Acme Ventures"
-                                style={{
-                                    width: '100%',
-                                    padding: '0.75rem',
-                                    background: 'rgba(255, 255, 255, 0.05)',
-                                    border: '1px solid #333',
-                                    color: 'white',
-                                    fontFamily: 'inherit',
-                                    fontSize: '0.9rem'
-                                }}
-                            />
-                        </div>
-
-                        {/* Deck Access */}
+                        {/* Deck Access with Toggle Switches */}
                         <div>
                             <div style={{
                                 display: 'flex',
@@ -394,7 +373,7 @@ const ProvisionPage: React.FC = () => {
                                             fontFamily: 'inherit'
                                         }}
                                     >
-                                        GRANT ALL
+                                        ALL ON
                                     </button>
                                     <span style={{ color: '#333' }}>|</span>
                                     <button
@@ -409,53 +388,108 @@ const ProvisionPage: React.FC = () => {
                                             fontFamily: 'inherit'
                                         }}
                                     >
-                                        CLEAR
+                                        ALL OFF
                                     </button>
                                 </div>
                             </div>
 
                             <div style={{
-                                display: 'grid',
-                                gridTemplateColumns: '1fr 1fr',
+                                display: 'flex',
+                                flexDirection: 'column',
                                 gap: '0.5rem',
                                 padding: '0.75rem',
                                 background: 'rgba(0, 0, 0, 0.2)',
                                 border: '1px solid #222'
                             }}>
-                                {DECKS.map((deck) => (
-                                    <label
-                                        key={deck.id}
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '0.5rem',
-                                            cursor: 'pointer',
-                                            padding: '0.5rem',
-                                            background: selectedDecks.includes(deck.id)
-                                                ? 'rgba(228, 0, 40, 0.1)'
-                                                : 'transparent',
-                                            border: selectedDecks.includes(deck.id)
-                                                ? '1px solid rgba(228, 0, 40, 0.3)'
-                                                : '1px solid transparent',
-                                            transition: 'all 0.2s'
-                                        }}
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedDecks.includes(deck.id)}
-                                            onChange={() => handleDeckToggle(deck.id)}
-                                            style={{ accentColor: '#e40028' }}
-                                        />
-                                        <span style={{
-                                            fontSize: '0.7rem',
-                                            color: selectedDecks.includes(deck.id) ? 'white' : '#888'
-                                        }}>
-                                            {deck.title}
-                                        </span>
-                                    </label>
-                                ))}
+                                {DECKS.map((deck) => {
+                                    const isSelected = selectedDecks.includes(deck.id);
+                                    const hadAccess = existingAccess.includes(deck.id);
+                                    const isNewGrant = isSelected && !hadAccess;
+                                    const isRevoke = !isSelected && hadAccess;
+
+                                    return (
+                                        <div
+                                            key={deck.id}
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'space-between',
+                                                padding: '0.6rem 0.75rem',
+                                                background: isNewGrant
+                                                    ? 'rgba(76, 175, 80, 0.1)'
+                                                    : isRevoke
+                                                        ? 'rgba(228, 0, 40, 0.1)'
+                                                        : 'transparent',
+                                                border: isNewGrant
+                                                    ? '1px solid rgba(76, 175, 80, 0.3)'
+                                                    : isRevoke
+                                                        ? '1px solid rgba(228, 0, 40, 0.3)'
+                                                        : '1px solid #222',
+                                                transition: 'all 0.2s'
+                                            }}
+                                        >
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                                <span style={{
+                                                    fontSize: '0.8rem',
+                                                    color: isSelected ? 'white' : '#666'
+                                                }}>
+                                                    {deck.title}
+                                                </span>
+                                                {isNewGrant && (
+                                                    <span style={{
+                                                        fontSize: '0.6rem',
+                                                        color: '#4CAF50',
+                                                        background: 'rgba(76, 175, 80, 0.2)',
+                                                        padding: '0.15rem 0.4rem',
+                                                        borderRadius: '2px'
+                                                    }}>
+                                                        + NEW
+                                                    </span>
+                                                )}
+                                                {isRevoke && (
+                                                    <span style={{
+                                                        fontSize: '0.6rem',
+                                                        color: '#e40028',
+                                                        background: 'rgba(228, 0, 40, 0.2)',
+                                                        padding: '0.15rem 0.4rem',
+                                                        borderRadius: '2px'
+                                                    }}>
+                                                        - REMOVE
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <ToggleSwitch
+                                                checked={isSelected}
+                                                onChange={() => handleDeckToggle(deck.id)}
+                                                disabled={!userExists}
+                                            />
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
+
+                        {/* Changes Summary */}
+                        {hasChanges && userExists && (
+                            <div style={{
+                                padding: '0.75rem',
+                                background: 'rgba(255, 255, 255, 0.03)',
+                                border: '1px solid #333',
+                                fontSize: '0.75rem'
+                            }}>
+                                <div style={{ color: '#888', marginBottom: '0.5rem' }}>PENDING CHANGES:</div>
+                                {newlyGranted.length > 0 && (
+                                    <div style={{ color: '#4CAF50' }}>
+                                        + Granting: {newlyGranted.map(getDeckTitle).join(', ')}
+                                    </div>
+                                )}
+                                {toBeRevoked.length > 0 && (
+                                    <div style={{ color: '#e40028' }}>
+                                        - Revoking: {toBeRevoked.map(getDeckTitle).join(', ')}
+                                    </div>
+                                )}
+                            </div>
+                        )}
 
                         {/* Error */}
                         {error && (
@@ -473,27 +507,27 @@ const ProvisionPage: React.FC = () => {
                         {/* Submit */}
                         <button
                             type="submit"
-                            disabled={loading}
+                            disabled={loading || !userExists || !hasChanges}
                             style={{
                                 padding: '1rem',
-                                background: loading ? '#333' : '#e40028',
+                                background: (loading || !userExists || !hasChanges) ? '#333' : '#e40028',
                                 border: 'none',
                                 color: 'white',
                                 fontFamily: 'inherit',
                                 fontSize: '0.9rem',
                                 letterSpacing: '1px',
-                                cursor: loading ? 'not-allowed' : 'pointer',
+                                cursor: (loading || !userExists || !hasChanges) ? 'not-allowed' : 'pointer',
                                 transition: 'background 0.2s'
                             }}
                         >
-                            {loading ? 'PROVISIONING...' : 'PROVISION ACCESS'}
+                            {loading ? 'UPDATING...' : hasChanges ? 'APPLY CHANGES' : 'NO CHANGES'}
                         </button>
                     </form>
                 </div>
 
-                {/* Success / Recent Section */}
+                {/* Success / Info Section */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                    {/* Success Message with Credentials */}
+                    {/* Success Message */}
                     {success && (
                         <div style={{
                             border: '1px solid #2a5a2a',
@@ -506,81 +540,22 @@ const ProvisionPage: React.FC = () => {
                                 color: '#4a9a4a',
                                 marginBottom: '1rem'
                             }}>
-                                ✓ ACCESS PROVISIONED
+                                ✓ ACCESS UPDATED
                             </div>
                             <div style={{ color: 'white', marginBottom: '0.5rem' }}>
-                                <strong>{success.name}</strong>
+                                <strong>{success.email}</strong>
                             </div>
-                            {success.organization && (
-                                <div style={{ color: '#666', fontSize: '0.8rem', marginBottom: '1rem' }}>
-                                    {success.organization}
-                                </div>
-                            )}
-
-                            {/* Credentials Box */}
-                            <div style={{
-                                background: 'rgba(0, 0, 0, 0.3)',
-                                border: '1px solid #333',
-                                padding: '1rem',
-                                marginBottom: '1rem'
-                            }}>
-                                <div style={{
-                                    fontSize: '0.7rem',
-                                    color: '#666',
-                                    marginBottom: '0.5rem',
-                                    letterSpacing: '1px'
-                                }}>
-                                    LOGIN CREDENTIALS
-                                </div>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                    <div>
-                                        <span style={{ color: '#888', fontSize: '0.75rem' }}>Email: </span>
-                                        <span style={{ color: 'white', fontSize: '0.85rem', fontFamily: 'monospace' }}>
-                                            {success.email}
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <span style={{ color: '#888', fontSize: '0.75rem' }}>Password: </span>
-                                        <span style={{ color: '#e40028', fontSize: '0.85rem', fontFamily: 'monospace' }}>
-                                            {success.password}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Copy Button */}
-                            <button
-                                onClick={handleCopyCredentials}
-                                style={{
-                                    width: '100%',
-                                    padding: '0.75rem',
-                                    background: copied ? '#2a5a2a' : 'rgba(255, 255, 255, 0.05)',
-                                    border: '1px solid #333',
-                                    color: copied ? 'white' : '#888',
-                                    fontFamily: 'inherit',
-                                    fontSize: '0.8rem',
-                                    cursor: 'pointer',
-                                    transition: 'all 0.2s'
-                                }}
-                            >
-                                {copied ? '✓ COPIED TO CLIPBOARD' : 'COPY CREDENTIALS'}
-                            </button>
-
                             <div style={{
                                 fontSize: '0.75rem',
                                 color: '#666',
-                                borderTop: '1px solid #2a5a2a',
-                                paddingTop: '1rem',
                                 marginTop: '1rem'
                             }}>
-                                DECKS: {success.decks.length > 0
-                                    ? success.decks.map(getDeckTitle).join(', ')
-                                    : 'None'}
+                                Now has access to {success.decks.length} deck{success.decks.length !== 1 ? 's' : ''}
                             </div>
                         </div>
                     )}
 
-                    {/* Recent Provisions */}
+                    {/* How it works */}
                     <div style={{
                         border: '1px solid #333',
                         background: 'rgba(255, 255, 255, 0.02)',
@@ -594,23 +569,61 @@ const ProvisionPage: React.FC = () => {
                             paddingBottom: '1rem',
                             borderBottom: '1px solid #333'
                         }}>
-                            RECENT PROVISIONS
+                            HOW IT WORKS
+                        </div>
+                        <ol style={{
+                            margin: 0,
+                            padding: '0 0 0 1.25rem',
+                            color: '#888',
+                            fontSize: '0.8rem',
+                            lineHeight: 1.8
+                        }}>
+                            <li>User signs up at <code style={{ color: '#e40028' }}>/gate</code></li>
+                            <li>Enter their email above to see current access</li>
+                            <li>Toggle decks ON/OFF as needed</li>
+                            <li>Click "Apply Changes" to update</li>
+                            <li>User refreshes deck hub to see changes</li>
+                        </ol>
+                    </div>
+
+                    {/* Recent Users */}
+                    <div style={{
+                        border: '1px solid #333',
+                        background: 'rgba(255, 255, 255, 0.02)',
+                        padding: '1.5rem'
+                    }}>
+                        <div style={{
+                            fontSize: '0.8rem',
+                            letterSpacing: '1px',
+                            color: '#888',
+                            marginBottom: '1rem',
+                            paddingBottom: '1rem',
+                            borderBottom: '1px solid #333'
+                        }}>
+                            RECENT USERS
                         </div>
 
-                        {recentProvisions.length === 0 ? (
+                        {recentUsers.length === 0 ? (
                             <div style={{ color: '#666', fontSize: '0.85rem' }}>
-                                No provisions yet
+                                No users yet
                             </div>
                         ) : (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                                {recentProvisions.map((user) => (
+                                {recentUsers.slice(0, 5).map((user) => (
                                     <div
                                         key={user.id}
+                                        onClick={() => setEmail(user.email)}
                                         style={{
                                             padding: '0.75rem',
                                             background: 'rgba(0, 0, 0, 0.2)',
-                                            borderLeft: '3px solid #e40028'
+                                            borderLeft: user.decks.length > 0
+                                                ? '3px solid #4CAF50'
+                                                : '3px solid #333',
+                                            cursor: 'pointer',
+                                            transition: 'background 0.2s'
                                         }}
+                                        onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                                        onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.2)'}
                                     >
                                         <div style={{
                                             display: 'flex',
@@ -618,13 +631,13 @@ const ProvisionPage: React.FC = () => {
                                             marginBottom: '0.25rem'
                                         }}>
                                             <span style={{ color: 'white', fontSize: '0.85rem' }}>
-                                                {user.name}
+                                                {user.name || user.email}
                                             </span>
                                             <span style={{ color: '#666', fontSize: '0.7rem' }}>
                                                 {user.decks.length} deck{user.decks.length !== 1 ? 's' : ''}
                                             </span>
                                         </div>
-                                        <div style={{ color: '#888', fontSize: '0.75rem' }}>
+                                        <div style={{ color: '#888', fontSize: '0.7rem' }}>
                                             {user.email}
                                         </div>
                                     </div>

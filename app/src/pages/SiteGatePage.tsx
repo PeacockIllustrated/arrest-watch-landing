@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import OnboardingModal from '../components/investor/_legacy/OnboardingModal';
 import '../styles/landing.css';
+
+type AuthMode = 'signin' | 'signup';
 
 const SiteGatePage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [mode, setMode] = useState<AuthMode>('signin');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [success, setSuccess] = useState<string | null>(null);
 
     const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/';
 
     // Custom Red Arrow Cursor SVG
     const cursorUrl = `url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3L10.5 20.5L13.5 13.5L20.5 10.5L3 3Z" fill="%23E40028" stroke="white" stroke-width="1.5" stroke-linejoin="round"/></svg>') 2 2, auto`;
 
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleSignIn = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
@@ -39,6 +43,72 @@ const SiteGatePage: React.FC = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleSignUp = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+        setSuccess(null);
+
+        // Validation
+        if (password !== confirmPassword) {
+            setError('PASSWORDS DO NOT MATCH');
+            setLoading(false);
+            return;
+        }
+
+        if (password.length < 6) {
+            setError('PASSWORD MUST BE AT LEAST 6 CHARACTERS');
+            setLoading(false);
+            return;
+        }
+
+        if (!name.trim()) {
+            setError('NAME IS REQUIRED');
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const { data, error } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    data: {
+                        name: name.trim(),
+                    },
+                },
+            });
+
+            if (error) {
+                setError(error.message.toUpperCase());
+            } else if (data.user) {
+                // Check if email confirmation is required
+                if (data.session) {
+                    // User is confirmed and logged in
+                    navigate(from, { replace: true });
+                } else {
+                    // Email confirmation required
+                    setSuccess('ACCOUNT CREATED. CHECK YOUR EMAIL TO CONFIRM.');
+                    setMode('signin');
+                    setPassword('');
+                    setConfirmPassword('');
+                }
+            }
+        } catch (err) {
+            setError('AN UNEXPECTED ERROR OCCURRED');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const toggleMode = () => {
+        setMode(mode === 'signin' ? 'signup' : 'signin');
+        setError(null);
+        setSuccess(null);
+        setPassword('');
+        setConfirmPassword('');
     };
 
     return (
@@ -99,12 +169,37 @@ const SiteGatePage: React.FC = () => {
                     borderBottom: '1px solid #333',
                     paddingBottom: '1rem'
                 }}>
-                    ACCESS RESTRICTED
+                    {mode === 'signin' ? 'ACCESS RESTRICTED' : 'CREATE ACCOUNT'}
                 </h2>
 
-                <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <form onSubmit={mode === 'signin' ? handleSignIn : handleSignUp} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                    {/* Name field - only for signup */}
+                    {mode === 'signup' && (
+                        <div>
+                            <label style={{ display: 'block', fontSize: '0.7rem', marginBottom: '0.5rem', opacity: 0.7 }}>IDENTITY</label>
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="Full Name"
+                                required
+                                style={{
+                                    width: '100%',
+                                    background: 'rgba(255,255,255,0.05)',
+                                    border: '1px solid #333',
+                                    padding: '0.8rem',
+                                    color: 'white',
+                                    fontFamily: 'inherit',
+                                    outline: 'none'
+                                }}
+                            />
+                        </div>
+                    )}
+
                     <div>
-                        <label style={{ display: 'block', fontSize: '0.7rem', marginBottom: '0.5rem', opacity: 0.7 }}>OPERATOR ID</label>
+                        <label style={{ display: 'block', fontSize: '0.7rem', marginBottom: '0.5rem', opacity: 0.7 }}>
+                            {mode === 'signin' ? 'OPERATOR ID' : 'EMAIL'}
+                        </label>
                         <input
                             type="email"
                             value={email}
@@ -123,7 +218,9 @@ const SiteGatePage: React.FC = () => {
                     </div>
 
                     <div>
-                        <label style={{ display: 'block', fontSize: '0.7rem', marginBottom: '0.5rem', opacity: 0.7 }}>ACCESS KEY</label>
+                        <label style={{ display: 'block', fontSize: '0.7rem', marginBottom: '0.5rem', opacity: 0.7 }}>
+                            {mode === 'signin' ? 'ACCESS KEY' : 'CREATE PASSWORD'}
+                        </label>
                         <input
                             type="password"
                             value={password}
@@ -141,6 +238,28 @@ const SiteGatePage: React.FC = () => {
                         />
                     </div>
 
+                    {/* Confirm password - only for signup */}
+                    {mode === 'signup' && (
+                        <div>
+                            <label style={{ display: 'block', fontSize: '0.7rem', marginBottom: '0.5rem', opacity: 0.7 }}>CONFIRM PASSWORD</label>
+                            <input
+                                type="password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
+                                style={{
+                                    width: '100%',
+                                    background: 'rgba(255,255,255,0.05)',
+                                    border: '1px solid #333',
+                                    padding: '0.8rem',
+                                    color: 'white',
+                                    fontFamily: 'inherit',
+                                    outline: 'none'
+                                }}
+                            />
+                        </div>
+                    )}
+
                     {error && (
                         <div style={{
                             color: '#e40028',
@@ -151,6 +270,19 @@ const SiteGatePage: React.FC = () => {
                             background: 'rgba(228, 0, 40, 0.1)'
                         }}>
                             ERROR: {error}
+                        </div>
+                    )}
+
+                    {success && (
+                        <div style={{
+                            color: '#4CAF50',
+                            fontSize: '0.8rem',
+                            textAlign: 'center',
+                            border: '1px solid #4CAF50',
+                            padding: '0.5rem',
+                            background: 'rgba(76, 175, 80, 0.1)'
+                        }}>
+                            ✓ {success}
                         </div>
                     )}
 
@@ -165,29 +297,30 @@ const SiteGatePage: React.FC = () => {
                             fontFamily: 'inherit',
                             fontWeight: 'bold',
                             cursor: 'pointer',
-                            marginTop: '1rem',
+                            marginTop: '0.5rem',
                             opacity: loading ? 0.7 : 1,
                             transition: 'all 0.2s'
                         }}
                     >
-                        {loading ? 'AUTHENTICATING...' : 'INITIATE SESSION'}
+                        {loading
+                            ? (mode === 'signin' ? 'AUTHENTICATING...' : 'CREATING ACCOUNT...')
+                            : (mode === 'signin' ? 'INITIATE SESSION' : 'REGISTER')}
                     </button>
 
                     <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
                         <button
                             type="button"
-                            onClick={() => setIsModalOpen(true)}
+                            onClick={toggleMode}
                             className="toggle-link"
                             style={{ background: 'none', border: 'none', fontFamily: 'inherit' }}
                         >
-                            NO ACCESS? REGISTER INTEREST →
+                            {mode === 'signin'
+                                ? 'NO ACCOUNT? REGISTER →'
+                                : '← ALREADY REGISTERED? SIGN IN'}
                         </button>
                     </div>
                 </form>
             </div>
-
-            {/* Use the same OnboardingModal as the landing page */}
-            <OnboardingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };

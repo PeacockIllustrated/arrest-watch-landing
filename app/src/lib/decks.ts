@@ -37,6 +37,22 @@ export const DECKS: Deck[] = [
         status: 'LIVE'
     },
     {
+        id: 'market-sizing',
+        title: 'MARKET SIZING',
+        route: '/investor-delta/appendix/market-sizing',
+        category: 'investor',
+        description: 'Serviceable market analysis: SAM, SOM, and expansion levers',
+        status: 'LIVE'
+    },
+    {
+        id: 'why-now',
+        title: 'WHY NOW',
+        route: '/investor-delta/appendix/why-now',
+        category: 'investor',
+        description: 'Timing thesis: risk environment, regulatory shifts, and enterprise readiness',
+        status: 'LIVE'
+    },
+    {
         id: 'gtm-plan',
         title: 'GTM PLAN',
         route: '/gtm',

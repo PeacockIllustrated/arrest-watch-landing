@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import RadarNode from '../components/investor/ui/RadarNode';
 import { ChartIcon, LinkIcon, LockIcon } from '../components/portal/Icons';
 import { DeckHubAuthProvider, useDeckHubAuth } from '../components/deckhub/DeckHubAuthContext';
-import DeckHubLoginModal from '../components/deckhub/DeckHubLoginModal';
 import OnboardingModal from '../components/investor/_legacy/OnboardingModal';
 import { DECKS, type Deck } from '../lib/decks';
 import { usePageTitle } from '../hooks/usePageTitle';
@@ -294,7 +293,6 @@ const DeckCard: React.FC<{
 const DeckHubContent: React.FC = () => {
     usePageTitle('Decks');
     const { isAuthenticated, user, accessibleDecks, loading, logout } = useDeckHubAuth();
-    const [showLoginModal, setShowLoginModal] = useState(false);
     const [showOnboardingModal, setShowOnboardingModal] = useState(false);
 
     const investorDecks = DECKS.filter(d => d.category === 'investor');
@@ -307,11 +305,9 @@ const DeckHubContent: React.FC = () => {
     };
 
     const handleRequestAccess = () => {
-        if (!isAuthenticated) {
-            setShowLoginModal(true);
-        } else {
-            setShowOnboardingModal(true);
-        }
+        // User is already authenticated (came through SiteGatePage)
+        // Show onboarding modal to request access to specific decks
+        setShowOnboardingModal(true);
     };
 
     // Override body styles for scrolling
@@ -434,39 +430,9 @@ const DeckHubContent: React.FC = () => {
                                 </button>
                             </>
                         ) : (
-                            <>
-                                <button
-                                    onClick={() => setShowOnboardingModal(true)}
-                                    className="deck-hub-register-btn"
-                                    style={{
-                                        background: 'transparent',
-                                        border: '1px solid #333',
-                                        color: '#888',
-                                        padding: '0.4rem 0.75rem',
-                                        fontFamily: 'var(--font-mono)',
-                                        fontSize: '0.6rem',
-                                        cursor: 'pointer',
-                                        whiteSpace: 'nowrap'
-                                    }}
-                                >
-                                    REGISTER
-                                </button>
-                                <button
-                                    onClick={() => setShowLoginModal(true)}
-                                    style={{
-                                        background: '#e40028',
-                                        border: 'none',
-                                        color: 'white',
-                                        padding: '0.4rem 0.75rem',
-                                        fontFamily: 'var(--font-mono)',
-                                        fontSize: '0.6rem',
-                                        cursor: 'pointer',
-                                        whiteSpace: 'nowrap'
-                                    }}
-                                >
-                                    ACCESS
-                                </button>
-                            </>
+                            <span className="text-mono text-muted" style={{ fontSize: '0.65rem' }}>
+                                LOADING...
+                            </span>
                         )}
                     </div>
                 </div>
@@ -584,14 +550,6 @@ const DeckHubContent: React.FC = () => {
             </div>
 
             {/* Modals */}
-            <DeckHubLoginModal
-                isOpen={showLoginModal}
-                onClose={() => setShowLoginModal(false)}
-                onRegisterInterest={() => {
-                    setShowLoginModal(false);
-                    setShowOnboardingModal(true);
-                }}
-            />
             <OnboardingModal isOpen={showOnboardingModal} onClose={() => setShowOnboardingModal(false)} />
 
             {/* Keyframes */}
