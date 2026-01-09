@@ -53,6 +53,11 @@ const Slide13_Raise: React.FC = () => {
                                     KEY HIRES
                                 </div>
                             </div>
+                            <div style={{ marginTop: '1.5rem', textAlign: 'right' }}>
+                                <a href="/investor-delta/appendix/use-of-funds" className="text-mono text-red hover-glow" style={{ fontSize: '0.8rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    VIEW DETAILED MILESTONE PLAN →
+                                </a>
+                            </div>
                         </div>
 
                         <div style={{ marginTop: '2rem' }}>

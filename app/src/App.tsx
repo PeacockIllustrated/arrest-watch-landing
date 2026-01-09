@@ -9,6 +9,7 @@ import ValuationRationale from './pages/investor/ValuationRationale';
 import InvestorQuestions from './pages/investor/InvestorQuestions';
 import MarketSizing from './pages/investor/MarketSizing';
 import WhyNow from './pages/investor/WhyNow';
+import UseOfFunds from './pages/investor/UseOfFunds';
 import UberPack from './pages/UberPack';
 import UberClosePlan from './pages/UberClosePlan';
 import UberEconomics from './pages/UberEconomics';
@@ -82,6 +83,7 @@ function App() {
           <Route path="/investor-delta/why" element={<InvestorQuestions />} />
           <Route path="/investor-delta/appendix/market-sizing" element={<MarketSizing />} />
           <Route path="/investor-delta/appendix/why-now" element={<WhyNow />} />
+          <Route path="/investor-delta/appendix/use-of-funds" element={<UseOfFunds />} />
           <Route path="/uber" element={<UberPack />} />
           <Route path="/uber-close" element={<UberClosePlan />} />
           <Route path="/uber-economics" element={<UberEconomics />} />

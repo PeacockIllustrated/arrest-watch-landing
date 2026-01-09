@@ -45,6 +45,14 @@ export const DECKS: Deck[] = [
         status: 'LIVE'
     },
     {
+        id: 'use-of-funds',
+        title: 'USE OF FUNDS',
+        route: '/investor-delta/appendix/use-of-funds',
+        category: 'investor',
+        description: 'Milestone-based capital allocation and de-risking strategy',
+        status: 'LIVE'
+    },
+    {
         id: 'why-now',
         title: 'WHY NOW',
         route: '/investor-delta/appendix/why-now',

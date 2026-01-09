@@ -33,3 +33,12 @@ This document tracks all changes made to the original source text during the imp
 
 *   **Expansion Levers:** Converted list format to "Dossier Cards" for interactive disclosure.
 *   **SAM Calculation:** Visualized as a "Command Calculator" interface.
+
+## 6. Mobile Responsiveness & Polish
+
+*   **Slide 4 (SOM):** Adjusted grid to stack vertically on mobile (<768px) and hid the vertical divider line.
+*   **Slide 5 (Expansion):** Changed 4-column grid to single-column stack on mobile to prevent squished content.
+*   **Slide 7 (Summary):**
+    *   Redesigned for clarity: Shortened headline, replaced long quote with metric cards.
+    *   Responsive Grid: Metric cards stack vertically on mobile.
+    *   Font Sizes: Added `text-huge` and `text-large` overrides for mobile screens to prevent overflow.

@@ -130,7 +130,7 @@ const WhyNow: React.FC = () => {
 
                             <div className="glass-panel" style={{ padding: '1.5rem', borderLeft: '4px solid var(--color-alert-red)' }}>
                                 <div className="text-mono text-muted" style={{ fontSize: '0.8rem', marginBottom: '1rem' }}>ARREST DATA NOW INFLUENCES:</div>
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem' }}>
+                                <div className="influences-grid">
                                     {WHY_NOW_CONFIG.systemicRisk.influences.map((item, i) => (
                                         <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#fff' }}>
                                             <span className="text-red">›</span>
@@ -387,7 +387,7 @@ const WhyNow: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', maxWidth: '900px' }}>
+                            <div className="cost-comparison-grid">
                                 {/* Coverage Panel */}
                                 <div
                                     className="glass-panel"
@@ -525,14 +525,7 @@ const WhyNow: React.FC = () => {
                             </p>
 
                             {/* Pipeline Diagram */}
-                            <div className="pipeline-diagram" style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '0',
-                                marginBottom: '3rem',
-                                flexWrap: 'wrap'
-                            }}>
+                            <div className="pipeline-diagram-container">
                                 {/* Sources */}
                                 <div className="pipeline-node" style={{ textAlign: 'center' }}>
                                     <div style={{
@@ -551,7 +544,7 @@ const WhyNow: React.FC = () => {
                                 </div>
 
                                 {/* Arrow */}
-                                <div className="pipeline-arrow" style={{ padding: '0 1rem', color: 'var(--color-grid)' }}>→</div>
+                                <div className="pipeline-arrow">→</div>
 
                                 {/* ArrestDelta */}
                                 <div className="pipeline-node" style={{ textAlign: 'center' }}>
@@ -572,7 +565,7 @@ const WhyNow: React.FC = () => {
                                 </div>
 
                                 {/* Arrow */}
-                                <div className="pipeline-arrow" style={{ padding: '0 1rem', color: 'var(--color-alert-red)' }}>→</div>
+                                <div className="pipeline-arrow">→</div>
 
                                 {/* Enterprise */}
                                 <div className="pipeline-node" style={{ textAlign: 'center' }}>
@@ -629,7 +622,7 @@ const WhyNow: React.FC = () => {
                                 {WHY_NOW_CONFIG.aiStakes.content}
                             </p>
 
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+                            <div className="ai-stakes-grid">
                                 {/* Escalations */}
                                 <div>
                                     {WHY_NOW_CONFIG.aiStakes.escalations.map((esc, i) => (
@@ -707,6 +700,74 @@ const WhyNow: React.FC = () => {
                         @keyframes blastExpand {
                             0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
                             100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+                        }
+
+                        /* RESPONSIVE LAYOUTS */
+                        .influences-grid {
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                            gap: 0.75rem;
+                        }
+
+                        .cost-comparison-grid {
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 2rem;
+                            max-width: 900px;
+                        }
+
+                        .pipeline-diagram-container {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 0;
+                            margin-bottom: 3rem;
+                            flex-wrap: wrap;
+                        }
+                        
+                        .pipeline-arrow {
+                            padding: 0 1rem;
+                            color: var(--color-grid);
+                            transition: transform 0.3s;
+                        }
+
+                        .ai-stakes-grid {
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 4rem;
+                            align-items: center;
+                        }
+
+                        /* MOBILE OVERRIDES */
+                        @media (max-width: 768px) {
+                            .influences-grid {
+                                grid-template-columns: 1fr;
+                            }
+
+                            .cost-comparison-grid {
+                                grid-template-columns: 1fr;
+                                gap: 1.5rem;
+                            }
+
+                            .pipeline-diagram-container {
+                                flex-direction: column;
+                                gap: 1rem;
+                            }
+
+                            .pipeline-arrow {
+                                transform: rotate(90deg);
+                                margin: 0.5rem 0;
+                            }
+
+                            .ai-stakes-grid {
+                                grid-template-columns: 1fr;
+                                gap: 3rem;
+                            }
+                            
+                            /* Adjust blast radius container on mobile so it doesn't overflow */
+                            .blast-radius {
+                                transform: scale(0.8);
+                            }
                         }
                     `}</style>
                 </section>

@@ -337,12 +337,12 @@ const MarketSizing: React.FC = () => {
                                 }
                             `}</style>
 
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', gap: '2rem', alignItems: 'center' }}>
+                            <div className="ms-som-grid">
                                 <div>
                                     <div className="text-huge text-red" style={{ fontSize: '4rem', lineHeight: 1 }}>20–30</div>
                                     <div className="text-mono text-muted" style={{ marginTop: '0.5rem' }}>CUSTOMERS</div>
                                 </div>
-                                <div style={{ height: '80px', background: 'var(--color-grid)' }}></div>
+                                <div className="ms-som-divider"></div>
                                 <div>
                                     <div className="text-huge text-red" style={{ fontSize: '3rem', lineHeight: 1 }}>$3.5M–$5.5M</div>
                                     <div className="text-mono text-muted" style={{ marginTop: '0.5rem' }}>ARR</div>
@@ -367,7 +367,7 @@ const MarketSizing: React.FC = () => {
                             </h2>
                         </div>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', height: '500px' }}>
+                        <div className="ms-expansion-grid">
                             {MARKET_SIZING_CONFIG.expansionLevers.map((lever, i) => (
                                 <div
                                     key={i}
@@ -481,14 +481,8 @@ const MarketSizing: React.FC = () => {
                         </h2>
 
                         {/* Key Metrics Summary */}
-                        <div className="animate-fade-in-up" style={{
-                            animationDelay: '0.1s',
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(3, 1fr)',
-                            gap: '1.5rem',
-                            marginBottom: '3rem',
-                            maxWidth: '800px',
-                            margin: '0 auto 3rem'
+                        <div className="animate-fade-in-up ms-summary-grid" style={{
+                            animationDelay: '0.1s'
                         }}>
                             <div className="glass-panel" style={{ padding: '1.5rem', textAlign: 'center' }}>
                                 <div className="text-red text-mono" style={{ fontSize: '2rem', fontWeight: 'bold' }}>$175M+</div>
@@ -561,6 +555,75 @@ const MarketSizing: React.FC = () => {
                 showPrev={showPrev}
                 showNext={showNext}
             />
+
+            <style>{`
+                /* Responsive Grid Overrides */
+                .ms-som-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1px 1fr;
+                    gap: 2rem;
+                    align-items: center;
+                }
+                .ms-expansion-grid {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 1rem;
+                    height: 500px;
+                }
+                .ms-summary-grid {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 1.5rem;
+                    margin-bottom: 3rem;
+                    max-width: 800px;
+                    margin: 0 auto 3rem;
+                }
+                .ms-som-divider {
+                    height: 80px; 
+                    background: var(--color-grid);
+                }
+
+                @media (max-width: 768px) {
+                    .brand-section {
+                        padding: 4rem 1.5rem !important;
+                        overflow-y: auto !important;
+                        scrollbar-gutter: stable; /* Prevents layout shift when scrollbar appears */
+                    }
+                    .text-huge {
+                        font-size: 3rem !important;
+                    }
+                    .text-large {
+                        font-size: 2rem !important;
+                    }
+                    
+                    /* Slide 4 SOM */
+                    .ms-som-grid {
+                        grid-template-columns: 1fr !important;
+                        gap: 2rem !important;
+                    }
+                    .ms-som-divider {
+                        display: none;
+                    }
+
+                    /* Slide 5 Expansion */
+                    .ms-expansion-grid {
+                        grid-template-columns: 1fr !important;
+                        height: auto !important;
+                        overflow-y: auto !important;
+                        max-height: 60vh;
+                    }
+
+                    /* Slide 7 Summary */
+                    .ms-summary-grid {
+                        grid-template-columns: 1fr !important;
+                    }
+                    
+                    /* General adjustments */
+                    .glass-panel {
+                        padding: 1.5rem !important;
+                    }
+                }
+            `}</style>
         </>
     );
 };
