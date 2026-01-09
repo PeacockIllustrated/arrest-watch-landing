@@ -26,6 +26,7 @@ interface DeckHubAuthContextType {
     isAuthenticated: boolean;
     accessibleDecks: string[];
     loading: boolean;
+    login: (email: string, password: string) => Promise<{ success: boolean; message: string }>;
     logout: () => Promise<void>;
     checkAccess: (deckId: string) => boolean;
     refreshDeckAccess: () => Promise<void>;
@@ -129,6 +130,34 @@ export const DeckHubAuthProvider: React.FC<{ children: ReactNode }> = ({ childre
         setAccessibleDecks([]);
     };
 
+    const login = async (email: string, password: string): Promise<{ success: boolean; message: string }> => {
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email,
+                password
+            });
+
+            if (error) {
+                return { success: false, message: error.message };
+            }
+
+            if (data.user) {
+                setUser({
+                    id: data.user.id,
+                    email: data.user.email || '',
+                    name: data.user.user_metadata?.name
+                });
+                await fetchAccessibleDecks(data.user.id);
+                return { success: true, message: 'Access granted' };
+            }
+
+            return { success: false, message: 'Login failed' };
+        } catch (err) {
+            console.error('Login error:', err);
+            return { success: false, message: 'An unexpected error occurred' };
+        }
+    };
+
     const checkAccess = (deckId: string): boolean => {
         return accessibleDecks.includes(deckId);
     };
@@ -146,6 +175,7 @@ export const DeckHubAuthProvider: React.FC<{ children: ReactNode }> = ({ childre
                 isAuthenticated: !!user,
                 accessibleDecks,
                 loading,
+                login,
                 logout,
                 checkAccess,
                 refreshDeckAccess
