@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PageHeader, Card, CardBody, Badge, Button, Input, EmptyState } from '../../components/ui';
 import { PersonIcon, LocationIcon, ListIcon } from '../../components/portal/Icons';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 // =============================================================================
 // TYPES - Ready for Supabase integration
@@ -61,6 +62,7 @@ const statusConfig: Record<EmployeeStatus, { label: string; badge: 'success' | '
 // =============================================================================
 
 const Employees: React.FC = () => {
+    usePageTitle('Employees');
     const navigate = useNavigate();
 
     return (

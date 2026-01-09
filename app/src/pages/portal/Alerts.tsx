@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PageHeader, Card, CardBody, Badge, Button, Input, EmptyState } from '../../components/ui';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 type AlertSeverity = 'critical' | 'high' | 'medium' | 'low';
 type AlertStatus = 'new' | 'acknowledged' | 'resolved';
@@ -32,6 +33,7 @@ const severityConfig: Record<AlertSeverity, { color: string; badge: 'danger' | '
 };
 
 const Alerts: React.FC = () => {
+    usePageTitle('Alerts');
     const [selectedSeverity, setSelectedSeverity] = useState<AlertSeverity | 'all'>('all');
     const [selectedStatus, setSelectedStatus] = useState<AlertStatus | 'all'>('all');
 

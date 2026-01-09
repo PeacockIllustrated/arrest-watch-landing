@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { usePageTitle } from '../hooks/usePageTitle';
 import '../styles/landing.css';
 
 const Terms: React.FC = () => {
+    usePageTitle('Terms of Service');
     useEffect(() => {
         document.body.classList.add('landing-page');
         return () => {

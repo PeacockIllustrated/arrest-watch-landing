@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import TimelinePhase from '../../components/admin/TimelinePhase';
 import AddTaskModal from '../../components/admin/AddTaskModal';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 interface Task {
     id: string;
@@ -14,6 +15,7 @@ interface Task {
 }
 
 const PersonnelPage: React.FC = () => {
+    usePageTitle('Timeline');
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);

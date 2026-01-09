@@ -6,6 +6,7 @@ import { DeckHubAuthProvider, useDeckHubAuth } from '../components/deckhub/DeckH
 import DeckHubLoginModal from '../components/deckhub/DeckHubLoginModal';
 import OnboardingModal from '../components/investor/_legacy/OnboardingModal';
 import { DECKS, type Deck } from '../lib/decks';
+import { usePageTitle } from '../hooks/usePageTitle';
 import '../styles/brand.css';
 
 // ============ TYPING EFFECT COMPONENT ============
@@ -291,6 +292,7 @@ const DeckCard: React.FC<{
 
 // ============ DECK HUB CONTENT ============
 const DeckHubContent: React.FC = () => {
+    usePageTitle('Decks');
     const { isAuthenticated, user, accessibleDecks, loading, logout } = useDeckHubAuth();
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showOnboardingModal, setShowOnboardingModal] = useState(false);

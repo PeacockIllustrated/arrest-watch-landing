@@ -7,8 +7,10 @@ import UberCaseStudies from '../components/uber/UberCaseStudies';
 import UberRealWorldCases from '../components/uber/UberRealWorldCases';
 import UberTechSection from '../components/uber/UberTechSection';
 import UberAsk from '../components/uber/UberAsk';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 const UberPack: React.FC = () => {
+    usePageTitle('Uber Pitch');
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showPrev, setShowPrev] = useState(false);
     const [showNext, setShowNext] = useState(true);

@@ -15,6 +15,7 @@ import Slide12_Valuation from '../components/investor/slides/Slide12_Valuation';
 import Slide13_Raise from '../components/investor/slides/Slide13_Raise';
 import Slide14_WhyNow from '../components/investor/slides/Slide14_WhyNow';
 import Slide15_Closing from '../components/investor/slides/Slide15_Closing';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 const SLIDE_TITLES = [
     "Problem", "Solution", "Product", "Customers", "Market",
@@ -23,6 +24,7 @@ const SLIDE_TITLES = [
 ];
 
 const InvestorPack: React.FC = () => {
+    usePageTitle('Investor Pitch');
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showPrev, setShowPrev] = useState(false);
     const [showNext, setShowNext] = useState(true);

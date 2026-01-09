@@ -2,12 +2,14 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationArrows from '../components/NavigationArrows';
 import '../styles/brand.css';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 const SLIDE_TITLES = [
     "Intro", "Objective", "Buying Center", "Coach & Cover", "Win Strategy", "Close Plan", "Final"
 ];
 
 const UberClosePlan: React.FC = () => {
+    usePageTitle('Uber Close Plan');
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showPrev, setShowPrev] = useState(false);
     const [showNext, setShowNext] = useState(true);

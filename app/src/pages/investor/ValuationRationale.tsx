@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
 import RadarNode from '../../components/investor/ui/RadarNode';
 import OnboardingModal from '../../components/investor/_legacy/OnboardingModal';
+import { usePageTitle } from '../../hooks/usePageTitle';
 import '../../styles/brand.css';
 
 const SLIDE_TITLES = [
@@ -10,6 +11,7 @@ const SLIDE_TITLES = [
 ];
 
 const ValuationRationale: React.FC = () => {
+    usePageTitle('Valuation');
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showPrev, setShowPrev] = useState(false);
     const [showNext, setShowNext] = useState(true);

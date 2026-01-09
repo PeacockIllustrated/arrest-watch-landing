@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { PageHeader, Card, CardHeader, CardBody, Badge, SkeletonCard } from '../../components/ui';
 import { SearchIcon, ListIcon, ChartIcon, PersonIcon } from '../../components/portal/Icons';
 import DeepMapViz from '../../components/visuals/DeepMapViz';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 // =============================================================================
 // TYPES - Ready for Supabase integration
@@ -58,6 +59,7 @@ const quickActions = [
 // =============================================================================
 
 const Dashboard: React.FC = () => {
+    usePageTitle('Dashboard');
     const navigate = useNavigate();
     const [loading] = React.useState(false);
 

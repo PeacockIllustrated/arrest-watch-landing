@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PageHeader, Card, CardBody, Badge, Button, Input, EmptyState } from '../../components/ui';
 import { LocationIcon, ListIcon, PersonIcon } from '../../components/portal/Icons';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 // =============================================================================
 // TYPES - Ready for Supabase integration
@@ -74,6 +75,7 @@ const typeLabels: Record<IncidentType, string> = {
 // =============================================================================
 
 const Incidents: React.FC = () => {
+    usePageTitle('Incidents');
     const navigate = useNavigate();
     const [viewMode, setViewMode] = useState<ViewMode>('list');
 

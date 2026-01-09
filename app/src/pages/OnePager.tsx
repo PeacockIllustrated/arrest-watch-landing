@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import logoMark from '../assets/logo-mark.png';
 import iconWhite from '../assets/icon-white.png';
 import founderImg from '../assets/founder.png';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 const OnePager: React.FC = () => {
+    usePageTitle('One Pager');
     // Force allow scrolling and height auto for this page specifically
     useEffect(() => {
         document.body.style.overflowY = 'auto'; // allow vertical scroll

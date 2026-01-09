@@ -6,9 +6,11 @@ import cofounder from '../assets/co-founder.png';
 import OnboardingModal from '../components/investor/_legacy/OnboardingModal';
 import DashboardMockup from '../components/visuals/DashboardMockup';
 import { supabase } from '../lib/supabase';
+import { usePageTitle } from '../hooks/usePageTitle';
 import '../styles/landing.css';
 
 const Landing: React.FC = () => {
+    usePageTitle('Home');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isScanning, setIsScanning] = useState(false);
     const observerRef = useRef<IntersectionObserver | null>(null);

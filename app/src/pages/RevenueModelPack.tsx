@@ -12,6 +12,7 @@ import Slide09_SanityCheck from '../components/investor/slides_revenue/Slide09_S
 import Slide10_Scenarios from '../components/investor/slides_revenue/Slide10_Scenarios';
 import Slide11_Summary from '../components/investor/slides_revenue/Slide11_Summary';
 import Slide12_Positioning from '../components/investor/slides_revenue/Slide12_Positioning';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 const SLIDE_TITLES = [
     "Outcome", "Assumptions", "Timeline", "Deal Mix", "ARR Build", "Pipeline",
@@ -19,6 +20,7 @@ const SLIDE_TITLES = [
 ];
 
 const RevenueModelPack: React.FC = () => {
+    usePageTitle('Revenue Model');
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showPrev, setShowPrev] = useState(false);
     const [showNext, setShowNext] = useState(true);

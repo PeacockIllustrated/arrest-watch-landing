@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 const AdminLogin: React.FC = () => {
+    usePageTitle('Admin Login');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');

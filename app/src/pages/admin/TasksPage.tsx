@@ -3,8 +3,10 @@ import TaskCard from '../../components/admin/TaskCard';
 import type { Task, TaskCategory, TaskPriority } from '../../components/admin/TaskCard';
 import { supabase } from '../../lib/supabase';
 import NewTaskModal from '../../components/admin/NewTaskModal';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 const TasksPage: React.FC = () => {
+    usePageTitle('Tasks');
     const [tasks, setTasks] = useState<Task[]>([]);
     const [filter, setFilter] = useState<'all' | 'me' | 'michael'>('all');
     const [isModalOpen, setIsModalOpen] = useState(false);

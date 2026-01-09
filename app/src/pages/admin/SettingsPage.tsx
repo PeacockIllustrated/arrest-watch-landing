@@ -1,6 +1,8 @@
 import React from 'react';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 const SettingsPage: React.FC = () => {
+    usePageTitle('Admin Settings');
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', color: 'white' }}>
             <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>SYSTEM SETTINGS</h2>

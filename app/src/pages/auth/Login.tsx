@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
+import { usePageTitle } from '../../hooks/usePageTitle';
 import '../../styles/portal.css';
 
 const Login: React.FC = () => {
+    usePageTitle('Login');
     const navigate = useNavigate();
     const location = useLocation();
     const [email, setEmail] = useState('');

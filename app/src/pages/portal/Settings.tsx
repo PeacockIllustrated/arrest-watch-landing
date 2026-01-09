@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { PageHeader, Card, CardHeader, CardBody, Button, Input, ComingSoon } from '../../components/ui';
 import { useAuth } from '../../hooks/useAuth';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 type SettingsTab = 'profile' | 'organisation' | 'notifications' | 'api' | 'security' | 'data';
 
 const Settings: React.FC = () => {
+    usePageTitle('Settings');
     const { user, profile } = useAuth();
     const [activeTab, setActiveTab] = useState<SettingsTab>('profile');
 

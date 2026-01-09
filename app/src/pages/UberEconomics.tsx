@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import NavigationArrows from '../components/NavigationArrows';
 import RadarNode from '../components/investor/ui/RadarNode';
 import '../styles/brand.css';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 const SLIDE_TITLES = [
     "Intro", "Baseline", "Pilot", "Cost/Risk", "Rounding Error", "Why Us", "Expansion", "Closing"
 ];
 
 const UberEconomics: React.FC = () => {
+    usePageTitle('Uber Economics');
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showPrev, setShowPrev] = useState(false);
     const [showNext, setShowNext] = useState(true);

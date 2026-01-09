@@ -9,8 +9,10 @@ import ComponentsSection from '../components/brand/ComponentsSection';
 import DashboardSection from '../components/brand/DashboardSection';
 import EffectsSection from '../components/brand/EffectsSection';
 import NavigationArrows from '../components/NavigationArrows';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 const BrandPack: React.FC = () => {
+    usePageTitle('Brand Pack');
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showPrev, setShowPrev] = useState(false);
     const [showNext, setShowNext] = useState(true);

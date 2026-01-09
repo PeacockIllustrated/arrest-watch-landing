@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { DECKS } from '../../lib/decks';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 interface ProvisionedUser {
     id: string;
@@ -23,6 +24,7 @@ const generatePassword = (): string => {
 };
 
 const ProvisionPage: React.FC = () => {
+    usePageTitle('Provision Access');
     // Form state
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');

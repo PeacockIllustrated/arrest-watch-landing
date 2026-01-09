@@ -10,6 +10,7 @@ import Slide07_Pipeline from '../components/investor/slides_gtm/Slide07_Pipeline
 import Slide08_Marketing from '../components/investor/slides_gtm/Slide08_Marketing';
 import Slide09_NotDoing from '../components/investor/slides_gtm/Slide09_NotDoing';
 import Slide10_Resourcing from '../components/investor/slides_gtm/Slide10_Resourcing';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 const SLIDE_TITLES = [
     "Objective", "ICP", "Personas", "Packaging", "Pricing",
@@ -17,6 +18,7 @@ const SLIDE_TITLES = [
 ];
 
 const GTMPackDelta: React.FC = () => {
+    usePageTitle('GTM Strategy');
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showPrev, setShowPrev] = useState(false);
     const [showNext, setShowNext] = useState(true);

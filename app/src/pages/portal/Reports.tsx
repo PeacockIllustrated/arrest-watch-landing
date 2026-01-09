@@ -1,6 +1,7 @@
 import React from 'react';
 import { PageHeader, Card, CardHeader, CardBody, Button, ComingSoon } from '../../components/ui';
 import { ChartIcon, PersonIcon, TrendIcon, DocumentIcon, RiskIcon, CheckIcon } from '../../components/portal/Icons';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 // =============================================================================
 // MVP REPORT TEMPLATES
@@ -32,6 +33,7 @@ const recentReports = [
 // =============================================================================
 
 const Reports: React.FC = () => {
+    usePageTitle('Reports');
     return (
         <div>
             <PageHeader

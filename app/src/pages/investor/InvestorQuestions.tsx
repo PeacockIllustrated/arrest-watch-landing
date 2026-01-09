@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
 import RadarNode from '../../components/investor/ui/RadarNode';
 import '../../styles/brand.css';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 const SLIDE_TITLES = [
     "Why", "Friction", "Pain", "Failed", "Insight", "Solvable", "Tailwinds", "Close"
 ];
 
 const InvestorQuestions: React.FC = () => {
+    usePageTitle('Why ArrestDelta');
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showPrev, setShowPrev] = useState(false);
     const [showNext, setShowNext] = useState(true);
