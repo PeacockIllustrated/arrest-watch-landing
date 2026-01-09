@@ -57,7 +57,7 @@ export const DeckHubAuthProvider: React.FC<{ children: ReactNode }> = ({ childre
             }
 
             // 2. Fetch User Role from Profiles
-            const { data: profileData, error: profileError } = await supabase
+            const { data: profileData } = await supabase
                 .from('profiles')
                 .select('role')
                 .eq('id', userId)
