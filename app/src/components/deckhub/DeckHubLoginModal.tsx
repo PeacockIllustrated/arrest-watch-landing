@@ -10,15 +10,17 @@ interface DeckHubLoginModalProps {
 const DeckHubLoginModal: React.FC<DeckHubLoginModalProps> = ({ isOpen, onClose, onRegisterInterest }) => {
     const { login } = useDeckHubAuth();
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [message, setMessage] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!email.trim()) return;
+        if (!email.trim() || !password.trim()) return;
 
         setStatus('loading');
-        const result = await login(email);
+        const result = await login(email, password);
 
         if (result.success) {
             setStatus('success');
@@ -27,6 +29,7 @@ const DeckHubLoginModal: React.FC<DeckHubLoginModalProps> = ({ isOpen, onClose, 
                 onClose();
                 setStatus('idle');
                 setEmail('');
+                setPassword('');
             }, 1500);
         } else {
             setStatus('error');
@@ -108,6 +111,7 @@ const DeckHubLoginModal: React.FC<DeckHubLoginModalProps> = ({ isOpen, onClose, 
                         </div>
                     ) : (
                         <form onSubmit={handleSubmit}>
+                            {/* Email Field */}
                             <div style={{ marginBottom: '1.5rem' }}>
                                 <label style={{
                                     display: 'block',
@@ -116,7 +120,7 @@ const DeckHubLoginModal: React.FC<DeckHubLoginModalProps> = ({ isOpen, onClose, 
                                     marginBottom: '0.5rem',
                                     letterSpacing: '0.1em'
                                 }}>
-                                    VERIFY IDENTITY
+                                    EMAIL
                                 </label>
                                 <input
                                     type="email"
@@ -137,6 +141,58 @@ const DeckHubLoginModal: React.FC<DeckHubLoginModalProps> = ({ isOpen, onClose, 
                                 />
                             </div>
 
+                            {/* Password Field */}
+                            <div style={{ marginBottom: '1.5rem' }}>
+                                <label style={{
+                                    display: 'block',
+                                    fontSize: '0.7rem',
+                                    color: '#666',
+                                    marginBottom: '0.5rem',
+                                    letterSpacing: '0.1em'
+                                }}>
+                                    PASSWORD
+                                </label>
+                                <div style={{ position: 'relative' }}>
+                                    <input
+                                        type={showPassword ? 'text' : 'password'}
+                                        value={password}
+                                        onChange={e => setPassword(e.target.value)}
+                                        placeholder="Enter password"
+                                        disabled={status === 'loading'}
+                                        style={{
+                                            width: '100%',
+                                            padding: '1rem',
+                                            paddingRight: '4rem',
+                                            background: 'rgba(255,255,255,0.05)',
+                                            border: '1px solid #333',
+                                            color: 'white',
+                                            fontFamily: 'var(--font-mono)',
+                                            fontSize: '1rem',
+                                            boxSizing: 'border-box'
+                                        }}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        style={{
+                                            position: 'absolute',
+                                            right: '1rem',
+                                            top: '50%',
+                                            transform: 'translateY(-50%)',
+                                            background: 'none',
+                                            border: 'none',
+                                            color: '#666',
+                                            cursor: 'pointer',
+                                            fontSize: '0.7rem',
+                                            fontFamily: 'var(--font-mono)',
+                                            letterSpacing: '0.05em'
+                                        }}
+                                    >
+                                        {showPassword ? 'HIDE' : 'SHOW'}
+                                    </button>
+                                </div>
+                            </div>
+
                             {status === 'error' && (
                                 <div style={{
                                     padding: '1rem',
@@ -152,7 +208,7 @@ const DeckHubLoginModal: React.FC<DeckHubLoginModalProps> = ({ isOpen, onClose, 
 
                             <button
                                 type="submit"
-                                disabled={status === 'loading' || !email.trim()}
+                                disabled={status === 'loading' || !email.trim() || !password.trim()}
                                 style={{
                                     width: '100%',
                                     padding: '1rem',
@@ -163,7 +219,7 @@ const DeckHubLoginModal: React.FC<DeckHubLoginModalProps> = ({ isOpen, onClose, 
                                     fontSize: '0.9rem',
                                     fontWeight: 'bold',
                                     cursor: status === 'loading' ? 'wait' : 'pointer',
-                                    opacity: status === 'loading' || !email.trim() ? 0.7 : 1
+                                    opacity: status === 'loading' || !email.trim() || !password.trim() ? 0.7 : 1
                                 }}
                             >
                                 {status === 'loading' ? 'VERIFYING...' : 'ACCESS DECKS'}

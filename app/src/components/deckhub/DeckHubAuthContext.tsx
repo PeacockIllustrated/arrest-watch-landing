@@ -2,18 +2,19 @@ import React, { createContext, useContext, useState, useEffect, type ReactNode }
 import { supabase } from '../../lib/supabase';
 
 /**
- * SECURITY NOTE: This authentication is for low-security deck access only.
- * It uses email verification against the leads table.
+ * SECURITY NOTE: This authentication is for deck access only.
+ * It uses email + password verification against the leads table.
  * 
  * For higher security requirements, consider:
- * - Implementing magic link (OTP) email verification
  * - Using Supabase Auth for full authentication
  * - Adding rate limiting on login attempts
+ * - Implementing password hashing
  */
 
 interface DeckHubUser {
     email: string;
     leadId: string;
+    name?: string;
 }
 
 interface StoredSession {
@@ -26,7 +27,7 @@ interface DeckHubAuthContextType {
     isAuthenticated: boolean;
     accessibleDecks: string[];
     loading: boolean;
-    login: (email: string) => Promise<{ success: boolean; message: string }>;
+    login: (email: string, password: string) => Promise<{ success: boolean; message: string }>;
     logout: () => void;
     checkAccess: (deckId: string) => boolean;
 }
@@ -80,14 +81,14 @@ export const DeckHubAuthProvider: React.FC<{ children: ReactNode }> = ({ childre
         setLoading(false);
     };
 
-    const login = async (email: string): Promise<{ success: boolean; message: string }> => {
+    const login = async (email: string, password: string): Promise<{ success: boolean; message: string }> => {
         // Normalize email to prevent case-sensitivity issues
         const normalizedEmail = email.toLowerCase().trim();
 
-        // Check if email exists in leads table
+        // Check if email exists in leads table with matching password
         const { data: leads, error } = await supabase
             .from('leads')
-            .select('id, email, name')
+            .select('id, email, name, password')
             .eq('email', normalizedEmail)
             .limit(1);
 
@@ -96,15 +97,22 @@ export const DeckHubAuthProvider: React.FC<{ children: ReactNode }> = ({ childre
             return { success: false, message: 'System error. Please try again.' };
         }
 
-        // Don't reveal whether email exists or not (prevent enumeration)
+        // Generic error message to prevent enumeration
         if (!leads || leads.length === 0) {
-            return { success: false, message: 'Access request submitted. Check your email for confirmation.' };
+            return { success: false, message: 'Invalid email or password.' };
         }
 
         const lead = leads[0];
+
+        // Check if password matches
+        if (!lead.password || lead.password !== password) {
+            return { success: false, message: 'Invalid email or password.' };
+        }
+
         const deckUser: DeckHubUser = {
             email: lead.email,
-            leadId: lead.id
+            leadId: lead.id,
+            name: lead.name
         };
 
         // Store session with expiration
@@ -158,4 +166,3 @@ export const useDeckHubAuth = (): DeckHubAuthContextType => {
 };
 
 export default DeckHubAuthContext;
-

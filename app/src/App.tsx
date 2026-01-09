@@ -22,6 +22,7 @@ import LeadsPage from './pages/admin/LeadsPage';
 import PersonnelPage from './pages/admin/PersonnelPage';
 import TasksPage from './pages/admin/TasksPage';
 import SettingsPage from './pages/admin/SettingsPage';
+import ProvisionPage from './pages/admin/ProvisionPage';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 import AdminLayout from './components/admin/AdminLayout';
 
@@ -55,7 +56,7 @@ import AuthCallback from './pages/auth/Callback';
 // Public
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
-import EmailSignature from './pages/EmailSignature';
+
 
 // Site Gate (Auth wrapper for marketing pages)
 import SiteGatePage from './pages/SiteGatePage';
@@ -89,7 +90,7 @@ function App() {
         {/* Public Pages (no Layout wrapper) */}
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
-        <Route path="/signature" element={<EmailSignature />} />
+
 
         {/* Auth Routes */}
         <Route path="/auth/login" element={<AuthLogin />} />
@@ -155,6 +156,7 @@ function App() {
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<DashboardHome />} />
           <Route path="leads" element={<LeadsPage />} />
+          <Route path="provision" element={<ProvisionPage />} />
           <Route path="personnel" element={<PersonnelPage />} />
           <Route path="tasks" element={<TasksPage />} />
           <Route path="settings" element={<SettingsPage />} />

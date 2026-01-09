@@ -13,6 +13,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onClose }) => {
     const menuItems = [
         { label: 'OVERVIEW', path: '/admin/dashboard' },
         { label: 'LEADS', path: '/admin/leads' },
+        { label: 'PROVISION', path: '/admin/provision' },
         { label: 'PERSONNEL', path: '/admin/personnel' },
         { label: 'TASKS', path: '/admin/tasks' },
         { label: 'SETTINGS', path: '/admin/settings' },

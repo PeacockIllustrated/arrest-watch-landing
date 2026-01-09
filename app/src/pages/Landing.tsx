@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import logoMain from '../assets/logo_main.png';
-import mugshot from '../assets/mugshot.jpg';
+import VerificationConsoleVisual from '../components/visuals/VerificationConsoleVisual';
 import founder from '../assets/founder.png';
 import cofounder from '../assets/co-founder.png';
 import OnboardingModal from '../components/investor/_legacy/OnboardingModal';
@@ -117,22 +117,23 @@ const Landing: React.FC = () => {
                     <div className="grid-2">
                         <div>
                             <span className="text-label">The Threat</span>
-                            <h2 className="text-large">Static background checks expire the moment they are completed.</h2>
+                            <h2 className="text-large">Static and refresh-based checks expire the moment they are completed.</h2>
                             <p className="text-muted" style={{ marginTop: '1rem' }}></p>
                         </div>
                         <div className="flex-col">
                             <div className="panel reveal-text">
                                 <h3 className="text-mono" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>IDENTITY RE-ENTRY</h3>
-                                <p className="text-muted">Onboarded personnel may encounter law enforcement events after hiring. Static checks do not provide post-access visibility.</p>
+                                <p className="text-muted">Onboarded personnel may encounter law enforcement events after access is granted. Without continuous identity verification, systems cannot reliably detect or confirm post-access change.</p>
                             </div>
                             <div className="panel reveal-text" style={{ transitionDelay: '0.1s' }}>
                                 <h3 className="text-mono" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>REACTIVE DISCOVERY</h3>
-                                <p className="text-muted">Arrests are often discovered after the fact — sometimes via third parties or the press.</p>
+                                <p className="text-muted">Arrests are often discovered after the fact, through third parties, delayed records, or public exposure, increasing both response cost and liability.</p>
                             </div>
                             <div className="panel reveal-text" style={{ transitionDelay: '0.2s' }}>
                                 <h3 className="text-mono" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>COST OF REACTION</h3>
                                 <p className="text-muted">Incidents are significantly more expensive to manage than early intervention.</p>
                             </div>
+                            <p className="text-muted" style={{ marginTop: '2rem', fontSize: '0.85rem', opacity: 0.7 }}>Modern risk systems require verified, identity-certain visibility between formal checks, not reactive discovery after the fact.</p>
                         </div>
                     </div>
                 </div>
@@ -142,24 +143,17 @@ const Landing: React.FC = () => {
             <section className="section" id="solution">
                 <div className="container">
                     <div className="grid-2">
-                        <div className="face-container" id="face-demo">
-                            <img src={mugshot} className="face-img" alt="Subject" />
-                            <div className="face-overlay"></div>
-                            <div className="scan-line"></div>
-                            <div style={{ position: 'absolute', bottom: '20px', left: '20px', fontFamily: 'var(--font-mono)', fontSize: '0.8rem' }}>
-                                <div id="scan-status">SCANNING...</div>
-                                <div id="scan-id" className="text-muted">ID: 884-29-1X</div>
-                            </div>
-                        </div>
+                        <VerificationConsoleVisual />
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                             <span className="text-label">The Solution</span>
-                            <h2 className="text-large">From arrest to alert... instantly.</h2>
+                            <h2 className="text-large">From arrest to verified action.</h2>
                             <ul style={{ listStyle: 'none', marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                <li className="panel reveal-text">Verification before access: Fast arrest history checks during onboarding or access requests.</li>
-                                <li className="panel reveal-text">Monitoring after access: Continuous monitoring for new arrest events.</li>
+                                <li className="panel reveal-text">Verification before access: Identity-confirmed arrest history checks during onboarding or access requests.</li>
+                                <li className="panel reveal-text">Monitoring after access: Continuous detection of new arrest events with identity resolution and state verification.</li>
                                 <li className="panel reveal-text">Alert routing: Signals delivered to HR, Legal, PR, and Security teams.</li>
                                 <li className="panel reveal-text">Operational workflow: From alert to case review and resolution.</li>
                             </ul>
+                            <p className="text-muted" style={{ marginTop: '1.5rem', fontSize: '0.85rem', opacity: 0.7 }}>ArrestDelta verifies identity and state transitions before alerts are issued, ensuring only stable, high-confidence signals reach operational teams.</p>
                         </div>
                     </div>
                 </div>
@@ -169,7 +163,11 @@ const Landing: React.FC = () => {
             <section className="section">
                 <div className="container">
                     <span className="text-label">Capability</span>
-                    <h2 className="text-large" style={{ marginBottom: '2rem' }}>Two Modes of Protection</h2>
+                    <h2 className="text-large" style={{ marginBottom: '1rem' }}>Dual Protection, Before and After Access</h2>
+                    <div style={{ marginBottom: '2rem' }}>
+                        <p className="text-muted" style={{ fontSize: '0.85rem', marginBottom: '0.5rem' }}>Mode 1 - Pre-Access Verification: identity-confirmed arrest checks during onboarding or access requests</p>
+                        <p className="text-muted" style={{ fontSize: '0.85rem' }}>Mode 2 - Post-Access Monitoring: continuous, verified detection of new arrest events after access is granted</p>
+                    </div>
                     <div className="capability-pipeline">
                         {/* Pipeline Track */}
                         <div className="capability-track"></div>
@@ -179,9 +177,9 @@ const Landing: React.FC = () => {
 
                         {/* Nodes */}
                         {[
-                            { title: 'COUNTY SOURCE', sub: 'RAW DATA' },
-                            { title: 'ARRESTDELTA', sub: 'PROCESSING' },
-                            { title: 'CLIENT SYSTEM', sub: 'ALERT' }
+                            { title: 'PUBLIC RECORDS SOURCES', sub: 'Fragmented - Noisy - Identity-ambiguous' },
+                            { title: 'ARRESTDELTA VERIFICATION LAYER', sub: 'Identity resolution - State verification - Confidence scoring' },
+                            { title: 'CLIENT SYSTEMS', sub: 'Alerts only when confidence thresholds are met' }
                         ].map((node, i) => (
                             <div key={i} className="panel capability-node">
                                 <div className="text-mono text-red" style={{ fontSize: '0.8rem', marginBottom: '0.5rem' }}>0{i + 1}</div>
@@ -201,17 +199,17 @@ const Landing: React.FC = () => {
                         <div className="metric-card reveal-text">
                             <span className="metric-value text-red" style={{ fontSize: '2.5rem' }}>REDUCED EXPOSURE</span>
                             <span className="text-muted text-mono"></span>
-                            <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>Reduce the gap between arrest and action.</p>
+                            <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>Reduce the gap between verified change and safe action.</p>
                         </div>
                         <div className="metric-card reveal-text" style={{ transitionDelay: '0.1s' }}>
-                            <span className="metric-value" style={{ fontSize: '2.5rem' }}>MINUTES, NOT DAYS</span>
+                            <span className="metric-value" style={{ fontSize: '2.5rem' }}>ACTION WHEN CONFIRMED</span>
                             <span className="text-muted text-mono"></span>
-                            <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>Drastically reduce response time.</p>
+                            <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>Decisions triggered only after verification thresholds are met.</p>
                         </div>
                         <div className="metric-card reveal-text" style={{ transitionDelay: '0.2s' }}>
-                            <span className="metric-value" style={{ fontSize: '2.5rem' }}>CONTINUOUS VISIBILITY</span>
+                            <span className="metric-value" style={{ fontSize: '2.5rem' }}>PERSISTENT, VERIFIED VISIBILITY</span>
                             <span className="text-muted text-mono"></span>
-                            <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>Nationwide coverage (expanding).</p>
+                            <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>Nationwide coverage with identity certainty and suppression of noise.</p>
                         </div>
                     </div>
                 </div>
@@ -223,7 +221,7 @@ const Landing: React.FC = () => {
                     <span className="text-label">Scale Intent</span>
                     <h2 className="text-large" style={{ marginBottom: '0.75rem' }}>Built for national magnitude</h2>
                     <p className="text-muted" style={{ marginBottom: '3rem', maxWidth: '700px' }}>
-                        Our architecture is designed to expand coverage while keeping verification ahead of alerts.
+                        Our architecture is designed to expand nationwide coverage while enforcing verification before alerts at every stage.
                     </p>
                     <div className="grid-3">
                         <div className="panel" style={{ padding: '2rem' }}>
@@ -232,9 +230,9 @@ const Landing: React.FC = () => {
                             <p className="text-muted" style={{ fontSize: '0.9rem' }}>Designed to support thousands of local jurisdictions as coverage expands.</p>
                         </div>
                         <div className="panel" style={{ padding: '2rem' }}>
-                            <div className="text-mono text-red" style={{ fontSize: '0.8rem', marginBottom: '0.75rem' }}>SPEED</div>
-                            <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.5rem' }}>Alerts in Minutes</div>
-                            <p className="text-muted" style={{ fontSize: '0.9rem' }}>Engineered for fast state-change detection — timings depend on source latency and verification.</p>
+                            <div className="text-mono text-red" style={{ fontSize: '0.8rem', marginBottom: '0.75rem' }}>LOW-LATENCY VERIFICATION</div>
+                            <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.5rem' }}>Alerts delivered in minutes, once confidence thresholds are met</div>
+                            <p className="text-muted" style={{ fontSize: '0.9rem' }}>Engineered for rapid state-change detection once identity and verification checks are complete.</p>
                         </div>
                         <div className="panel" style={{ padding: '2rem' }}>
                             <div className="text-mono text-red" style={{ fontSize: '0.8rem', marginBottom: '0.75rem' }}>CONFIDENCE</div>
@@ -284,7 +282,7 @@ const Landing: React.FC = () => {
                     <div className="grid-2">
                         <div>
                             <span className="text-label">The Scope</span>
-                            <h2 className="text-large">160M Workers.<br />Zero Visibility.</h2>
+                            <h2 className="text-large">160M Workers.<br />Near-Zero Visibility Between Checks.</h2>
                             <p className="text-muted" style={{ marginTop: '1rem' }}>
                                 The US workforce is massive, but the gap in safety intelligence is critical.
                                 Trust-critical roles require more than a "hired" stamp.
@@ -292,10 +290,13 @@ const Landing: React.FC = () => {
                             <p className="text-muted" style={{ marginTop: '0.75rem', fontSize: '0.9rem', fontStyle: 'italic' }}>
                                 ArrestDelta focuses on the subset of roles where arrest-related changes create immediate operational, legal, or reputational risk.
                             </p>
+                            <p className="text-muted" style={{ marginTop: '0.75rem', fontSize: '0.85rem', opacity: 0.7 }}>
+                                Most existing systems provide visibility only at the point of hiring, not throughout active access.
+                            </p>
                         </div>
                         <div className="flex-col" style={{ justifyContent: 'center' }}>
                             <div className="flex-row" style={{ justifyContent: 'space-between', borderBottom: '1px solid var(--color-grid)', paddingBottom: '1rem', marginBottom: '1rem' }}>
-                                <span className="text-mono">TOTAL WORKFORCE</span>
+                                <span className="text-mono">TOTAL U.S. WORKFORCE</span>
                                 <span className="text-mono text-white">160M+</span>
                             </div>
                             <div className="flex-row" style={{ justifyContent: 'space-between', borderBottom: '1px solid var(--color-grid)', paddingBottom: '1rem', marginBottom: '1rem' }}>
@@ -303,8 +304,8 @@ const Landing: React.FC = () => {
                                 <span className="text-mono text-red">50M+</span>
                             </div>
                             <div className="flex-row" style={{ justifyContent: 'space-between' }}>
-                                <span className="text-mono">CURRENT VISIBILITY</span>
-                                <span className="text-mono text-muted">STATIC ONLY</span>
+                                <span className="text-mono">EFFECTIVE POST-ACCESS VISIBILITY</span>
+                                <span className="text-mono text-muted">Static only</span>
                             </div>
                         </div>
                     </div>
@@ -336,7 +337,7 @@ const Landing: React.FC = () => {
             {/* PRICING */}
             <section className="section">
                 <div className="container">
-                    <span className="text-label">Transparent Pricing</span>
+                    <span className="text-label">Scalable Pricing, Aligned to Risk</span>
                     <h2 className="text-large">Two Engines of Protection</h2>
                     <p className="text-muted" style={{ marginBottom: '2rem' }}>Simple, volume-based pricing for any scale.</p>
 
@@ -344,10 +345,10 @@ const Landing: React.FC = () => {
                         {/* TRANSACTIONAL */}
                         <div className="panel">
                             <div className="text-mono text-center" style={{ marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px solid var(--color-grid)' }}>
-                                TRANSACTIONAL SEARCH
+                                ON-DEMAND VERIFICATION
                             </div>
                             <p className="text-center text-muted" style={{ marginBottom: '2rem' }}>
-                                For pre-hire verification and access gates.
+                                For identity-confirmed verification at onboarding and access decision points.
                             </p>
                             <div className="text-center">
                                 <span className="text-large">$2.00 - $5.00</span>
@@ -362,10 +363,10 @@ const Landing: React.FC = () => {
                         {/* SUBSCRIPTION */}
                         <div className="panel" style={{ border: '1px solid var(--color-alert-red)', background: 'rgba(228,0,40,0.05)' }}>
                             <div className="text-mono text-center" style={{ marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px solid var(--color-alert-red)', color: 'var(--color-alert-red)' }}>
-                                CONTINUOUS MONITORING
+                                POST-ACCESS VERIFIED MONITORING
                             </div>
                             <p className="text-center text-muted" style={{ marginBottom: '2rem' }}>
-                                For active workforce and fleet monitoring.
+                                For active workforce and fleet monitoring, with identity resolution and confidence gating.
                             </p>
                             <div className="text-center">
                                 <span className="text-large">$3.00 - $5.00</span>
@@ -377,6 +378,8 @@ const Landing: React.FC = () => {
                             </div>
                         </div>
                     </div>
+
+                    <p className="text-muted text-center" style={{ marginTop: '2rem', fontSize: '0.85rem', opacity: 0.7 }}>Pricing reflects verification depth and confidence thresholds, not raw alert volume.</p>
 
                     <div className="text-center text-muted" style={{ marginTop: '2rem', fontSize: '0.75rem', fontStyle: 'italic', opacity: 0.6 }}>
                         * Indicative pricing for enterprise planning purposes only. Final rates depend on volume, API usage, and specific contract terms.
@@ -398,6 +401,7 @@ const Landing: React.FC = () => {
                             <div>
                                 <div className="text-mono" style={{ marginBottom: '0.2rem', fontSize: '1.1rem' }}>MICHAEL KING</div>
                                 <div className="text-muted" style={{ fontSize: '0.8rem', marginBottom: '1rem' }}>FOUNDER & CEO</div>
+                                <div className="text-muted" style={{ fontSize: '0.8rem', marginBottom: '1rem' }}>COMMERCIAL & GTM</div>
                                 <div style={{ paddingTop: '0.5rem', borderTop: '1px solid var(--color-grid)' }}>
                                     <div className="text-mono" style={{ fontSize: '0.8rem' }}>michael@arrestdelta.com</div>
                                     <div className="text-mono" style={{ fontSize: '0.8rem' }}>+44 7963 520703</div>
@@ -411,6 +415,7 @@ const Landing: React.FC = () => {
                             <div>
                                 <div className="text-mono" style={{ marginBottom: '0.2rem', fontSize: '1.1rem' }}>TOM PEACOCK</div>
                                 <div className="text-muted" style={{ fontSize: '0.8rem', marginBottom: '1rem' }}>CO-FOUNDER & CTO</div>
+                                <div className="text-muted" style={{ fontSize: '0.8rem', marginBottom: '1rem' }}>SYSTEMS & DATA INFRASTRUCTURE</div>
                                 <div style={{ paddingTop: '0.5rem', borderTop: '1px solid var(--color-grid)' }}>
                                     <div className="text-mono" style={{ fontSize: '0.8rem' }}>tom@arrestdelta.com</div>
                                 </div>
