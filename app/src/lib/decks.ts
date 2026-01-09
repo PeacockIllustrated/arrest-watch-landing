@@ -61,6 +61,46 @@ export const DECKS: Deck[] = [
         status: 'LIVE'
     },
     {
+        id: 'competitive-landscape',
+        title: 'COMPETITIVE LANDSCAPE',
+        route: '/investor-delta/appendix/competitive-landscape',
+        category: 'investor',
+        description: 'Ecosystem analysis: timeliness vs. decision confidence and defensive moat',
+        status: 'LIVE'
+    },
+    {
+        id: 'technical-defensibility',
+        title: 'TECHNICAL DEFENSIBILITY',
+        route: '/investor-delta/appendix/technical-defensibility',
+        category: 'investor',
+        description: 'Deep technical moat: verification logic, compounding learning, and execution complexity',
+        status: 'LIVE'
+    },
+    {
+        id: 'kill-criteria',
+        title: 'KILL CRITERIA',
+        route: '/investor-delta/appendix/kill-criteria',
+        category: 'investor',
+        description: 'Downside discipline: failure conditions, capital triggers, and scale guardrails',
+        status: 'LIVE'
+    },
+    {
+        id: 'founder-investor-fit',
+        title: 'FOUNDER–INVESTOR FIT',
+        route: '/investor-delta/appendix/founder-investor-fit',
+        category: 'investor',
+        description: 'Values and operating system alignment for long-term partnership',
+        status: 'LIVE'
+    },
+    {
+        id: 'customer-proof',
+        title: 'CUSTOMER PROOF',
+        route: '/investor-delta/appendix/customer-proof',
+        category: 'investor',
+        description: 'Early validation: enterprise signals, solution alignment, and engagement depth',
+        status: 'LIVE'
+    },
+    {
         id: 'gtm-plan',
         title: 'GTM PLAN',
         route: '/gtm',

@@ -392,24 +392,55 @@ const UseOfFunds: React.FC = () => {
                 {/* SLIDE 6: Summary & Discipline */}
                 < section className="brand-section" >
                     <div className="grid-bg-overlay" />
-                    <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', opacity: 0.1 }}>
+                    <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', opacity: 0.2 }}>
                         <RadarNode size="1000px" type="radar" />
                     </div>
                     <div className="animate-fade-in-up" style={{ maxWidth: '1100px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 2 }}>
-                        <div style={{ marginBottom: '8rem' }}>
-                            <span className="label text-red">INVESTOR SUMMARY</span>
-                            <h2 className="text-large" style={{ fontSize: '3rem', lineHeight: 1.4, margin: '3rem 0', fontWeight: 300 }}>
-                                "{parseMarkdown(USE_OF_FUNDS_CONFIG.investorSummary.content)}"
-                            </h2>
+                        <div style={{ marginBottom: '5rem' }}>
+                            <span className="label text-mono" style={{ color: 'var(--color-alert-red)', letterSpacing: '2px' }}>INVESTOR PROTOCOL // SUMMARY</span>
+                            <div style={{ position: 'relative', display: 'inline-block', marginTop: '3rem' }}>
+                                <span style={{ position: 'absolute', top: '-2rem', left: '-3rem', fontSize: '6rem', color: 'rgba(228, 0, 40, 0.3)', fontFamily: 'serif' }}>“</span>
+                                <h2 className="text-large" style={{ fontSize: '3.5rem', lineHeight: 1.3, margin: '0', fontWeight: 400, borderLeft: '4px solid var(--color-alert-red)', paddingLeft: '2rem' }}>
+                                    {parseMarkdown(USE_OF_FUNDS_CONFIG.investorSummary.content)}
+                                </h2>
+                            </div>
                         </div>
 
-                        <div className="glass-panel" style={{ padding: '3rem', border: '1px solid var(--color-grid)', background: 'rgba(0,0,0,0.8)' }}>
-                            <span className="text-mono text-muted" style={{ display: 'block', marginBottom: '1.5rem', fontSize: '0.9rem' }}>
-                                {USE_OF_FUNDS_CONFIG.disciplineStatement.title.toUpperCase()}
-                            </span>
-                            <p className="text-muted" style={{ fontSize: '1.2rem', margin: 0 }}>
-                                {parseMarkdown(USE_OF_FUNDS_CONFIG.disciplineStatement.content)}
-                            </p>
+                        <div className="glass-panel" style={{
+                            padding: '0',
+                            border: '1px solid rgba(228, 0, 40, 0.3)',
+                            background: 'rgba(0,10,20,0.85)',
+                            maxWidth: '900px',
+                            margin: '0 auto',
+                            boxShadow: '0 0 30px rgba(0,0,0,0.5)'
+                        }}>
+                            {/* Header Row */}
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                padding: '1rem 2rem',
+                                borderBottom: '1px solid rgba(228, 0, 40, 0.3)',
+                                background: 'rgba(228, 0, 40, 0.1)'
+                            }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                    <span className="text-mono text-small" style={{ color: '#fff' }}>SYSTEM SAFEGUARD</span>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--color-alert-red)', boxShadow: '0 0 5px red' }} className="animate-pulse" />
+                                    <span className="text-mono text-small text-red">ACTIVE</span>
+                                </div>
+                            </div>
+
+                            {/* Content */}
+                            <div style={{ padding: '3rem' }}>
+                                <span className="text-mono text-muted" style={{ display: 'block', marginBottom: '1.5rem', fontSize: '0.9rem', letterSpacing: '1px' }}>
+                                    {USE_OF_FUNDS_CONFIG.disciplineStatement.title.toUpperCase()}
+                                </span>
+                                <p className="text-mono" style={{ fontSize: '1.2rem', margin: 0, color: '#e0e0e0', lineHeight: 1.6 }}>
+                                    {parseMarkdown(USE_OF_FUNDS_CONFIG.disciplineStatement.content)}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </section >
@@ -454,6 +485,9 @@ const UseOfFunds: React.FC = () => {
                      svg {
                         max-width: 100%;
                         height: auto;
+                     }
+                     .glass-panel {
+                        padding: 1.5rem !important;
                      }
                 }
             `}</style>

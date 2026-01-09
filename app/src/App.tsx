@@ -10,6 +10,12 @@ import InvestorQuestions from './pages/investor/InvestorQuestions';
 import MarketSizing from './pages/investor/MarketSizing';
 import WhyNow from './pages/investor/WhyNow';
 import UseOfFunds from './pages/investor/UseOfFunds';
+import TechnicalDefensibility from './pages/investor/TechnicalDefensibility';
+import KillCriteria from './pages/investor/KillCriteria';
+import FounderInvestorFit from './pages/investor/FounderInvestorFit';
+import CustomerProof from './pages/investor/CustomerProof';
+import CustomerAccessTargeting from './pages/investor/CustomerAccessTargeting';
+import CompetitiveLandscape from './pages/investor/CompetitiveLandscape';
 import UberPack from './pages/UberPack';
 import UberClosePlan from './pages/UberClosePlan';
 import UberEconomics from './pages/UberEconomics';
@@ -84,6 +90,12 @@ function App() {
           <Route path="/investor-delta/appendix/market-sizing" element={<MarketSizing />} />
           <Route path="/investor-delta/appendix/why-now" element={<WhyNow />} />
           <Route path="/investor-delta/appendix/use-of-funds" element={<UseOfFunds />} />
+          <Route path="/investor-delta/appendix/technical-defensibility" element={<TechnicalDefensibility />} />
+          <Route path="/investor-delta/appendix/kill-criteria" element={<KillCriteria />} />
+          <Route path="/investor-delta/appendix/founder-investor-fit" element={<FounderInvestorFit />} />
+          <Route path="/investor-delta/appendix/customer-proof" element={<CustomerProof />} />
+          <Route path="/investor-delta/appendix/customer-access" element={<CustomerAccessTargeting />} />
+          <Route path="/investor-delta/appendix/competitive-landscape" element={<CompetitiveLandscape />} />
           <Route path="/uber" element={<UberPack />} />
           <Route path="/uber-close" element={<UberClosePlan />} />
           <Route path="/uber-economics" element={<UberEconomics />} />
