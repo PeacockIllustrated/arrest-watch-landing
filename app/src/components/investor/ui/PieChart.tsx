@@ -29,14 +29,9 @@ const PieChart: React.FC<PieChartProps> = ({
     // Helper to converting degrees to radians
     const degToRad = (deg: number) => (deg - 90) * (Math.PI / 180);
 
-    // Helper to calculate coordinates
-    const getCoordinatesForPercent = (percent: number) => {
-        const x = center + radius * Math.cos(degToRad(percent * 360));
-        const y = center + radius * Math.sin(degToRad(percent * 360));
-        return [x, y];
-    };
 
-    const slices = data.map((item, index) => {
+
+    const slices = data.map((item) => {
         const sliceAngle = (item.value / total) * 360;
         const endAngle = startAngle + sliceAngle;
 
