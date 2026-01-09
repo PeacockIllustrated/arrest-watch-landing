@@ -8,6 +8,10 @@ export interface Deck {
     category: 'investor' | 'partner';
     description: string;
     status: 'LIVE' | 'DRAFT';
+    sourceDocPath?: string | string[];
+    changelogPath?: string;
+    selfcheckPath?: string;
+    tags?: string[];
 }
 
 export const DECKS: Deck[] = [
@@ -85,6 +89,14 @@ export const DECKS: Deck[] = [
         status: 'LIVE'
     },
     {
+        id: 'product-flow',
+        title: 'PRODUCT FLOW',
+        route: '/investor-delta/product-flow',
+        category: 'investor',
+        description: 'Infrastructure flow: Unverified signals -> Verification Gate -> Actionable Alerts',
+        status: 'LIVE'
+    },
+    {
         id: 'founder-investor-fit',
         title: 'FOUNDER–INVESTOR FIT',
         route: '/investor-delta/appendix/founder-investor-fit',
@@ -115,6 +127,37 @@ export const DECKS: Deck[] = [
         category: 'investor',
         description: 'Conservative revenue projections: 6 enterprise accounts, $1.025M ARR',
         status: 'LIVE'
+    },
+    {
+        id: 'operational-scenarios',
+        title: 'OPERATIONAL SCENARIOS',
+        route: '/investor-delta/operational-scenarios',
+        category: 'investor',
+        description: 'Before/After scenarios: Risk profile changes and decision logic',
+        status: 'LIVE',
+        sourceDocPath: [
+            '/supporting-docs/Customer Risk Scenario Example.md',
+            '/supporting-docs/Example Decision Scenario.md'
+        ],
+        changelogPath: '/supporting-docs/operational-scenarios.changelog.md',
+        selfcheckPath: '/supporting-docs/operational-scenarios.selfcheck.md',
+        tags: ['scenarios', 'before-after', 'risk']
+    },
+    {
+        id: 'technical-appendix-system-logic',
+        title: 'TECHNICAL APPENDIX — SYSTEM LOGIC',
+        route: '/investor-delta/appendix/technical-appendix-system-logic',
+        category: 'investor',
+        description: 'System logic deep dive: detection, identity, verification, and routing architecture.',
+        status: 'LIVE',
+        sourceDocPath: [
+            '/supporting-docs/ArrestDelta - Product flow.md',
+            '/supporting-docs/Technical Appendix (System Overview).md',
+            '/supporting-docs/Technical Breakdown by Flow Step.md'
+        ],
+        changelogPath: '/supporting-docs/technical-appendix-system-logic.changelog.md',
+        selfcheckPath: '/supporting-docs/technical-appendix-system-logic.selfcheck.md',
+        tags: ['appendix', 'architecture', 'verification-first']
     },
 
     // Partner Materials

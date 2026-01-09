@@ -69,6 +69,12 @@ const ProvisionPage: React.FC = () => {
     const [userExists, setUserExists] = useState<boolean | null>(null);
     const [checkingUser, setCheckingUser] = useState(false);
 
+    // Super Admin State
+    const [currentUserRole, setCurrentUserRole] = useState<string>('viewer');
+    const [adminEmail, setAdminEmail] = useState('');
+    const [adminLoading, setAdminLoading] = useState(false);
+    const [adminMessage, setAdminMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+
     // Fetch recent provisioned users on mount
     useEffect(() => {
         fetchRecentUsers();
@@ -96,6 +102,56 @@ const ProvisionPage: React.FC = () => {
             }
         } catch (err) {
             console.error('Error fetching recent users:', err);
+        }
+    };
+
+    const fetchCurrentUserRole = async () => {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+            const { data } = await supabase
+                .from('profiles')
+                .select('role')
+                .eq('id', user.id)
+                .single();
+            if (data) {
+                setCurrentUserRole(data.role || 'viewer');
+            }
+        }
+    };
+
+    useEffect(() => {
+        fetchCurrentUserRole();
+    }, []);
+
+    const handleSuperAdminAction = async (action: 'promote' | 'demote') => {
+        if (!adminEmail || !adminEmail.includes('@')) {
+            setAdminMessage({ type: 'error', text: 'Invalid email' });
+            return;
+        }
+
+        setAdminLoading(true);
+        setAdminMessage(null);
+
+        try {
+            const rpcName = action === 'promote' ? 'set_super_admin' : 'remove_super_admin';
+            const { data, error } = await supabase.rpc(rpcName, { p_email: adminEmail });
+
+            if (error) throw error;
+
+            if (data === 'user_not_found') {
+                setAdminMessage({ type: 'error', text: 'User not found' });
+            } else {
+                setAdminMessage({
+                    type: 'success',
+                    text: action === 'promote' ? 'User promoted to Super Admin' : 'User demoted to Viewer'
+                });
+                setAdminEmail('');
+            }
+        } catch (err) {
+            console.error('Super Admin Action Error:', err);
+            setAdminMessage({ type: 'error', text: 'Action failed' });
+        } finally {
+            setAdminLoading(false);
         }
     };
 
@@ -647,7 +703,92 @@ const ProvisionPage: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </div>
+
+
+            {/* SUPER ADMIN CONTROLS */}
+            {
+                currentUserRole === 'super_admin' && (
+                    <div style={{
+                        marginTop: '2rem',
+                        border: '1px solid #e40028',
+                        background: 'rgba(228, 0, 40, 0.05)',
+                        padding: '1.5rem'
+                    }}>
+                        <h3 style={{
+                            fontSize: '1rem',
+                            color: '#e40028',
+                            marginBottom: '1rem',
+                            letterSpacing: '1px',
+                            borderBottom: '1px solid rgba(228, 0, 40, 0.3)',
+                            paddingBottom: '0.5rem'
+                        }}>
+                            SUPER ADMIN CONTROLS
+                        </h3>
+                        <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-end', flexWrap: 'wrap' }}>
+                            <div style={{ flex: 1, minWidth: '250px' }}>
+                                <label style={{ display: 'block', fontSize: '0.75rem', color: '#e40028', marginBottom: '0.5rem' }}>
+                                    TARGET USER EMAIL
+                                </label>
+                                <input
+                                    type="email"
+                                    value={adminEmail}
+                                    onChange={(e) => setAdminEmail(e.target.value)}
+                                    placeholder="email@example.com"
+                                    style={{
+                                        width: '100%',
+                                        padding: '0.75rem',
+                                        background: 'rgba(0, 0, 0, 0.3)',
+                                        border: '1px solid #e40028',
+                                        color: 'white',
+                                        fontFamily: 'inherit'
+                                    }}
+                                />
+                            </div>
+                            <button
+                                onClick={() => handleSuperAdminAction('promote')}
+                                disabled={adminLoading || !adminEmail}
+                                style={{
+                                    padding: '0.75rem 1.5rem',
+                                    background: '#e40028',
+                                    border: 'none',
+                                    color: 'white',
+                                    cursor: (adminLoading || !adminEmail) ? 'not-allowed' : 'pointer',
+                                    fontWeight: 'bold',
+                                    fontFamily: 'inherit',
+                                    opacity: (adminLoading || !adminEmail) ? 0.6 : 1
+                                }}
+                            >
+                                PROMOTE TO SUPER ADMIN
+                            </button>
+                            <button
+                                onClick={() => handleSuperAdminAction('demote')}
+                                disabled={adminLoading || !adminEmail}
+                                style={{
+                                    padding: '0.75rem 1.5rem',
+                                    background: 'transparent',
+                                    border: '1px solid #666',
+                                    color: '#aaa',
+                                    cursor: (adminLoading || !adminEmail) ? 'not-allowed' : 'pointer',
+                                    fontFamily: 'inherit',
+                                    opacity: (adminLoading || !adminEmail) ? 0.6 : 1
+                                }}
+                            >
+                                REMOVE SUPER ADMIN
+                            </button>
+                        </div>
+                        {adminMessage && (
+                            <div style={{
+                                marginTop: '1rem',
+                                color: adminMessage.type === 'success' ? '#4CAF50' : '#e40028',
+                                fontSize: '0.85rem'
+                            }}>
+                                {adminMessage.type === 'success' ? '✓ ' : '⚠ '} {adminMessage.text}
+                            </div>
+                        )}
+                    </div>
+                )
+            }
+        </div >
     );
 };
 

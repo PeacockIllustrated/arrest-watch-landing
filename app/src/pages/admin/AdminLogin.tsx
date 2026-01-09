@@ -16,16 +16,45 @@ const AdminLogin: React.FC = () => {
         setLoading(true);
         setError('');
 
-        const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
+        try {
+            // 1. Authenticate
+            const { data: { user }, error: authError } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            });
 
-        if (error) {
-            setError(error.message.toUpperCase());
+            if (authError) throw authError;
+
+            if (user) {
+                // 2. Check Role
+                const { data: profile, error: profileError } = await supabase
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', user.id)
+                    .single();
+
+                if (profileError) {
+                    // Profile might not exist yet, treat as unauthorized for admin
+                    console.error('Profile check failed:', profileError);
+                    await supabase.auth.signOut();
+                    setError(`ACCESS DENIED: PROFILE ERROR (${profileError.message})`);
+                    setLoading(false);
+                    return;
+                }
+
+                if (profile?.role !== 'super_admin') {
+                    await supabase.auth.signOut();
+                    setError(`ACCESS DENIED: ROLE IS '${profile?.role?.toUpperCase() || 'NULL'}' NOT SUPER_ADMIN`);
+                    setLoading(false);
+                    return;
+                }
+
+                // 3. Success
+                navigate('/admin/dashboard');
+            }
+        } catch (err) {
+            setError(err instanceof Error ? err.message.toUpperCase() : 'AUTHENTICATION FAILED');
             setLoading(false);
-        } else {
-            navigate('/admin/dashboard');
         }
     };
 

@@ -16,6 +16,9 @@ import FounderInvestorFit from './pages/investor/FounderInvestorFit';
 import CustomerProof from './pages/investor/CustomerProof';
 import CustomerAccessTargeting from './pages/investor/CustomerAccessTargeting';
 import CompetitiveLandscape from './pages/investor/CompetitiveLandscape';
+import ProductFlow from './pages/investor/ProductFlow';
+import TechnicalAppendixSystemLogic from './pages/investor/TechnicalAppendixSystemLogic';
+import OperationalScenarios from './pages/investor/OperationalScenarios';
 import UberPack from './pages/UberPack';
 import UberClosePlan from './pages/UberClosePlan';
 import UberEconomics from './pages/UberEconomics';
@@ -96,6 +99,9 @@ function App() {
           <Route path="/investor-delta/appendix/customer-proof" element={<CustomerProof />} />
           <Route path="/investor-delta/appendix/customer-access" element={<CustomerAccessTargeting />} />
           <Route path="/investor-delta/appendix/competitive-landscape" element={<CompetitiveLandscape />} />
+          <Route path="/investor-delta/product-flow" element={<ProductFlow />} />
+          <Route path="/investor-delta/appendix/technical-appendix-system-logic" element={<TechnicalAppendixSystemLogic />} />
+          <Route path="/investor-delta/operational-scenarios" element={<OperationalScenarios />} />
           <Route path="/uber" element={<UberPack />} />
           <Route path="/uber-close" element={<UberClosePlan />} />
           <Route path="/uber-economics" element={<UberEconomics />} />

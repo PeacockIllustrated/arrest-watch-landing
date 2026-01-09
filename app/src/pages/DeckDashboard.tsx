@@ -211,7 +211,7 @@ const DeckCard: React.FC<{
                 }}>
                     {deck.category === 'investor'
                         ? <><ChartIcon size={12} color="currentColor" /> INVESTOR</>
-                        : <><LinkIcon size={12} color="currentColor" /> PARTNER</>
+                        : <><LinkIcon size={12} color="currentColor" /> TRACTION</>
                     }
                 </span>
             </div>
@@ -463,7 +463,7 @@ const DeckHubContent: React.FC = () => {
                     </h1>
 
                     <div className="text-muted animate-fade-in-up" style={{ fontSize: '1.1rem', animationDelay: '0.2s' }}>
-                        <TypingText text="Investor and partner presentation materials. Access granted per user." delay={50} />
+                        <TypingText text="Investor and Traction presentation materials. Access granted per user." delay={50} />
                     </div>
 
                     {/* Stats Row */}
@@ -519,7 +519,7 @@ const DeckHubContent: React.FC = () => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
                         <div style={{ width: '30px', height: '2px', background: 'var(--color-alert-red)' }} />
                         <h2 className="text-mono" style={{ fontSize: '0.9rem', letterSpacing: '0.15em', color: 'var(--color-signal-white)' }}>
-                            PARTNER MATERIALS
+                            EARLY TRACTION
                         </h2>
                         <div style={{ flex: 1, height: '1px', background: 'var(--color-grid)' }} />
                     </div>

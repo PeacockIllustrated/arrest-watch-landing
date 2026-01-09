@@ -19,6 +19,7 @@ interface DeckHubUser {
     id: string;
     email: string;
     name?: string;
+    role?: string;
 }
 
 interface DeckHubAuthContextType {
@@ -39,26 +40,47 @@ export const DeckHubAuthProvider: React.FC<{ children: ReactNode }> = ({ childre
     const [accessibleDecks, setAccessibleDecks] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // Fetch accessible decks for the current user
-    const fetchAccessibleDecks = async (userId: string) => {
+    // Fetch accessible decks and role for the current user
+    const fetchUserData = async (userId: string, email?: string, name?: string) => {
         try {
-            const { data, error } = await supabase
+            // 1. Fetch Deck Access
+            const { data: deckData, error: deckError } = await supabase
                 .from('user_deck_access')
                 .select('deck_id')
                 .eq('user_id', userId);
 
-            if (error) {
-                console.error('Error fetching deck access:', error.message);
+            if (deckError) {
+                console.error('Error fetching deck access:', deckError.message);
                 setAccessibleDecks([]);
-                return;
+            } else if (deckData) {
+                setAccessibleDecks(deckData.map(d => d.deck_id));
             }
 
-            if (data) {
-                setAccessibleDecks(data.map(d => d.deck_id));
-            }
+            // 2. Fetch User Role from Profiles
+            const { data: profileData, error: profileError } = await supabase
+                .from('profiles')
+                .select('role')
+                .eq('id', userId)
+                .single();
+
+            // Only set user once we have the role (or default to viewer if error/missing)
+            setUser({
+                id: userId,
+                email: email || '',
+                name: name,
+                role: profileData?.role || 'viewer'
+            });
+
         } catch (err) {
-            console.error('Error fetching deck access:', err);
+            console.error('Error fetching user data:', err);
             setAccessibleDecks([]);
+            // Still set user even if extra data fails
+            setUser({
+                id: userId,
+                email: email || '',
+                name: name,
+                role: 'viewer'
+            });
         }
     };
 
@@ -79,12 +101,11 @@ export const DeckHubAuthProvider: React.FC<{ children: ReactNode }> = ({ childre
                 }
 
                 if (currentSession?.user) {
-                    setUser({
-                        id: currentSession.user.id,
-                        email: currentSession.user.email || '',
-                        name: currentSession.user.user_metadata?.name
-                    });
-                    await fetchAccessibleDecks(currentSession.user.id);
+                    await fetchUserData(
+                        currentSession.user.id,
+                        currentSession.user.email,
+                        currentSession.user.user_metadata?.name
+                    );
                 }
             } catch (err) {
                 console.error('Error initializing auth:', err);
@@ -103,12 +124,11 @@ export const DeckHubAuthProvider: React.FC<{ children: ReactNode }> = ({ childre
                 if (!mounted) return;
 
                 if (newSession?.user) {
-                    setUser({
-                        id: newSession.user.id,
-                        email: newSession.user.email || '',
-                        name: newSession.user.user_metadata?.name
-                    });
-                    await fetchAccessibleDecks(newSession.user.id);
+                    await fetchUserData(
+                        newSession.user.id,
+                        newSession.user.email,
+                        newSession.user.user_metadata?.name
+                    );
                 } else {
                     setUser(null);
                     setAccessibleDecks([]);
@@ -142,12 +162,11 @@ export const DeckHubAuthProvider: React.FC<{ children: ReactNode }> = ({ childre
             }
 
             if (data.user) {
-                setUser({
-                    id: data.user.id,
-                    email: data.user.email || '',
-                    name: data.user.user_metadata?.name
-                });
-                await fetchAccessibleDecks(data.user.id);
+                await fetchUserData(
+                    data.user.id,
+                    data.user.email,
+                    data.user.user_metadata?.name
+                );
                 return { success: true, message: 'Access granted' };
             }
 
@@ -164,7 +183,7 @@ export const DeckHubAuthProvider: React.FC<{ children: ReactNode }> = ({ childre
 
     const refreshDeckAccess = async () => {
         if (user?.id) {
-            await fetchAccessibleDecks(user.id);
+            await fetchUserData(user.id, user.email, user.name);
         }
     };
 

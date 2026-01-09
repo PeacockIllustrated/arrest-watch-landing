@@ -218,38 +218,50 @@ const ComponentsPage: React.FC = () => {
                                     ArrestDelta is a live feed of the present.
                                 </p>
                             </div>
-                            <div style={{ position: 'relative', height: '400px' }}>
-                                {/* Back Card (Legacy) */}
+                            <div style={{ position: 'relative', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                {/* Back Card (Legacy / Bad) */}
                                 <div className="panel" style={{
-                                    position: 'absolute', top: '0', right: '0', width: '80%', height: '300px',
-                                    background: '#222', zIndex: 1, transform: 'rotate(-5deg)', opacity: 0.5
+                                    position: 'absolute', top: '20px', right: '20px', width: '320px', height: '220px',
+                                    background: '#151515', zIndex: 1, border: '1px dashed #444',
+                                    display: 'flex', flexDirection: 'column', opacity: 0.6
                                 }}>
-                                    <div className="text-mono text-muted" style={{ borderBottom: '1px solid #444', paddingBottom: '1rem' }}>PASSED: 2021-04-12</div>
-                                    <div style={{ fontSize: '3rem', color: '#444', textAlign: 'center', marginTop: '3rem' }}>static_check.pdf</div>
+                                    <div style={{ padding: '1rem', borderBottom: '1px dashed #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <span className="text-mono text-muted" style={{ fontSize: '0.7rem' }}>TRADITIONAL CHECK</span>
+                                        <span className="text-mono" style={{ fontSize: '0.7rem', color: '#666' }}>EXPIRED</span>
+                                    </div>
+                                    <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                        <div style={{ width: '60%', height: '8px', background: '#333', borderRadius: '4px' }}></div>
+                                        <div style={{ width: '40%', height: '8px', background: '#333', borderRadius: '4px' }}></div>
+                                        <div style={{ width: '80%', height: '8px', background: '#333', borderRadius: '4px', marginTop: '1rem' }}></div>
+                                        <div className="text-mono" style={{ marginTop: 'auto', fontSize: '0.8rem', color: '#555' }}>LAST SYNC: 30 DAYS AGO</div>
+                                    </div>
                                 </div>
 
-                                {/* Front Card (ArrestDelta) */}
+                                {/* Front Card (ArrestDelta / Good) */}
                                 <div className="panel" style={{
-                                    position: 'absolute', top: '40px', right: '40px', width: '80%', height: '300px',
-                                    background: '#0a0a0a', zIndex: 2, border: '1px solid var(--color-alert-red)',
-                                    boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
+                                    position: 'absolute', top: '60px', right: '60px', width: '320px', height: '220px',
+                                    background: '#050505', zIndex: 2, border: '1px solid var(--color-alert-red)',
+                                    boxShadow: '0 20px 40px rgba(0,0,0,0.6)',
+                                    display: 'flex', flexDirection: 'column'
                                 }}>
-                                    <div className="flex-row" style={{ justifyContent: 'space-between', borderBottom: '1px solid var(--color-grid)', paddingBottom: '1rem' }}>
-                                        <div className="text-mono text-white">LIVE MONITORING</div>
-                                        <div className="text-mono text-red pulse-active">● ACTIVE</div>
-                                    </div>
-                                    <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                            <span className="text-muted">Subject:</span>
-                                            <span>JD-8842</span>
+                                    <div style={{ padding: '1rem', borderBottom: '1px solid var(--color-grid)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <span className="text-mono text-white" style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>LIVE MONITORING</span>
+                                        <div className="flex-row">
+                                            <div className="pulse-active" style={{ width: '6px', height: '6px', background: 'var(--color-alert-red)', borderRadius: '50%' }}></div>
+                                            <span className="text-mono text-red" style={{ fontSize: '0.7rem' }}>ACTIVE</span>
                                         </div>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                            <span className="text-muted">Status:</span>
+                                    </div>
+                                    <div style={{ padding: '1.5rem', flex: 1 }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                                            <span className="text-muted">Subject ID</span>
+                                            <span className="text-mono">JD-8842-X</span>
+                                        </div>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+                                            <span className="text-muted">Status</span>
                                             <span className="text-white">CLEAR</span>
                                         </div>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                            <span className="text-muted">Last Checked:</span>
-                                            <span className="text-code">00:00:02 AGO</span>
+                                        <div className="text-mono text-red" style={{ fontSize: '0.75rem', border: '1px solid rgba(228, 0, 40, 0.2)', padding: '0.5rem', display: 'inline-block', background: 'rgba(228, 0, 40, 0.05)' }}>
+                                            &gt;&gt; REAL-TIME SYNC
                                         </div>
                                     </div>
                                 </div>
