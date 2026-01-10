@@ -562,7 +562,7 @@ const FounderInvestorFit: React.FC = () => {
                             {/* CTA Buttons */}
                             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '2.5rem' }}>
                                 <Link to="/decks" className="btn">
-                                    ← Back to Decks
+                                    ← Back to Data Room
                                 </Link>
                                 <Link to="/" className="btn btn-secondary">
                                     Main Site

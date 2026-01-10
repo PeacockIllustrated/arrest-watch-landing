@@ -3,7 +3,7 @@ import { usePageTitle } from '../hooks/usePageTitle';
 
 /**
  * Branded 404 Not Found page
- * Provides clear navigation back to main site and deck hub
+ * Provides clear navigation back to main site and data room
  */
 const NotFound: React.FC = () => {
     usePageTitle('Page Not Found');
@@ -104,7 +104,7 @@ const NotFound: React.FC = () => {
                             transition: 'all 0.2s'
                         }}
                     >
-                        DECK HUB
+                        DATA ROOM
                     </Link>
                 </div>
 

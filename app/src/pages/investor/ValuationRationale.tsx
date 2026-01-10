@@ -603,7 +603,7 @@ const ValuationRationale: React.FC = () => {
                                 fontSize: '0.95rem',
                                 padding: '1rem 2rem'
                             }}>
-                                ← Back to Decks
+                                ← Back to Data Room
                             </Link>
                             <Link to="/" className="btn btn-secondary" style={{
                                 fontSize: '0.95rem',

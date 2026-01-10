@@ -107,7 +107,7 @@ const UseOfFunds: React.FC = () => {
             {/* Back to Investor Deck */}
             <div style={{ position: 'fixed', top: '20px', left: '20px', zIndex: 100 }}>
                 <Link to="/investor-delta" className="nav-link text-mono text-muted" style={{ fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none' }}>
-                    <span className="text-red">←</span> BACK TO DECK
+                    <span className="text-red">←</span> BACK TO DATA ROOM
                 </Link>
             </div>
 

@@ -869,7 +869,7 @@ const TechnicalDefensibility: React.FC = () => {
 
                             <div style={{ marginTop: '3rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                                 <Link to="/decks" className="btn">
-                                    ← BACK TO DECKS
+                                    ← BACK TO DATA ROOM
                                 </Link>
                                 <Link to="/" className="btn btn-secondary">
                                     MAIN SITE

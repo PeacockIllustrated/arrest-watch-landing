@@ -435,7 +435,7 @@ const InvestorQuestions: React.FC = () => {
 
                             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                                 <Link to="/decks" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
-                                    ← Back to Decks
+                                    ← Back to Data Room
                                 </Link>
                                 <Link to="/" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
                                     Visit Website

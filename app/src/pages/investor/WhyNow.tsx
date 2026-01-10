@@ -943,7 +943,7 @@ const WhyNow: React.FC = () => {
                                 ← Back to Investor Deck
                             </Link>
                             <Link to="/decks" className="btn btn-secondary">
-                                All Decks
+                                Data Room
                             </Link>
                         </div>
 

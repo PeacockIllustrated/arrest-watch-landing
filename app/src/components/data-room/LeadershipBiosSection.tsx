@@ -116,7 +116,7 @@ const AccordionChevron: React.FC<{ isOpen: boolean }> = ({ isOpen }) => (
  * Leadership Accordion Card Component
  * Collapsible card showing contact info, expanding to show full bio
  */
-const LeadershipAccordionCard: React.FC<{ leader: LeadershipBio; index: number }> = ({ leader, index }) => {
+const LeadershipAccordionCard: React.FC<{ leader: LeadershipBio }> = ({ leader }) => {
     const [isOpen, setIsOpen] = React.useState(false);
     const [isHovered, setIsHovered] = React.useState(false);
     const imageSrc = leader.image ? imageMap[leader.image] : null;

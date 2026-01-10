@@ -416,7 +416,7 @@ const TechnicalAppendixSystemLogic: React.FC = () => {
 
                             <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'flex-end' }}>
                                 <Link to="/decks" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
-                                    ← BACK TO DECK HUB
+                                    ← BACK TO DATA ROOM
                                 </Link>
                             </div>
                         </div>

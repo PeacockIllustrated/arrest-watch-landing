@@ -638,7 +638,7 @@ const ProvisionPage: React.FC = () => {
                             <li>Enter their email above to see current access</li>
                             <li>Toggle decks ON/OFF as needed</li>
                             <li>Click "Apply Changes" to update</li>
-                            <li>User refreshes deck hub to see changes</li>
+                            <li>User refreshes Data Room to see changes</li>
                         </ol>
                     </div>
 

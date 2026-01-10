@@ -174,7 +174,7 @@ const OperationalScenarios: React.FC = () => {
                                 </Link>
                                 <span className="text-muted">|</span>
                                 <Link to="/decks" className="text-link text-muted" style={{ fontSize: '0.9rem' }}>
-                                    Deck Hub
+                                    Data Room
                                 </Link>
                             </div>
                         </div>

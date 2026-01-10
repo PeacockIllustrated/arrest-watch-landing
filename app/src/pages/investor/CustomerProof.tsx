@@ -738,7 +738,7 @@ const CustomerProof: React.FC = () => {
                             {/* CTA Buttons */}
                             <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                                 <Link to="/decks" className="btn" style={{ minWidth: '180px' }}>
-                                    ← BACK TO DECKS
+                                    ← BACK TO DATA ROOM
                                 </Link>
                                 <Link to="/" className="btn btn-secondary" style={{ minWidth: '180px' }}>
                                     MAIN SITE

@@ -76,7 +76,7 @@ const Landing: React.FC = () => {
                 <div className="container" style={{ position: 'relative', zIndex: 2 }}>
                     <img src={logoMain} alt="ArrestDelta" className="hero-logo reveal-text" />
                     <span className="text-label reveal-text" style={{ transitionDelay: '0.1s' }}>ArrestDelta Intelligence Layer</span>
-                    <h1 className="text-huge reveal-text" style={{ transitionDelay: '0.2s' }}>From arrest<br />to alert...<br /><span className="text-red">Instantly.</span></h1>
+                    <h1 className="text-huge reveal-text" style={{ transitionDelay: '0.2s' }}>From arrest<br />to alert...<br /><span className="text-red">Verified.</span></h1>
                     <p className="reveal-text" style={{ maxWidth: '600px', margin: '2rem auto 0', fontSize: '1.2rem', color: 'var(--color-text-muted)', transitionDelay: '0.3s' }}>
                         ArrestDelta provides verified, identity-certain change intelligence for enterprises making high-stakes trust decisions.
                     </p>
