@@ -190,8 +190,8 @@ const LeadershipAccordionCard: React.FC<{ leader: LeadershipBio }> = ({ leader }
                             fontWeight: 700,
                             color: 'var(--color-signal-white)',
                             marginBottom: '0.5rem',
-                            textTransform: 'lowercase',
-                            letterSpacing: '-0.01em',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.02em',
                         }}
                     >
                         {leader.name}
@@ -244,7 +244,7 @@ const LeadershipAccordionCard: React.FC<{ leader: LeadershipBio }> = ({ leader }
             {/* Accordion Content - Bio */}
             <div
                 style={{
-                    maxHeight: isOpen ? '1000px' : '0',
+                    maxHeight: isOpen ? '2000px' : '0',
                     opacity: isOpen ? 1 : 0,
                     overflow: 'hidden',
                     transition: 'max-height 0.5s ease, opacity 0.3s ease, padding 0.3s ease',
