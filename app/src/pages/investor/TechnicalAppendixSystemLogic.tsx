@@ -20,14 +20,38 @@ const TechnicalAppendixSystemLogic: React.FC = () => {
     const [activeTab, setActiveTab] = useState<'detection' | 'verification' | 'routing'>('verification');
     const [activeBreakdownStep, setActiveBreakdownStep] = useState<string>(CONFIG.flowBreakdown.steps[0].id);
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
         const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
         setPrefersReducedMotion(mediaQuery.matches);
         const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
         mediaQuery.addEventListener('change', handler);
-        return () => mediaQuery.removeEventListener('change', handler);
+
+        const checkMobile = () => setIsMobile(window.innerWidth < 1024); // Treat tablets as mobile for this view
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
+        return () => {
+            mediaQuery.removeEventListener('change', handler);
+            window.removeEventListener('resize', checkMobile);
+        };
     }, []);
+
+    // Mobile Auto-Cycle Loop
+    useEffect(() => {
+        if (!isMobile) return;
+
+        const phases: ('detection' | 'verification' | 'routing')[] = ['detection', 'verification', 'routing'];
+        let currentIndex = phases.indexOf(activeTab);
+
+        const interval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % phases.length;
+            setActiveTab(phases[currentIndex]);
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, [isMobile]);
 
     const handleScroll = () => {
         if (scrollContainerRef.current) {
@@ -156,15 +180,15 @@ const TechnicalAppendixSystemLogic: React.FC = () => {
                                 alignItems: 'stretch'
                             }}>
                                 {CONFIG.productFlow.steps.map((step, i) => {
-                                    const isExpanded = expandedStepId === step.id;
+                                    const isExpanded = isMobile || expandedStepId === step.id; // Always expanded on mobile
                                     const isGate = step.isGate;
 
                                     return (
                                         <div
                                             key={step.id}
                                             className="flow-step glass-panel"
-                                            onClick={() => setExpandedStepId(step.id)}
-                                            onMouseEnter={() => setExpandedStepId(step.id)}
+                                            onClick={() => !isMobile && setExpandedStepId(step.id)} // Disable click on mobile
+                                            onMouseEnter={() => !isMobile && setExpandedStepId(step.id)}
                                             style={{
                                                 padding: '1.5rem',
                                                 border: isGate ? '2px solid var(--color-alert-red)' : isExpanded ? '1px solid #fff' : '1px solid var(--color-grid)',
@@ -175,7 +199,7 @@ const TechnicalAppendixSystemLogic: React.FC = () => {
                                                 transition: prefersReducedMotion ? 'none' : 'all 0.3s ease',
                                                 display: 'flex',
                                                 flexDirection: 'column',
-                                                cursor: 'pointer',
+                                                cursor: isMobile ? 'default' : 'pointer', // No pointer cursor on mobile
                                                 position: 'relative',
                                                 minHeight: '480px'
                                             }}
@@ -237,9 +261,9 @@ const TechnicalAppendixSystemLogic: React.FC = () => {
                             <span className="label">SYSTEM CONTEXT</span>
                             <h2 className="text-large" style={{ marginBottom: '2rem' }}>System Overview</h2>
 
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '3rem' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 300px', gap: isMobile ? '2rem' : '3rem' }}>
                                 <div>
-                                    <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem' }}>
+                                    <div className="glass-panel" style={{ padding: isMobile ? '1.5rem' : '2rem', marginBottom: '2rem' }}>
                                         <h3 className="text-white" style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>Purpose</h3>
                                         <p className="text-muted" style={{ fontSize: '1rem', lineHeight: 1.6 }}>
                                             {CONFIG.systemOverview.purpose}
@@ -247,7 +271,7 @@ const TechnicalAppendixSystemLogic: React.FC = () => {
                                     </div>
 
                                     <h3 className="text-mono text-muted" style={{ marginBottom: '1rem', fontSize: '0.9rem' }}>CORE PRINCIPLES</h3>
-                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '1rem' }}>
                                         {CONFIG.systemOverview.principles.map((p, i) => (
                                             <div key={i} className="glass-panel" style={{ padding: '1rem', display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
                                                 <span className="text-red">›</span>
@@ -284,7 +308,7 @@ const TechnicalAppendixSystemLogic: React.FC = () => {
                 <section className="brand-section" id="slide-04-breakdown">
                     <div className="grid-bg-overlay" />
                     <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '0 2rem', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                        <div className="animate-fade-in-up" style={{ height: '80vh', display: 'flex', flexDirection: 'column' }}>
+                        <div className="animate-fade-in-up" style={{ height: isMobile ? 'auto' : '80vh', display: 'flex', flexDirection: 'column' }}>
                             <div style={{ flexShrink: 0, marginBottom: '2rem' }}>
                                 <span className="label">DEEP DIVE</span>
                                 <h2 className="text-large">Technical Breakdown</h2>
@@ -292,19 +316,23 @@ const TechnicalAppendixSystemLogic: React.FC = () => {
 
                             <div className="breakdown-console" style={{
                                 display: 'grid',
-                                gridTemplateColumns: '300px 1fr',
+                                gridTemplateColumns: isMobile ? '1fr' : '300px 1fr',
                                 gap: '2rem',
                                 flexGrow: 1,
-                                height: '100%',
-                                overflow: 'hidden'
+                                height: isMobile ? 'auto' : '100%',
+                                overflow: isMobile ? 'visible' : 'hidden'
                             }}>
                                 {/* Rail */}
                                 <div className="step-rail" style={{
                                     display: 'flex',
-                                    flexDirection: 'column',
-                                    gap: '0.5rem',
-                                    overflowY: 'auto',
-                                    paddingRight: '1rem'
+                                    flexDirection: isMobile ? 'row' : 'column',
+                                    gap: isMobile ? '1rem' : '0.5rem',
+                                    overflowY: isMobile ? 'hidden' : 'auto',
+                                    overflowX: isMobile ? 'auto' : 'hidden',
+                                    paddingRight: isMobile ? '0' : '1rem',
+                                    paddingBottom: isMobile ? '1rem' : '0',
+                                    scrollSnapType: isMobile ? 'x mandatory' : 'none',
+                                    WebkitOverflowScrolling: 'touch'
                                 }}>
                                     {CONFIG.flowBreakdown.steps.map((step) => (
                                         <button
@@ -317,7 +345,9 @@ const TechnicalAppendixSystemLogic: React.FC = () => {
                                                 borderLeft: activeBreakdownStep === step.id ? '4px solid var(--color-alert-red)' : '4px solid transparent',
                                                 textAlign: 'left',
                                                 cursor: 'pointer',
-                                                transition: 'all 0.2s'
+                                                transition: 'all 0.2s',
+                                                minWidth: isMobile ? '260px' : 'auto', // Wider touch target
+                                                scrollSnapAlign: 'start' // Snap to start
                                             }}
                                         >
                                             <div className="text-mono" style={{ color: activeBreakdownStep === step.id ? 'var(--color-alert-red)' : '#666', fontSize: '0.8rem', marginBottom: '0.5rem' }}>
@@ -332,12 +362,13 @@ const TechnicalAppendixSystemLogic: React.FC = () => {
 
                                 {/* Content Console */}
                                 <div className="glass-panel" style={{
-                                    padding: '3rem',
-                                    overflowY: 'auto',
+                                    padding: isMobile ? '1rem' : '3rem',
+                                    overflowY: isMobile ? 'visible' : 'auto',
                                     backgroundColor: 'rgba(0,0,0,0.4)',
                                     display: 'flex',
                                     flexDirection: 'column',
-                                    gap: '2rem'
+                                    gap: '2rem',
+                                    height: 'auto'
                                 }}>
                                     {CONFIG.flowBreakdown.steps.map(step => {
                                         if (step.id !== activeBreakdownStep) return null;
@@ -348,7 +379,7 @@ const TechnicalAppendixSystemLogic: React.FC = () => {
                                                     {step.subtitle}
                                                 </p>
 
-                                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem' }}>
+                                                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '2rem' : '3rem' }}>
                                                     <div>
                                                         <h4 className="text-mono text-grid" style={{ marginBottom: '1rem' }}>WHAT HAPPENS INITIALLY</h4>
                                                         <p className="text-muted" style={{ marginBottom: '2rem' }}>{step.technicalPurpose}</p>
@@ -356,7 +387,7 @@ const TechnicalAppendixSystemLogic: React.FC = () => {
                                                         <h4 className="text-mono text-grid" style={{ marginBottom: '1rem' }}>TECHNICAL DETAILS</h4>
                                                         <ul style={{ listStyle: 'none', padding: 0 }}>
                                                             {step.technicalDetails.map((detail, i) => (
-                                                                <li key={i} style={{ marginBottom: '1rem', display: 'flex', gap: '0.75rem', color: '#ccc' }}>
+                                                                <li key={i} style={{ marginBottom: '1rem', display: 'flex', gap: isMobile ? '0.5rem' : '0.75rem', color: '#ccc' }}>
                                                                     <span className="text-red">›</span>
                                                                     {detail}
                                                                 </li>
@@ -366,7 +397,7 @@ const TechnicalAppendixSystemLogic: React.FC = () => {
 
                                                     <div>
                                                         <div style={{
-                                                            padding: '2rem',
+                                                            padding: isMobile ? '1rem' : '2rem',
                                                             border: '1px dashed var(--color-grid)',
                                                             background: 'rgba(255,255,255,0.02)'
                                                         }}>

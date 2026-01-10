@@ -15,6 +15,7 @@ const MarketSizing: React.FC = () => {
     const [showNext, setShowNext] = useState(true);
     const [activeIndex, setActiveIndex] = useState(0);
     const [progress, setProgress] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
 
     // Interaction states
     const [expandedLever, setExpandedLever] = useState<string | null>(null);
@@ -46,6 +47,10 @@ const MarketSizing: React.FC = () => {
     };
 
     useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
         const container = scrollContainerRef.current;
         if (container) {
             container.addEventListener('scroll', handleScroll);
@@ -59,6 +64,7 @@ const MarketSizing: React.FC = () => {
         window.addEventListener('keydown', handleKeyDown);
 
         return () => {
+            window.removeEventListener('resize', checkMobile);
             if (container) {
                 container.removeEventListener('scroll', handleScroll);
             }
@@ -170,7 +176,7 @@ const MarketSizing: React.FC = () => {
                             </p>
                         </div>
 
-                        <div className="grid-2" style={{ gap: '2rem' }}>
+                        <div className="grid-2" style={{ gap: '2rem', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr' }}>
                             {MARKET_SIZING_CONFIG.coreAssumption.bullets.map((bullet, i) => (
                                 <div key={i} className="glass-panel animate-fade-in-up" style={{
                                     padding: '1.5rem',
@@ -192,7 +198,7 @@ const MarketSizing: React.FC = () => {
                 {/* ========== SLIDE 3: SAM ========== */}
                 <section className="brand-section" id="ms-slide-03">
                     <div className="grid-bg-overlay" />
-                    <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', height: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'center' }}>
+                    <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', height: '100%', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '3rem', alignItems: 'center' }}>
 
                         {/* LEFT: Context */}
                         <div className="animate-fade-in-up">
@@ -415,7 +421,7 @@ const MarketSizing: React.FC = () => {
                 {/* ========== SLIDE 6: VENTURE SCALE ========== */}
                 <section className="brand-section" id="ms-slide-06">
                     <div className="grid-bg-overlay" />
-                    <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%', height: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+                    <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%', height: '100%', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
 
                         {/* LEFT: TAO */}
                         <div className="animate-fade-in-up">
@@ -609,8 +615,8 @@ const MarketSizing: React.FC = () => {
                     .ms-expansion-grid {
                         grid-template-columns: 1fr !important;
                         height: auto !important;
-                        overflow-y: auto !important;
-                        max-height: 60vh;
+                        overflow: visible !important;
+                        max-height: none;
                     }
 
                     /* Slide 7 Summary */

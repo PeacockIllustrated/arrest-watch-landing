@@ -22,6 +22,7 @@ const TechnicalDefensibility: React.FC = () => {
     const [hoveredJurisdiction, setHoveredJurisdiction] = useState<number | null>(null);
     const [hoveredGate, setHoveredGate] = useState<string | null>(null);
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     // Check for reduced motion preference
     useEffect(() => {
@@ -29,7 +30,15 @@ const TechnicalDefensibility: React.FC = () => {
         setPrefersReducedMotion(mediaQuery.matches);
         const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
         mediaQuery.addEventListener('change', handler);
-        return () => mediaQuery.removeEventListener('change', handler);
+
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
+        return () => {
+            mediaQuery.removeEventListener('change', handler);
+            window.removeEventListener('resize', checkMobile);
+        };
     }, []);
 
     const handleScroll = () => {
@@ -167,7 +176,7 @@ const TechnicalDefensibility: React.FC = () => {
                                     display: 'grid',
                                     gridTemplateColumns: 'repeat(6, 1fr)',
                                     gridTemplateRows: 'repeat(4, 1fr)',
-                                    gap: '8px',
+                                    gap: isMobile ? '4px' : '8px',
                                     maxWidth: '400px',
                                     marginBottom: '2rem'
                                 }}>

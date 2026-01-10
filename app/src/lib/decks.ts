@@ -88,14 +88,7 @@ export const DECKS: Deck[] = [
         description: 'Downside discipline: failure conditions, capital triggers, and scale guardrails',
         status: 'LIVE'
     },
-    {
-        id: 'product-flow',
-        title: 'PRODUCT FLOW',
-        route: '/investor-delta/product-flow',
-        category: 'investor',
-        description: 'Infrastructure flow: Unverified signals -> Verification Gate -> Actionable Alerts',
-        status: 'LIVE'
-    },
+
     {
         id: 'founder-investor-fit',
         title: 'FOUNDER–INVESTOR FIT',

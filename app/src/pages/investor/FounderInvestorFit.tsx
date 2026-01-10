@@ -627,7 +627,8 @@ const FounderInvestorFit: React.FC = () => {
                     }
                     .brand-section {
                         padding: 2rem 1.5rem !important;
-                        overflow-y: auto !important;
+                        overflow: visible !important;
+                        height: auto !important;
                     }
                 }
             `}</style>

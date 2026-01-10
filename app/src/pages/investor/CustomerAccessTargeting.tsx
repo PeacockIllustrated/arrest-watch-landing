@@ -23,6 +23,7 @@ const CustomerAccessTargeting: React.FC = () => {
     const [hoveredMarketingRow, setHoveredMarketingRow] = useState<number | null>(null);
     const [expandedTrigger, setExpandedTrigger] = useState<number | null>(null);
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     // Check for reduced motion preference
     useEffect(() => {
@@ -30,7 +31,15 @@ const CustomerAccessTargeting: React.FC = () => {
         setPrefersReducedMotion(mediaQuery.matches);
         const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
         mediaQuery.addEventListener('change', handler);
-        return () => mediaQuery.removeEventListener('change', handler);
+
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
+        return () => {
+            mediaQuery.removeEventListener('change', handler);
+            window.removeEventListener('resize', checkMobile);
+        };
     }, []);
 
     const handleScroll = () => {
@@ -128,8 +137,8 @@ const CustomerAccessTargeting: React.FC = () => {
             border: '1px solid var(--color-grid)',
             borderLeft: '4px solid var(--color-alert-red)',
             padding: '2rem',
-            maxHeight: '70vh',
-            overflowY: 'auto' as const
+            maxHeight: isMobile ? 'none' : '70vh',
+            overflowY: (isMobile ? 'visible' : 'auto') as 'visible' | 'auto'
         },
         toggleButton: (isActive: boolean) => ({
             background: isActive ? 'rgba(228, 0, 40, 0.2)' : 'transparent',
@@ -915,7 +924,8 @@ const CustomerAccessTargeting: React.FC = () => {
                 @media (max-width: 768px) {
                     .brand-section {
                         padding: 2rem 1.5rem !important;
-                        overflow-y: auto !important;
+                        overflow: visible !important;
+                        height: auto !important;
                     }
                 }
             `}</style>

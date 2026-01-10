@@ -4,8 +4,8 @@
     /* GLOBAL LAYOUT */
     body {
         overflow-y: auto !important;
-        /* Allow vertical scroll on body */
         height: auto !important;
+        -webkit-overflow-scrolling: touch;
     }
 
     /* INVESTOR PACK SCROLL CONTAINER */
@@ -14,22 +14,140 @@
         overflow-x: hidden !important;
         overflow-y: auto !important;
         height: auto !important;
-        scroll-snap-type: y mandatory !important;
+        scroll-snap-type: y proximity !important;
+        /* Changed from mandatory to allow smoother scroll */
         width: 100% !important;
+        -webkit-overflow-scrolling: touch;
     }
 
     /* SECTIONS */
     .brand-section {
         flex: 0 0 auto !important;
-        /* Don't force 100vw width in flex row */
         width: 100% !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        /* Fixes 2x width issue */
         height: auto !important;
-        min-height: 100vh !important;
+        min-height: auto !important;
+        /* Allow content to determine height */
         padding: 4rem 1.5rem !important;
-        /* Reduce padding */
         border-right: none !important;
         border-bottom: 1px solid var(--color-grid);
         scroll-snap-align: start !important;
+        overflow: hidden !important;
+        /* Hide overflow instead of visible to prevent scroll traps */
+    }
+
+    /* ========================================
+       INVESTOR DECK SCROLL NORMALIZATION
+       Remove nested scroll contexts on mobile
+       ======================================== */
+
+    /* Step rails (Technical Appendix, etc.) */
+    .step-rail {
+        overflow: visible !important;
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        height: auto !important;
+        max-height: none !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Glass panels within sections */
+    .brand-section .glass-panel {
+        overflow: visible !important;
+        height: auto !important;
+        max-height: none !important;
+    }
+
+    /* Breakdown consoles */
+    .breakdown-console {
+        overflow: visible !important;
+        height: auto !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto auto !important;
+    }
+
+    /* Flow diagram containers */
+    .flow-diagram-container {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+
+    /* Flow steps - remove fixed heights */
+    .flow-step {
+        min-height: auto !important;
+        height: auto !important;
+    }
+
+    /* Card carousels - stack vertically */
+    .scenario-carousel,
+    .carousel-container {
+        flex-direction: column !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+        gap: 1.5rem !important;
+    }
+
+    /* Scenario cards */
+    .scenario-card {
+        width: 100% !important;
+        min-width: auto !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* Target consoles */
+    .target-console,
+    .segment-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Comparator rows */
+    .comparator-section {
+        overflow: visible !important;
+    }
+
+    /* Market sizing panels */
+    .market-panel-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Checklist grids */
+    .checklist-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Term cards and alignment items */
+    .terms-grid,
+    .alignment-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Navigation indicators - position adjustment for vertical scroll */
+    .nav-indicators {
+        position: fixed !important;
+        bottom: 1rem !important;
+        right: 1rem !important;
+        left: auto !important;
+        transform: none !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+    }
+
+    .nav-indicators .nav-group {
+        flex-direction: row-reverse !important;
+    }
+
+    .nav-indicators .nav-dot {
+        width: 8px !important;
+        height: 8px !important;
+    }
+
+    .nav-indicators .nav-dot.active {
+        width: 8px !important;
+        height: 24px !important;
     }
 
     /* GRIDS */
@@ -40,12 +158,12 @@
 
     /* TYPOGRAPHY */
     .text-huge {
-        font-size: 3rem !important;
+        font-size: 2.5rem !important;
         margin-bottom: 1.5rem !important;
     }
 
     .text-large {
-        font-size: 1.8rem !important;
+        font-size: 1.5rem !important;
     }
 
     /* COMPONENTS */
@@ -77,137 +195,56 @@
         flex-direction: column !important;
     }
 
-    /* Hide Sidebar by default (will need JS toggle) */
+    /* Hide Sidebar by default */
     .admin-sidebar {
         display: none;
-        /* Placeholder, will need state */
         position: fixed;
         top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+    }
 
-        /* MOBILE OVERRIDES */
-        @media (max-width: 768px) {
+    .admin-sidebar.open {
+        display: flex;
+    }
 
-            /* GLOBAL LAYOUT */
-            body {
-                overflow-y: auto !important;
-                /* Allow vertical scroll on body */
-                height: auto !important;
-            }
+    /* DASHBOARD WIDGETS */
+    .dashboard-widgets-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
 
-            /* INVESTOR PACK SCROLL CONTAINER */
-            .brand-scroll-container {
-                flex-direction: column !important;
-                overflow-x: hidden !important;
-                overflow-y: auto !important;
-                height: auto !important;
-                scroll-snap-type: y mandatory !important;
-                width: 100% !important;
-            }
+    .stat-card {
+        grid-column: auto !important;
+        width: 100% !important;
+    }
 
-            /* SECTIONS */
-            .brand-section {
-                flex: 0 0 auto !important;
-                /* Don't force 100vw width in flex row */
-                width: 100% !important;
-                height: auto !important;
-                min-height: 100vh !important;
-                padding: 4rem 1.5rem !important;
-                /* Reduce padding */
-                border-right: none !important;
-                border-bottom: 1px solid var(--color-grid);
-                scroll-snap-align: start !important;
-            }
+    /* ADMIN HEADER */
+    .admin-header {
+        padding: 0 1rem !important;
+        height: 60px !important;
+    }
 
-            /* GRIDS */
-            .grid-2 {
-                grid-template-columns: 1fr !important;
-                gap: 2rem !important;
-            }
+    .admin-header>div {
+        gap: 0.5rem !important;
+    }
 
-            /* TYPOGRAPHY */
-            .text-huge {
-                font-size: 3rem !important;
-                margin-bottom: 1.5rem !important;
-            }
+    .admin-header .mobile-menu-btn {
+        padding: 0.25rem !important;
+    }
 
-            .text-large {
-                font-size: 1.8rem !important;
-            }
+    /* Ensure main content has padding */
+    main {
+        padding: 1rem !important;
+    }
 
-            /* COMPONENTS */
-            .panel {
-                padding: 1.5rem !important;
-            }
-
-            /* BRAND PACK SPECIFIC */
-            .brand-pack-grid {
-                grid-template-columns: 1fr !important;
-            }
-
-            .brand-sidebar {
-                position: relative !important;
-                width: 100% !important;
-                height: auto !important;
-                border-right: none !important;
-                border-bottom: 1px solid var(--color-grid);
-                padding: 1rem !important;
-            }
-
-            .brand-content {
-                margin-left: 0 !important;
-                width: 100% !important;
-            }
-
-            /* ADMIN DASHBOARD */
-            .admin-root {
-                flex-direction: column !important;
-            }
-
-            /* Hide Sidebar by default (will need JS toggle) */
-            .admin-sidebar {
-                display: none;
-                /* Placeholder, will need state */
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 1000;
-            }
-
-            .admin-sidebar.open {
-                display: flex;
-            }
-
-            /* DASHBOARD WIDGETS */
-            .dashboard-widgets-grid {
-                grid-template-columns: 1fr !important;
-                gap: 1rem !important;
-            }
-
-            .stat-card {
-                grid-column: auto !important;
-                /* Reset colSpan */
-                width: 100% !important;
-            }
-
-            /* ADMIN HEADER */
-            .admin-header {
-                padding: 0 1rem !important;
-                height: 60px !important;
-            }
-
-            .admin-header>div {
-                gap: 0.5rem !important;
-            }
-
-            /* Adjust font sizes in header */
-            .admin-header .mobile-menu-btn {
-                padding: 0.25rem !important;
-            }
-
-            /* Ensure main content has padding */
-            main {
-                padding: 1rem !important;
-            }
-        }
+    /* Stop glitch animation on mobile to prevent scroll flickering */
+    .glitch-text::before,
+    .glitch-text::after {
+        animation-play-state: paused !important;
+        clip: auto !important;
+        display: none !important;
+    }
+}

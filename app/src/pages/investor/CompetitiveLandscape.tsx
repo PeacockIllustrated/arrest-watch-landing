@@ -16,6 +16,7 @@ const CompetitiveLandscape: React.FC = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [progress, setProgress] = useState(0);
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     // Interaction States
     const [thesisMode, setThesisMode] = useState<'timeliness' | 'confidence'>('timeliness');
@@ -27,7 +28,15 @@ const CompetitiveLandscape: React.FC = () => {
         setPrefersReducedMotion(mediaQuery.matches);
         const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
         mediaQuery.addEventListener('change', handler);
-        return () => mediaQuery.removeEventListener('change', handler);
+
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
+        return () => {
+            mediaQuery.removeEventListener('change', handler);
+            window.removeEventListener('resize', checkMobile);
+        };
     }, []);
 
     const handleScroll = () => {
@@ -268,7 +277,7 @@ const CompetitiveLandscape: React.FC = () => {
                                     {row.roleInEcosystem ? row.roleInEcosystem : "Market Analysis"}
                                 </h2>
 
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', marginTop: '2rem' }}>
+                                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '3rem', marginTop: '2rem' }}>
                                     <div>
                                         <h3 className="text-mono text-muted" style={{ fontSize: '0.85rem', marginBottom: '1rem' }}>STRUCTURE</h3>
                                         <div className="glass-panel" style={{ padding: '1.5rem' }}>
@@ -313,7 +322,7 @@ const CompetitiveLandscape: React.FC = () => {
                                 {CONFIG.differentiation.subtitle}
                             </p>
 
-                            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '3rem' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '2fr 1fr', gap: '3rem' }}>
                                 <div>
                                     {CONFIG.differentiation.points.map((point, i) => (
                                         <div key={i} className="glass-panel" style={{
@@ -484,7 +493,8 @@ const CompetitiveLandscape: React.FC = () => {
                     }
                     .brand-section {
                          padding: 2rem 1.5rem !important;
-                         overflow-y: auto !important;
+                         overflow: visible !important;
+                         height: auto !important;
                     }
                 }
             `}</style>

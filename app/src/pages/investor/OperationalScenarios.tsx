@@ -15,6 +15,7 @@ const OperationalScenarios: React.FC = () => {
     const [showPrev, setShowPrev] = useState(false);
     const [showNext, setShowNext] = useState(true);
     const [activeIndex, setActiveIndex] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
 
     // Scroll refs for carousel
     const scrollRefA = useRef<HTMLDivElement>(null);
@@ -117,6 +118,13 @@ const OperationalScenarios: React.FC = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
 
 
     // Interaction states
@@ -133,7 +141,7 @@ const OperationalScenarios: React.FC = () => {
 
     return (
         <>
-            <div className="brand-scroll-container" ref={scrollContainerRef} style={{ overflowY: 'hidden' }}> {/* Force no vertical scroll on main container */}
+            <div className="brand-scroll-container" ref={scrollContainerRef} style={{ overflowY: isMobile ? 'visible' : 'hidden' }}> {/* Force no vertical scroll on main container */}
 
                 {/* ========== PANEL 1: TITLE ========== */}
                 <section className="brand-section" id="os-slide-01">
@@ -455,15 +463,21 @@ const OperationalScenarios: React.FC = () => {
                 @media (max-width: 768px) {
                     #os-slide-01, #os-slide-02, #os-slide-03 {
                         height: auto !important;
-                        overflow-y: auto !important;
+                        overflow: visible !important;
                         padding-top: 5rem !important;
+                        padding-left: 1.5rem !important;
+                        padding-right: 1.5rem !important;
                     }
-                    .cards-grid {
-                        grid-template-columns: 1fr;
+                    .cards-scroll-container {
+                        flex-direction: column;
+                        overflow-x: visible;
+                        padding: 0;
+                        mask-image: none;
                     }
                     .scenario-card-container {
-                        aspect-ratio: auto;
-                        min-height: 200px;
+                        width: 100%;
+                        height: 350px;
+                        margin-bottom: 2rem;
                     }
                 }
 

@@ -29,7 +29,7 @@ const FounderInvestorFit = lazy(() => import('./pages/investor/FounderInvestorFi
 const CustomerProof = lazy(() => import('./pages/investor/CustomerProof'));
 const CustomerAccessTargeting = lazy(() => import('./pages/investor/CustomerAccessTargeting'));
 const CompetitiveLandscape = lazy(() => import('./pages/investor/CompetitiveLandscape'));
-const ProductFlow = lazy(() => import('./pages/investor/ProductFlow'));
+
 const TechnicalAppendixSystemLogic = lazy(() => import('./pages/investor/TechnicalAppendixSystemLogic'));
 const OperationalScenarios = lazy(() => import('./pages/investor/OperationalScenarios'));
 const UberPack = lazy(() => import('./pages/UberPack'));
@@ -134,7 +134,7 @@ function App() {
               <Route path="/investor-delta/appendix/customer-proof" element={<CustomerProof />} />
               <Route path="/investor-delta/appendix/customer-access" element={<CustomerAccessTargeting />} />
               <Route path="/investor-delta/appendix/competitive-landscape" element={<CompetitiveLandscape />} />
-              <Route path="/investor-delta/product-flow" element={<ProductFlow />} />
+
               <Route path="/investor-delta/appendix/technical-appendix-system-logic" element={<TechnicalAppendixSystemLogic />} />
               <Route path="/investor-delta/operational-scenarios" element={<OperationalScenarios />} />
               <Route path="/uber" element={<UberPack />} />
