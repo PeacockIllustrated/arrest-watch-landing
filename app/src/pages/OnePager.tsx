@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import logoMark from '../assets/logo-mark.png';
+import logoMark from '../assets/logo-mark.webp';
 import iconWhite from '../assets/icon-white.png';
 import founderImg from '../assets/founder.png';
 import { usePageTitle } from '../hooks/usePageTitle';
