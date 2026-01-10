@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import RadarNode from '../components/investor/ui/RadarNode';
-import { ChartIcon, LinkIcon, LockIcon } from '../components/portal/Icons';
+import { ChartIcon, LockIcon } from '../components/portal/Icons';
 import { DeckHubAuthProvider, useDeckHubAuth } from '../components/deckhub/DeckHubAuthContext';
 import OnboardingModal from '../components/investor/_legacy/OnboardingModal';
 import { DECKS, type Deck } from '../lib/decks';
+import { getDecksGroupedBySection } from '../lib/dataRoomPlan';
 import { usePageTitle } from '../hooks/usePageTitle';
 import '../styles/brand.css';
+import LeadershipBiosSection from '../components/data-room/LeadershipBiosSection';
 
 // ============ TYPING EFFECT COMPONENT ============
 const TypingText: React.FC<{ text: string; delay?: number }> = ({ text, delay = 50 }) => {
@@ -140,8 +142,9 @@ const DeckCard: React.FC<{
     deck: Deck;
     index: number;
     isLocked: boolean;
+    sectionTitle: string;
     onRequestAccess: () => void;
-}> = ({ deck, index, isLocked, onRequestAccess }) => {
+}> = ({ deck, index, isLocked, sectionTitle, onRequestAccess }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     const CardContent = (
@@ -209,10 +212,7 @@ const DeckCard: React.FC<{
                     alignItems: 'center',
                     gap: '0.4rem',
                 }}>
-                    {deck.category === 'investor'
-                        ? <><ChartIcon size={12} color="currentColor" /> INVESTOR</>
-                        : <><LinkIcon size={12} color="currentColor" /> TRACTION</>
-                    }
+                    <ChartIcon size={12} color="currentColor" /> {sectionTitle}
                 </span>
             </div>
 
@@ -291,12 +291,12 @@ const DeckCard: React.FC<{
 
 // ============ DECK HUB CONTENT ============
 const DeckHubContent: React.FC = () => {
-    usePageTitle('Decks');
+    usePageTitle('Data Room');
     const { isAuthenticated, user, accessibleDecks, loading, logout } = useDeckHubAuth();
     const [showOnboardingModal, setShowOnboardingModal] = useState(false);
 
-    const investorDecks = DECKS.filter(d => d.category === 'investor');
-    const partnerDecks = DECKS.filter(d => d.category === 'partner');
+    // Get decks organized by section from config
+    const sectionedDecks = getDecksGroupedBySection();
     const unlockedCount = accessibleDecks.length;
 
     const isDeckLocked = (deckId: string): boolean => {
@@ -459,11 +459,11 @@ const DeckHubContent: React.FC = () => {
                             lineHeight: 0.95,
                         }}
                     >
-                        DECK <span className="text-red">LIBRARY</span>
+                        DATA <span className="text-red">ROOM</span>
                     </h1>
 
                     <div className="text-muted animate-fade-in-up" style={{ fontSize: '1.1rem', animationDelay: '0.2s' }}>
-                        <TypingText text="Investor and Traction presentation materials. Access granted per user." delay={50} />
+                        <TypingText text="Investor materials organized for efficient diligence. Access granted per user." delay={50} />
                     </div>
 
                     {/* Stats Row */}
@@ -487,59 +487,76 @@ const DeckHubContent: React.FC = () => {
                     </div>
                 </header>
 
-                {/* Investor Section */}
-                <section style={{ maxWidth: '1400px', marginInline: 'auto', marginBottom: '4rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
-                        <div style={{ width: '30px', height: '2px', background: 'var(--color-alert-red)' }} />
-                        <h2 className="text-mono" style={{ fontSize: '0.9rem', letterSpacing: '0.15em', color: 'var(--color-signal-white)' }}>
-                            INVESTOR MATERIALS
-                        </h2>
-                        <div style={{ flex: 1, height: '1px', background: 'var(--color-grid)' }} />
-                    </div>
+                {/* Data Room Sections */}
+                {Array.from(sectionedDecks.entries()).map(([section, decks], sectionIndex) => (
+                    <section key={section.id} style={{ maxWidth: '1400px', marginInline: 'auto', marginBottom: '4rem' }}>
+                        {/* Section Header */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: section.isGated ? '1rem' : '2rem' }}>
+                            <div style={{ width: '30px', height: '2px', background: 'var(--color-alert-red)' }} />
+                            <h2 className="text-mono" style={{ fontSize: '0.9rem', letterSpacing: '0.15em', color: 'var(--color-signal-white)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                {section.title}
+                                {section.isGated && section.gatedBadge && (
+                                    <span style={{
+                                        fontSize: '0.65rem',
+                                        padding: '0.25rem 0.5rem',
+                                        border: '1px solid var(--color-alert-red)',
+                                        color: 'var(--color-alert-red)',
+                                        background: 'rgba(228, 0, 40, 0.1)',
+                                        letterSpacing: '0.05em'
+                                    }}>
+                                        {section.gatedBadge}
+                                    </span>
+                                )}
+                            </h2>
+                            <div style={{ flex: 1, height: '1px', background: 'var(--color-grid)' }} />
+                        </div>
 
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-                        gap: '1.5rem'
-                    }}>
-                        {investorDecks.map((deck, i) => (
-                            <DeckCard
-                                key={deck.id}
-                                deck={deck}
-                                index={i}
-                                isLocked={isDeckLocked(deck.id)}
-                                onRequestAccess={handleRequestAccess}
-                            />
-                        ))}
-                    </div>
-                </section>
+                        {/* Section Description (for non-gated) or Subheader (for gated) */}
+                        {section.description && !section.isGated && (
+                            <p className="text-muted" style={{ fontSize: '0.85rem', marginBottom: '2rem', maxWidth: '600px' }}>
+                                {section.description}
+                            </p>
+                        )}
+                        {section.isGated && section.gatedSubheader && (
+                            <p className="text-muted" style={{ fontSize: '0.85rem', marginBottom: '2rem', fontStyle: 'italic' }}>
+                                {section.gatedSubheader}
+                            </p>
+                        )}
 
-                {/* Partner Section */}
-                <section style={{ maxWidth: '1400px', marginInline: 'auto', marginBottom: '4rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
-                        <div style={{ width: '30px', height: '2px', background: 'var(--color-alert-red)' }} />
-                        <h2 className="text-mono" style={{ fontSize: '0.9rem', letterSpacing: '0.15em', color: 'var(--color-signal-white)' }}>
-                            EARLY TRACTION
-                        </h2>
-                        <div style={{ flex: 1, height: '1px', background: 'var(--color-grid)' }} />
-                    </div>
+                        {/* Deck Grid */}
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+                            gap: '1.5rem'
+                        }}>
+                            {decks.map((deck, i) => (
+                                <DeckCard
+                                    key={deck.id}
+                                    deck={deck}
+                                    index={sectionIndex * 10 + i}
+                                    isLocked={isDeckLocked(deck.id)}
+                                    sectionTitle={section.title}
+                                    onRequestAccess={handleRequestAccess}
+                                />
+                            ))}
+                        </div>
 
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-                        gap: '1.5rem'
-                    }}>
-                        {partnerDecks.map((deck, i) => (
-                            <DeckCard
-                                key={deck.id}
-                                deck={deck}
-                                index={i + investorDecks.length}
-                                isLocked={isDeckLocked(deck.id)}
-                                onRequestAccess={handleRequestAccess}
-                            />
-                        ))}
-                    </div>
-                </section>
+                        {/* Gated Section Footer */}
+                        {section.isGated && section.gatedFooter && (
+                            <p className="text-muted text-mono" style={{
+                                fontSize: '0.75rem',
+                                marginTop: '1.5rem',
+                                textAlign: 'center',
+                                letterSpacing: '0.05em'
+                            }}>
+                                {section.gatedFooter}
+                            </p>
+                        )}
+                    </section>
+                ))}
+
+                {/* Leadership Bios Section */}
+                <LeadershipBiosSection />
 
                 {/* Footer */}
                 <footer style={{ textAlign: 'center', marginTop: '4rem', paddingBottom: '2rem' }}>
