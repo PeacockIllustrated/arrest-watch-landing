@@ -14,18 +14,32 @@ const SiteProtectedRoute: React.FC<SiteProtectedRouteProps> = ({ children }) => 
     useEffect(() => {
         let mounted = true;
 
+        // Timeout fallback to prevent infinite loading if Supabase hangs
+        const timeout = setTimeout(() => {
+            if (mounted) {
+                console.warn('Auth check timed out after 5 seconds');
+                setAuthenticated(false);
+                setLoading(false);
+            }
+        }, 5000);
+
         const checkSession = async () => {
             try {
-                const { data: { session } } = await supabase.auth.getSession();
+                const { data: { session }, error } = await supabase.auth.getSession();
+                if (error) {
+                    console.error('Session error:', error.message);
+                }
                 if (mounted) {
                     setAuthenticated(!!session);
                     setLoading(false);
+                    clearTimeout(timeout);
                 }
             } catch (err) {
                 console.error('Error checking session:', err);
                 if (mounted) {
                     setAuthenticated(false);
                     setLoading(false);
+                    clearTimeout(timeout);
                 }
             }
         };
@@ -37,11 +51,13 @@ const SiteProtectedRoute: React.FC<SiteProtectedRouteProps> = ({ children }) => 
             if (mounted) {
                 setAuthenticated(!!session);
                 setLoading(false);
+                clearTimeout(timeout);
             }
         });
 
         return () => {
             mounted = false;
+            clearTimeout(timeout);
             subscription.unsubscribe();
         };
     }, []);
