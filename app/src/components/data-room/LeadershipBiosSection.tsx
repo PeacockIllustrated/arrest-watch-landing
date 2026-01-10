@@ -302,8 +302,8 @@ const LeadershipBiosSection: React.FC = () => {
 
             {/* Leadership Accordion Cards */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {LEADERSHIP_BIOS.map((leader, index) => (
-                    <LeadershipAccordionCard key={leader.id} leader={leader} index={index} />
+                {LEADERSHIP_BIOS.map((leader) => (
+                    <LeadershipAccordionCard key={leader.id} leader={leader} />
                 ))}
             </div>
         </section>
