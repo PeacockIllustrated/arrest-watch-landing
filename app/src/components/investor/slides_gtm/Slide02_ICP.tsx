@@ -49,7 +49,7 @@ const Slide02_ICP: React.FC = () => {
                     <div className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                         <div className="glass-panel" style={{ padding: '2.5rem' }}>
                             <div className="text-mono text-red" style={{ fontSize: '0.8rem', letterSpacing: '0.1em', marginBottom: '2rem' }}>
-                                PRIMARY ICP — YEAR 1
+                                PRIMARY ICP - YEAR 1
                             </div>
 
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>

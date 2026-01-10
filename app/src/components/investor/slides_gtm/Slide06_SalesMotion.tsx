@@ -40,7 +40,7 @@ const Slide06_SalesMotion: React.FC = () => {
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem' }}>
                             <div>
                                 <div className="text-mono text-red" style={{ fontSize: '0.8rem', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
-                                    PHASE 1 — CURRENT
+                                    PHASE 1 - CURRENT
                                 </div>
                                 <h3 className="text-white" style={{ fontSize: '1.8rem', fontWeight: 600 }}>
                                     FOUNDER-LED SALES
@@ -87,7 +87,7 @@ const Slide06_SalesMotion: React.FC = () => {
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem' }}>
                             <div>
                                 <div className="text-mono text-muted" style={{ fontSize: '0.8rem', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
-                                    PHASE 2 — EXPANSION
+                                    PHASE 2 - EXPANSION
                                 </div>
                                 <h3 className="text-white" style={{ fontSize: '1.8rem', fontWeight: 600 }}>
                                     ENTERPRISE AE

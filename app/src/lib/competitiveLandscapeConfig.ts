@@ -64,7 +64,7 @@ export interface CompetitiveLandscapeConfig {
 
 export const COMPETITIVE_LANDSCAPE_CONFIG: CompetitiveLandscapeConfig = {
     thesis: {
-        title: "The Market Has Moved Toward Timeliness — Not Toward Decision Confidence",
+        title: "The Market Has Moved Toward Timeliness - Not Toward Decision Confidence",
         problemStatement: "The arrest-data ecosystem has evolved toward faster detection, but the hardest problem remains unsolved: knowing whether an arrest record has meaningfully changed over time and whether that change is reliable enough to act on."
     },
     ecosystem: {

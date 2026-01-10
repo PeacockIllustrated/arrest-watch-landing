@@ -33,7 +33,7 @@ const Slide04_Packaging: React.FC = () => {
                         </h2>
 
                         <p className="text-muted" style={{ marginTop: '2rem', fontSize: '1.15rem', lineHeight: 1.6, maxWidth: '480px' }}>
-                            We sell a continuously-updated risk intelligence layer that integrates into existing workflows — not raw data that requires interpretation.
+                            We sell a continuously-updated risk intelligence layer that integrates into existing workflows - not raw data that requires interpretation.
                         </p>
                     </div>
 

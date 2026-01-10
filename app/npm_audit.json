@@ -1,0 +1,101 @@
+﻿{
+  "auditReportVersion": 2,
+  "vulnerabilities": {
+    "react-router": {
+      "name": "react-router",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1111964,
+          "name": "react-router",
+          "dependency": "react-router",
+          "title": "React Router has CSRF issue in Action/Server Action Request Processing",
+          "url": "https://github.com/advisories/GHSA-h5cw-625j-3rxh",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-346",
+            "CWE-352"
+          ],
+          "cvss": {
+            "score": 6.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N"
+          },
+          "range": ">=7.0.0 <=7.11.0"
+        },
+        {
+          "source": 1111966,
+          "name": "react-router",
+          "dependency": "react-router",
+          "title": "React Router vulnerable to XSS via Open Redirects",
+          "url": "https://github.com/advisories/GHSA-2w69-qvjg-hvjx",
+          "severity": "high",
+          "cwe": [
+            "CWE-79"
+          ],
+          "cvss": {
+            "score": 8,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N"
+          },
+          "range": ">=7.0.0 <=7.11.0"
+        },
+        {
+          "source": 1111979,
+          "name": "react-router",
+          "dependency": "react-router",
+          "title": "React Router SSR XSS in ScrollRestoration",
+          "url": "https://github.com/advisories/GHSA-8v8x-cx79-35w7",
+          "severity": "high",
+          "cwe": [
+            "CWE-79"
+          ],
+          "cvss": {
+            "score": 8.2,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N"
+          },
+          "range": ">=7.0.0 <7.12.0"
+        }
+      ],
+      "effects": [
+        "react-router-dom"
+      ],
+      "range": "7.0.0 - 7.12.0-pre.0",
+      "nodes": [
+        "node_modules/react-router"
+      ],
+      "fixAvailable": true
+    },
+    "react-router-dom": {
+      "name": "react-router-dom",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "react-router"
+      ],
+      "effects": [],
+      "range": "7.0.0-pre.0 - 7.11.0",
+      "nodes": [
+        "node_modules/react-router-dom"
+      ],
+      "fixAvailable": true
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 1,
+      "high": 1,
+      "critical": 0,
+      "total": 2
+    },
+    "dependencies": {
+      "prod": 112,
+      "dev": 198,
+      "optional": 56,
+      "peer": 0,
+      "peerOptional": 0,
+      "total": 316
+    }
+  }
+}

@@ -83,7 +83,7 @@ const Slide05_Pricing: React.FC = () => {
                         boxShadow: '0 0 40px rgba(228, 0, 40, 0.1)'
                     }}>
                         <div className="text-mono text-muted" style={{ fontSize: '0.8rem', letterSpacing: '0.1em', marginBottom: '0.75rem' }}>
-                            TARGET AVERAGE CONTRACT VALUE — YEAR 1
+                            TARGET AVERAGE CONTRACT VALUE - YEAR 1
                         </div>
                         <div className="text-mono text-red text-glow" style={{ fontSize: '4rem', fontWeight: 700, lineHeight: 1 }}>
                             $175k

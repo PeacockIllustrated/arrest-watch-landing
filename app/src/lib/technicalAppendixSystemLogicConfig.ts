@@ -64,7 +64,7 @@ export interface TechnicalAppendixSystemLogicConfig {
 
 export const TECHNICAL_APPENDIX_SYSTEM_LOGIC_CONFIG: TechnicalAppendixSystemLogicConfig = {
     intro: {
-        title: 'Technical Appendix — System Logic',
+        title: 'Technical Appendix - System Logic',
         neutralLine: 'Architecture intent: detection → identity certainty → verification → routing.'
     },
 

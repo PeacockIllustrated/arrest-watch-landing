@@ -41,7 +41,7 @@ export interface OperationalScenariosConfig {
 }
 
 export const OPERATIONAL_SCENARIOS_CONFIG: OperationalScenariosConfig = {
-    pageTitle: "Operational Scenarios — Before / After",
+    pageTitle: "Operational Scenarios - Before / After",
     pageSubtitle: "Two canonical scenarios showing why verification must occur before alerts.",
 
     // SCENARIO A: Customer Risk Scenario

@@ -9,7 +9,7 @@ const MarketSection: React.FC = () => {
                         <span className="label">03. Why Now</span>
                         <h2 className="text-large">A Market Inefficiency.</h2>
                         <p className="text-muted" style={{ marginTop: '2rem', fontSize: '1.2rem' }}>
-                            Public arrest data exists, but it is fragmented across thousands of jurisdictions and lacks any real-time aggregation layer. No company in the U.S. aggregates this data continuously at scale—until now.
+                            Public arrest data exists, but it is fragmented across thousands of jurisdictions and lacks any real-time aggregation layer. No company in the U.S. aggregates this data continuously at scale-until now.
                         </p>
                     </div>
                     <div className="grid-2" style={{ gap: '1.5rem' }}>

@@ -92,8 +92,8 @@ const Dashboard: React.FC = () => {
                     <DeepMapViz
                         isScanning={true}
                         height="28rem"
-                        onStateSelect={(stateId) => console.log('State selected:', stateId)}
-                        onCountySelect={(countyId, stateId) => console.log('County selected:', countyId, 'in', stateId)}
+                        onStateSelect={() => { }}
+                        onCountySelect={() => { }}
                     />
                 </Card>
             </div>

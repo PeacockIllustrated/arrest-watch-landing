@@ -476,7 +476,7 @@ const DeckHubContent: React.FC = () => {
                     }}>
                         {[
                             { label: 'TOTAL DECKS', value: DECKS.length },
-                            { label: 'UNLOCKED', value: isAuthenticated ? unlockedCount : '—' },
+                            { label: 'UNLOCKED', value: isAuthenticated ? unlockedCount : '-' },
                             { label: 'STATUS', value: isAuthenticated ? 'ACTIVE' : 'GUEST' },
                         ].map((stat, i) => (
                             <div key={i} style={{ textAlign: 'center' }}>

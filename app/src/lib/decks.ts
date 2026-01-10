@@ -145,7 +145,7 @@ export const DECKS: Deck[] = [
     },
     {
         id: 'technical-appendix-system-logic',
-        title: 'TECHNICAL APPENDIX — SYSTEM LOGIC',
+        title: 'TECHNICAL APPENDIX - SYSTEM LOGIC',
         route: '/investor-delta/appendix/technical-appendix-system-logic',
         category: 'investor',
         description: 'System logic deep dive: detection, identity, verification, and routing architecture.',

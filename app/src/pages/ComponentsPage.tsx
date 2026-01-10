@@ -600,7 +600,7 @@ const ComponentsPage: React.FC = () => {
                                 "ArrestDelta identified a <span style={{ background: 'white', color: 'black', padding: '0 0.5rem' }}>violent felony</span> within 12 minutes of booking. Our legacy provider missed it for <span style={{ textDecoration: 'line-through', color: 'var(--color-alert-red)' }}>two weeks</span>."
                             </blockquote>
                             <div className="text-mono">
-                                — DIRECTOR OF SECURITY, <span style={{ background: '#333', color: 'transparent', borderRadius: '2px' }}>FORTUNE 500 LOGISTICS</span>
+                                - DIRECTOR OF SECURITY, <span style={{ background: '#333', color: 'transparent', borderRadius: '2px' }}>FORTUNE 500 LOGISTICS</span>
                             </div>
                         </div>
                     </section>

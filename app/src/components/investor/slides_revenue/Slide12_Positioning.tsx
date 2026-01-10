@@ -40,7 +40,7 @@ const Slide12_Positioning: React.FC = () => {
                         lineHeight: 1.7,
                         fontWeight: 400
                     }}>
-                        "This revenue model reflects <span className="text-red" style={{ fontWeight: 600 }}>disciplined enterprise execution</span>: narrow focus, paid pilots, credible deal sizes, and pipeline rigor—without relying on expansion or optimistic conversion assumptions."
+                        "This revenue model reflects <span className="text-red" style={{ fontWeight: 600 }}>disciplined enterprise execution</span>: narrow focus, paid pilots, credible deal sizes, and pipeline rigor-without relying on expansion or optimistic conversion assumptions."
                     </p>
                 </div>
 

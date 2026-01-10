@@ -222,7 +222,7 @@ export const TECHNICAL_DEFENSIBILITY_CONFIG: TechnicalDefensibilityConfig = {
             'Suppressing noise without missing real events',
             'Accepting delayed signals over incorrect ones'
         ],
-        callout: 'This tradeoff is counterintuitive and culturally hard for data teams focused on volume. Enterprises reward this approach — but it takes time to build correctly.'
+        callout: 'This tradeoff is counterintuitive and culturally hard for data teams focused on volume. Enterprises reward this approach - but it takes time to build correctly.'
     },
 
     infrastructure: {
@@ -268,7 +268,7 @@ export const TECHNICAL_DEFENSIBILITY_CONFIG: TechnicalDefensibilityConfig = {
 
     investorSummary: {
         eyebrow: 'INVESTOR SUMMARY',
-        summary: 'Arrest Delta is defensible because it solves the hardest part of arrest intelligence — verified change detection under real-world variability — and that advantage compounds with every jurisdiction and every event observed.'
+        summary: 'Arrest Delta is defensible because it solves the hardest part of arrest intelligence - verified change detection under real-world variability - and that advantage compounds with every jurisdiction and every event observed.'
     },
 
     slideNavTitles: [

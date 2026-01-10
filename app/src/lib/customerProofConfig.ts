@@ -1,5 +1,5 @@
 /**
- * Customer Proof — Early Validation Configuration
+ * Customer Proof - Early Validation Configuration
  * 
  * CANONICAL SOURCE: /supporting-docs/ArrestDelta - Customer Proof _ Early Validation.md
  * All content preserved verbatim from original with minimal overlay improvements.
@@ -101,7 +101,7 @@ export interface CustomerProofConfig {
 export const CUSTOMER_PROOF_CONFIG: CustomerProofConfig = {
     thesis: {
         id: 'thesis',
-        eyebrow: 'CUSTOMER PROOF — EARLY VALIDATION',
+        eyebrow: 'CUSTOMER PROOF - EARLY VALIDATION',
         headline: 'We Do Not Claim Traction. We Demonstrate Truth.',
         thesisLine: 'At this stage, our proof is not logos or contracts.',
         framing: 'Our proof is consistent buyer behaviour, repeatable problem validation, and clear alignment on what a viable solution must deliver.'
@@ -172,7 +172,7 @@ export const CUSTOMER_PROOF_CONFIG: CustomerProofConfig = {
                 solutionRequirement: 'Reduce legal and operational risk, not introduce new exposure'
             }
         ],
-        closing: 'This alignment confirms that the problem — and the solution shape — are well understood by the market.'
+        closing: 'This alignment confirms that the problem - and the solution shape - are well understood by the market.'
     },
 
     engagementEvidence: {
@@ -198,7 +198,7 @@ export const CUSTOMER_PROOF_CONFIG: CustomerProofConfig = {
             {
                 id: 'eng-4',
                 label: 'Stakeholder depth',
-                detail: 'Engagements involving Trust & Safety, Security, and Legal stakeholders — not innovation teams'
+                detail: 'Engagements involving Trust & Safety, Security, and Legal stakeholders - not innovation teams'
             }
         ],
         closing: 'This is not casual interest; it is problem-driven engagement.'
@@ -264,7 +264,7 @@ export const CUSTOMER_PROOF_CONFIG: CustomerProofConfig = {
 
     investorSummary: {
         eyebrow: 'INVESTOR SUMMARY',
-        summary: 'At pre-seed, our customer proof is not logos — it is consistent enterprise validation of the problem, alignment on the solution requirements, and serious engagement toward paid pilots.'
+        summary: 'At pre-seed, our customer proof is not logos - it is consistent enterprise validation of the problem, alignment on the solution requirements, and serious engagement toward paid pilots.'
     },
 
     slideNavTitles: [

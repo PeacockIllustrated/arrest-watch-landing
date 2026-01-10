@@ -228,17 +228,17 @@ const Landing: React.FC = () => {
                     <div className="grid-3">
                         <div className="panel" style={{ padding: '2rem' }}>
                             <div className="text-mono text-red" style={{ fontSize: '0.8rem', marginBottom: '0.75rem' }}>COVERAGE</div>
-                            <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.5rem' }}>Nationwide-Ready</div>
+                            <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.5rem' }}>NATIONWIDE-READY</div>
                             <p className="text-muted" style={{ fontSize: '0.9rem' }}>Designed to support thousands of local jurisdictions as coverage expands.</p>
                         </div>
                         <div className="panel" style={{ padding: '2rem' }}>
                             <div className="text-mono text-red" style={{ fontSize: '0.8rem', marginBottom: '0.75rem' }}>LOW-LATENCY VERIFICATION</div>
-                            <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.5rem' }}>Alerts delivered in minutes, once confidence thresholds are met</div>
+                            <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.5rem' }}>ALERTS DELIVERED IN MINUTES, ONCE CONFIDENCE THRESHOLDS ARE MET</div>
                             <p className="text-muted" style={{ fontSize: '0.9rem' }}>Engineered for rapid state-change detection once identity and verification checks are complete.</p>
                         </div>
                         <div className="panel" style={{ padding: '2rem' }}>
                             <div className="text-mono text-red" style={{ fontSize: '0.8rem', marginBottom: '0.75rem' }}>CONFIDENCE</div>
-                            <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.5rem' }}>Verified Before Surfaced</div>
+                            <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.5rem' }}>VERIFIED BEFORE SURFACED</div>
                             <p className="text-muted" style={{ fontSize: '0.9rem' }}>Biometric/identity resolution reduces ambiguity before an alert is created.</p>
                         </div>
                     </div>
@@ -428,7 +428,7 @@ const Landing: React.FC = () => {
             </section>
 
             {/* PHILOSOPHICAL CLOSE */}
-            <section className="section" id="contact" style={{ background: '#0a0a0a', overflow: 'hidden', position: 'relative', borderBottom: 'none', paddingTop: '6rem', paddingBottom: '3rem' }}>
+            <section className="section" id="contact" style={{ background: '#0a0a0a', overflow: 'hidden', position: 'relative', borderBottom: 'none', paddingTop: '6rem', paddingBottom: '7rem' }}>
                 <div style={{
                     position: 'absolute', top: 0, left: '-100%', width: '50%', height: '100%',
                     background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent)',

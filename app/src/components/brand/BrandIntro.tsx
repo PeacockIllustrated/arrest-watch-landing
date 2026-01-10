@@ -20,7 +20,7 @@ const BrandIntro: React.FC = () => {
                     <p className="text-muted" style={{ marginTop: '2rem', maxWidth: '500px', lineHeight: 1.6 }}>
                         The ArrestDelta brand is built on the principles of immediate clarity and unshakeable
                         reliability.
-                        Our visual language reflects the critical nature of our intelligence layer—high contrast,
+                        Our visual language reflects the critical nature of our intelligence layer-high contrast,
                         data-driven, and devoid of noise.
                     </p>
                     <div style={{ marginTop: '3rem' }}>

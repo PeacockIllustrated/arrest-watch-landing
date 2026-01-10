@@ -385,7 +385,6 @@ body.landing-page.hovering #cursor {
 footer {
     border-top: 1px solid var(--color-grid);
     padding: 4rem 0;
-    margin-top: 4rem;
 }
 
 .footer-bottom {

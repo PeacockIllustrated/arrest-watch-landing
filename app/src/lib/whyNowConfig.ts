@@ -99,7 +99,7 @@ export const WHY_NOW_CONFIG: WhyNowConfig = {
             'Legal exposure',
             'Public and regulatory scrutiny'
         ],
-        callout: 'In this environment, acting on incorrect or outdated arrest information is no longer a tolerable edge case—it is a systemic risk.'
+        callout: 'In this environment, acting on incorrect or outdated arrest information is no longer a tolerable edge case-it is a systemic risk.'
     },
 
     auditability: {
@@ -132,7 +132,7 @@ export const WHY_NOW_CONFIG: WhyNowConfig = {
         id: 'false-positives',
         eyebrow: 'COST INVERSION',
         headline: 'The Cost of False Positives Is Rising Faster Than the Cost of Missed Events',
-        content: 'Historically, organizations optimized for coverage—more data, more alerts. Today, the dominant cost has shifted.',
+        content: 'Historically, organizations optimized for coverage-more data, more alerts. Today, the dominant cost has shifted.',
         coverageBullets: [
             'More data sources',
             'More frequent refreshes',
@@ -146,7 +146,7 @@ export const WHY_NOW_CONFIG: WhyNowConfig = {
             'Reputational harm',
             'Regulatory inquiry'
         ],
-        callout: 'False positives now create more downstream risk than delayed awareness. This makes signal confidence—not data volume—the critical variable.'
+        callout: 'False positives now create more downstream risk than delayed awareness. This makes signal confidence-not data volume-the critical variable.'
     },
 
     fragmentation: {
@@ -188,7 +188,7 @@ export const WHY_NOW_CONFIG: WhyNowConfig = {
             'Decisions scale instantly',
             'Liability compounds'
         ],
-        callout: 'Bad data no longer affects one case—it affects thousands. This makes verified change detection foundational, not optional.'
+        callout: 'Bad data no longer affects one case-it affects thousands. This makes verified change detection foundational, not optional.'
     },
 
     whyNowExists: {

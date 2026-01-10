@@ -251,7 +251,7 @@ const UberClosePlan: React.FC = () => {
                                     ))}
                                 </div>
                                 <p className="text-white" style={{ fontSize: '1rem', fontStyle: 'italic', borderLeft: '2px solid #00ff00', paddingLeft: '0.75rem' }}>
-                                    Mark's role is not to sell—it is to reassure Nadelle that this reduces risk, not adds it.
+                                    Mark's role is not to sell-it is to reassure Nadelle that this reduces risk, not adds it.
                                 </p>
                             </div>
 
@@ -334,7 +334,7 @@ const UberClosePlan: React.FC = () => {
 
                         {/* Competitive Reality */}
                         <div className="glass-panel animate-fade-in-up" style={{ padding: '1.5rem', animationDelay: '0.25s' }}>
-                            <div className="text-mono text-muted" style={{ marginBottom: '0.75rem', fontSize: '0.75rem' }}>COMPETITIVE REALITY — PRIMARY COMPETITOR: STATUS QUO</div>
+                            <div className="text-mono text-muted" style={{ marginBottom: '0.75rem', fontSize: '0.75rem' }}>COMPETITIVE REALITY - PRIMARY COMPETITOR: STATUS QUO</div>
                             <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
                                 {["Batch background checks", "Periodic updates", "Manual verification"].map((item, i) => (
                                     <span key={i} className="text-muted" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.95rem' }}>

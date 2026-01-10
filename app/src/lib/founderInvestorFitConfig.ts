@@ -235,7 +235,7 @@ export const FOUNDER_INVESTOR_FIT_CONFIG: FounderInvestorFitConfig = {
         statement: [
             'We are ambitious about what ArrestDelta can become.',
             'We are equally disciplined about how we get there.',
-            'The right investors will recognize that this combination—high ambition with operational restraint—is what enables durable, outsized outcomes.'
+            'The right investors will recognize that this combination-high ambition with operational restraint-is what enables durable, outsized outcomes.'
         ],
         partnershipProfile: 'long-term / evidence-led / enterprise-native'
     },

@@ -142,7 +142,7 @@ export const KILL_CRITERIA_CONFIG: KillCriteriaConfig = {
 
     investorSummary: {
         eyebrow: 'INVESTOR SUMMARY',
-        summary: 'We define failure conditions upfront because we are building enterprise decision infrastructure — and discipline is part of the product.',
+        summary: 'We define failure conditions upfront because we are building enterprise decision infrastructure - and discipline is part of the product.',
         finalNote: 'These kill criteria are not expectations of failure. They are guardrails to ensure we only scale when the core thesis is proven.'
     },
 

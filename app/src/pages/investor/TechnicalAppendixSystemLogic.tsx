@@ -9,7 +9,7 @@ const CONFIG = TECHNICAL_APPENDIX_SYSTEM_LOGIC_CONFIG;
 const SLIDE_TITLES = ['Intro', 'Flow', 'Overview', 'Breakdown'];
 
 const TechnicalAppendixSystemLogic: React.FC = () => {
-    usePageTitle('Technical Appendix — System Logic');
+    usePageTitle('Technical Appendix - System Logic');
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showPrev, setShowPrev] = useState(false);
     const [showNext, setShowNext] = useState(true);

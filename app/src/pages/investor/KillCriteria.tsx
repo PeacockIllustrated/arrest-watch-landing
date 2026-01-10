@@ -388,7 +388,7 @@ const KillCriteria: React.FC = () => {
                                             fontSize: '0.8rem',
                                             color: triggerLevel === 2 ? 'var(--color-alert-red)' : '#666'
                                         }}>
-                                            {triggerLevel === 2 ? 'TRIGGERED — CAPITAL DISCIPLINE ACTIVE' : 'STATUS: NOMINAL'}
+                                            {triggerLevel === 2 ? 'TRIGGERED - CAPITAL DISCIPLINE ACTIVE' : 'STATUS: NOMINAL'}
                                         </span>
                                     </div>
                                 </div>

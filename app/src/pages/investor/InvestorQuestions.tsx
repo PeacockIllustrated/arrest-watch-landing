@@ -188,7 +188,7 @@ const InvestorQuestions: React.FC = () => {
                             background: 'linear-gradient(135deg, rgba(228,0,40,0.05), transparent)'
                         }}>
                             <p className="text-white" style={{ fontSize: '1.3rem', marginBottom: '1.5rem' }}>
-                                Teams don't need more data. They need to know when something meaningful has changed — with confidence.
+                                Teams don't need more data. They need to know when something meaningful has changed - with confidence.
                             </p>
                             <p className="text-muted" style={{ marginBottom: '1rem' }}>That uncertainty creates:</p>
                             <div className="mobile-stack" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '1.5rem' }}>

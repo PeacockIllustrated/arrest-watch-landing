@@ -31,7 +31,6 @@ const LeadTable: React.FC = () => {
         if (error) {
             console.error('Error fetching leads:', error);
         }
-        console.log('Fetched leads:', data);
         if (data) setLeads(data);
         setLoading(false);
     };

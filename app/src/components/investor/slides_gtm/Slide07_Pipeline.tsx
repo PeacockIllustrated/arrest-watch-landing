@@ -74,7 +74,7 @@ const Slide07_Pipeline: React.FC = () => {
                     <div className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                         <div className="glass-panel border-glow" style={{ padding: '2.5rem' }}>
                             <div className="text-mono text-red" style={{ fontSize: '0.8rem', letterSpacing: '0.1em', marginBottom: '2rem' }}>
-                                DEAL MATH — CONVERSION RATES
+                                DEAL MATH - CONVERSION RATES
                             </div>
 
                             {/* Conversion Metrics */}

@@ -49,7 +49,7 @@ export interface UseOfFundsConfig {
 }
 
 export const USE_OF_FUNDS_CONFIG: UseOfFundsConfig = {
-    pageTitle: "Use of Funds — Milestone-Based Plan",
+    pageTitle: "Use of Funds - Milestone-Based Plan",
     thesis: {
         headline: "Capital Is a Tool to De-Risk the Business, Not to Fund Exploration",
         content: [

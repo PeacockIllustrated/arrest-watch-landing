@@ -57,7 +57,7 @@ const Slide01_Outcome: React.FC = () => {
                                 THE OUTCOME
                             </div>
                             <p className="text-white" style={{ fontSize: '1.1rem', lineHeight: 1.6 }}>
-                                This model reflects disciplined enterprise execution: narrow focus, paid pilots, credible deal sizes, and pipeline rigor—without relying on expansion or optimistic conversion assumptions.
+                                This model reflects disciplined enterprise execution: narrow focus, paid pilots, credible deal sizes, and pipeline rigor-without relying on expansion or optimistic conversion assumptions.
                             </p>
                         </div>
                     </div>
