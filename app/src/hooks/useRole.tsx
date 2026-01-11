@@ -9,8 +9,9 @@ export const useRole = () => {
     const hasRole = (requiredRole: UserRole): boolean => {
         if (!role) return false;
 
-        // Role hierarchy: owner > admin > analyst > viewer
+        // Role hierarchy: super_admin > owner > admin > analyst > viewer
         const roleHierarchy: Record<UserRole, number> = {
+            super_admin: 5,
             owner: 4,
             admin: 3,
             analyst: 2,

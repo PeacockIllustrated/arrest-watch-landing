@@ -51,6 +51,7 @@ const PersonnelPage = lazy(() => import('./pages/admin/PersonnelPage'));
 const TasksPage = lazy(() => import('./pages/admin/TasksPage'));
 const SettingsPage = lazy(() => import('./pages/admin/SettingsPage'));
 const ProvisionPage = lazy(() => import('./pages/admin/ProvisionPage'));
+const NotificationsAdminPage = lazy(() => import('./pages/admin/NotificationsPage'));
 import ProtectedRoute from './components/admin/ProtectedRoute';
 import AdminLayout from './components/admin/AdminLayout';
 
@@ -216,6 +217,7 @@ function App() {
             >
               <Route index element={<Navigate to="dashboard" replace />} />
               <Route path="dashboard" element={<DashboardHome />} />
+              <Route path="notifications" element={<NotificationsAdminPage />} />
               <Route path="leads" element={<LeadsPage />} />
               <Route path="provision" element={<ProvisionPage />} />
               <Route path="personnel" element={<PersonnelPage />} />

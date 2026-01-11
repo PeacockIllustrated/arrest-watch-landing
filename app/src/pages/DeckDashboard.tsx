@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import RadarNode from '../components/investor/ui/RadarNode';
 import { ChartIcon, LockIcon } from '../components/portal/Icons';
 import { DeckHubAuthProvider, useDeckHubAuth } from '../components/deckhub/DeckHubAuthContext';
-import OnboardingModal from '../components/investor/_legacy/OnboardingModal';
 import { DECKS, type Deck } from '../lib/decks';
 import { getDecksGroupedBySection } from '../lib/dataRoomPlan';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { DeckReadStatusProvider, useDeckReadStatus } from '../hooks/useDeckReadStatus';
+import { useDeckAccessRequests } from '../hooks/useDeckAccessRequests';
 import '../styles/brand.css';
 import LeadershipBiosSection from '../components/data-room/LeadershipBiosSection';
 import AdminReviewPanel from '../components/data-room/AdminReviewPanel';
@@ -67,12 +67,19 @@ const DataStreamParticle: React.FC<{ index: number }> = ({ index }) => {
 };
 
 // ============ LOCKED OVERLAY COMPONENT ============
-const LockedOverlay: React.FC<{ onRequestAccess: () => void }> = ({ onRequestAccess }) => (
+const LockedOverlay: React.FC<{
+    deckId: string;
+    hasRequestedAccess: boolean;
+    onRequestAccess: (deckId: string) => void;
+    isRequesting?: boolean;
+}> = ({ deckId, hasRequestedAccess, onRequestAccess, isRequesting }) => (
     <div
         onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            onRequestAccess();
+            if (!hasRequestedAccess && !isRequesting) {
+                onRequestAccess(deckId);
+            }
         }}
         style={{
             position: 'absolute',
@@ -122,19 +129,21 @@ const LockedOverlay: React.FC<{ onRequestAccess: () => void }> = ({ onRequestAcc
             ACCESS RESTRICTED
         </div>
         <button
+            disabled={hasRequestedAccess || isRequesting}
             style={{
                 marginTop: '1.5rem',
                 padding: '0.75rem 1.5rem',
-                background: 'transparent',
-                border: '1px solid #e40028',
-                color: '#e40028',
+                background: hasRequestedAccess ? 'rgba(76, 175, 80, 0.15)' : 'transparent',
+                border: `1px solid ${hasRequestedAccess ? '#4CAF50' : '#e40028'}`,
+                color: hasRequestedAccess ? '#4CAF50' : '#e40028',
                 fontFamily: 'var(--font-mono)',
                 fontSize: '0.75rem',
-                cursor: 'pointer',
+                cursor: hasRequestedAccess || isRequesting ? 'not-allowed' : 'pointer',
+                opacity: isRequesting ? 0.6 : 1,
                 transition: 'all 0.2s'
             }}
         >
-            REQUEST ACCESS
+            {isRequesting ? 'REQUESTING...' : hasRequestedAccess ? '✓ REQUESTED' : 'REQUEST ACCESS'}
         </button>
     </div>
 );
@@ -145,8 +154,10 @@ const DeckCard: React.FC<{
     index: number;
     isLocked: boolean;
     sectionTitle: string;
-    onRequestAccess: () => void;
-}> = ({ deck, index, isLocked, sectionTitle, onRequestAccess }) => {
+    hasRequestedAccess: boolean;
+    isRequesting: boolean;
+    onRequestAccess: (deckId: string) => void;
+}> = ({ deck, index, isLocked, sectionTitle, hasRequestedAccess, isRequesting, onRequestAccess }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [checkHovered, setCheckHovered] = useState(false);
     const { hasOpened, isRead, toggleRead } = useDeckReadStatus();
@@ -277,7 +288,14 @@ const DeckCard: React.FC<{
             )}
 
             {/* Locked Overlay */}
-            {isLocked && <LockedOverlay onRequestAccess={onRequestAccess} />}
+            {isLocked && (
+                <LockedOverlay
+                    deckId={deck.id}
+                    hasRequestedAccess={hasRequestedAccess}
+                    onRequestAccess={onRequestAccess}
+                    isRequesting={isRequesting}
+                />
+            )}
 
             {/* Read Status Checkmark (bottom-right) */}
             {!isLocked && (
@@ -357,7 +375,8 @@ const DeckCard: React.FC<{
 const DeckHubContent: React.FC = () => {
     usePageTitle('Data Room');
     const { isAuthenticated, user, accessibleDecks, loading, logout } = useDeckHubAuth();
-    const [showOnboardingModal, setShowOnboardingModal] = useState(false);
+    const { hasPendingRequest, requestAccess } = useDeckAccessRequests();
+    const [requestingDeckId, setRequestingDeckId] = useState<string | null>(null);
 
     // Get decks organized by section from config
     const sectionedDecks = getDecksGroupedBySection();
@@ -368,10 +387,13 @@ const DeckHubContent: React.FC = () => {
         return !accessibleDecks.includes(deckId);
     };
 
-    const handleRequestAccess = () => {
-        // User is already authenticated (came through SiteGatePage)
-        // Show onboarding modal to request access to specific decks
-        setShowOnboardingModal(true);
+    const handleRequestAccess = async (deckId: string) => {
+        setRequestingDeckId(deckId);
+        const result = await requestAccess(deckId);
+        if (!result.success) {
+            console.error('Failed to request access:', result.error);
+        }
+        setRequestingDeckId(null);
     };
 
     // Override body styles for scrolling
@@ -602,6 +624,8 @@ const DeckHubContent: React.FC = () => {
                                     index={sectionIndex * 10 + i}
                                     isLocked={isDeckLocked(deck.id)}
                                     sectionTitle={section.title}
+                                    hasRequestedAccess={hasPendingRequest(deck.id)}
+                                    isRequesting={requestingDeckId === deck.id}
                                     onRequestAccess={handleRequestAccess}
                                 />
                             ))}
@@ -631,9 +655,6 @@ const DeckHubContent: React.FC = () => {
                     </Link>
                 </footer>
             </div>
-
-            {/* Modals */}
-            <OnboardingModal isOpen={showOnboardingModal} onClose={() => setShowOnboardingModal(false)} />
 
             {/* Keyframes */}
             <style>{`

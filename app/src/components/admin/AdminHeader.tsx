@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import NotificationsPanel from './NotificationsPanel';
 
 interface AdminHeaderProps {
     onMenuClick?: () => void;
@@ -55,6 +56,9 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ onMenuClick }) => {
             `}</style>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                {/* Notifications Panel */}
+                <NotificationsPanel />
+
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <span style={{ color: '#e40028', fontSize: '0.8rem', fontWeight: 'bold' }}>LIVE</span>
                     <div style={{

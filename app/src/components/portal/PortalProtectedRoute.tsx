@@ -13,7 +13,7 @@ export const PortalProtectedRoute: React.FC<PortalProtectedRouteProps> = ({
     children,
     requiredRole
 }) => {
-    const { user, loading } = useAuth();
+    const { user, profile, loading } = useAuth();
     const { hasRole } = useRole();
     const location = useLocation();
 
@@ -63,7 +63,71 @@ export const PortalProtectedRoute: React.FC<PortalProtectedRouteProps> = ({
         return <Navigate to="/auth/login" state={{ from: location }} replace />;
     }
 
-    // Check role if required
+    // SUPER ADMIN CHECK: Portal is restricted to super_admin users only
+    if (profile && profile.role !== 'super_admin') {
+        return (
+            <div
+                className="portal-root"
+                style={{
+                    height: '100vh',
+                    width: '100vw',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: '#0a0a0a',
+                    fontFamily: "'Inter', sans-serif",
+                }}
+            >
+                <h1 style={{
+                    color: '#e40028',
+                    fontSize: '2.5rem',
+                    fontWeight: 700,
+                    marginBottom: '1rem',
+                    fontFamily: "'Space Mono', monospace",
+                    letterSpacing: '0.05em'
+                }}>
+                    403 // ACCESS DENIED
+                </h1>
+                <p style={{
+                    color: '#666',
+                    fontSize: '1rem',
+                    marginBottom: '2rem',
+                    fontFamily: "'Space Mono', monospace"
+                }}>
+                    Portal access is restricted to administrators.
+                </p>
+                <div style={{
+                    padding: '1rem 2rem',
+                    border: '1px solid #333',
+                    background: 'rgba(255,255,255,0.02)',
+                    fontSize: '0.8rem',
+                    color: '#888',
+                    fontFamily: "'Space Mono', monospace",
+                    marginBottom: '2rem'
+                }}>
+                    Logged in as: {user.email}
+                </div>
+                <a
+                    href="/"
+                    style={{
+                        padding: '0.75rem 1.5rem',
+                        background: 'transparent',
+                        border: '1px solid #e40028',
+                        color: '#e40028',
+                        textDecoration: 'none',
+                        fontFamily: "'Space Mono', monospace",
+                        fontSize: '0.85rem',
+                        transition: 'all 0.2s'
+                    }}
+                >
+                    ← BACK TO MAIN SITE
+                </a>
+            </div>
+        );
+    }
+
+    // Check role if required (for sub-routes like /portal/admin)
     if (requiredRole && !hasRole(requiredRole)) {
         // Redirect to dashboard with insufficient permissions
         return <Navigate to="/portal/dashboard" replace />;
@@ -73,3 +137,4 @@ export const PortalProtectedRoute: React.FC<PortalProtectedRouteProps> = ({
 };
 
 export default PortalProtectedRoute;
+
