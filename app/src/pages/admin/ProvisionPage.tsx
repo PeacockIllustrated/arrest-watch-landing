@@ -17,6 +17,12 @@ interface UserWithAccess {
     decks: string[];
 }
 
+interface DeckReadStatus {
+    deck_id: string;
+    opened_at: string | null;
+    marked_read_at: string | null;
+}
+
 // Toggle Switch Component
 const ToggleSwitch: React.FC<{
     checked: boolean;
@@ -66,8 +72,10 @@ const ProvisionPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<ProvisionedAccess | null>(null);
     const [recentUsers, setRecentUsers] = useState<UserWithAccess[]>([]);
+    const [allUsers, setAllUsers] = useState<UserWithAccess[]>([]);
     const [userExists, setUserExists] = useState<boolean | null>(null);
     const [checkingUser, setCheckingUser] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(false);
 
     // Super Admin State
     const [currentUserRole, setCurrentUserRole] = useState<string>('viewer');
@@ -75,10 +83,40 @@ const ProvisionPage: React.FC = () => {
     const [adminLoading, setAdminLoading] = useState(false);
     const [adminMessage, setAdminMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
+    // Deck Read Status State
+    const [deckReadStatus, setDeckReadStatus] = useState<Map<string, DeckReadStatus>>(new Map());
+    const [togglingRead, setTogglingRead] = useState<string | null>(null);
+
     // Fetch recent provisioned users on mount
     useEffect(() => {
         fetchRecentUsers();
+        fetchAllUsers();
     }, []);
+
+    const fetchAllUsers = async () => {
+        try {
+            const { data, error } = await supabase
+                .rpc('get_recent_users_with_access', { p_limit: 100 });
+
+            if (error) {
+                console.error('Error fetching all users:', error);
+                return;
+            }
+
+            if (data) {
+                const users: UserWithAccess[] = data.map((user: { user_id: string; email: string; name: string | null; created_at: string; deck_count: number }) => ({
+                    id: user.user_id,
+                    email: user.email,
+                    name: user.name,
+                    created_at: user.created_at,
+                    decks: Array(user.deck_count).fill('')
+                }));
+                setAllUsers(users);
+            }
+        } catch (err) {
+            console.error('Error fetching all users:', err);
+        }
+    };
 
     const fetchRecentUsers = async () => {
         try {
@@ -214,16 +252,81 @@ const ProvisionPage: React.FC = () => {
                     setExistingAccess([]);
                     setSelectedDecks([]);
                 }
+
+                // Fetch deck read status (super_admin only)
+                if (currentUserRole === 'super_admin') {
+                    const { data: readData, error: readError } = await supabase
+                        .rpc('get_user_deck_read_status_by_email', { p_email: normalizedEmail });
+
+                    if (readError) {
+                        console.warn('Error fetching deck read status:', readError);
+                        setDeckReadStatus(new Map());
+                    } else if (readData) {
+                        const statusMap = new Map<string, DeckReadStatus>();
+                        readData.forEach((item: DeckReadStatus) => {
+                            statusMap.set(item.deck_id, item);
+                        });
+                        setDeckReadStatus(statusMap);
+                    } else {
+                        setDeckReadStatus(new Map());
+                    }
+                }
             } else {
                 setExistingAccess([]);
                 setSelectedDecks([]);
+                setDeckReadStatus(new Map());
             }
         } catch (err) {
             console.error('Error checking user:', err);
             setUserExists(null);
             setExistingAccess([]);
+            setDeckReadStatus(new Map());
         } finally {
             setCheckingUser(false);
+        }
+    };
+
+    // Toggle deck read status (admin action)
+    const handleToggleReadStatus = async (deckId: string) => {
+        if (!email || !userExists || currentUserRole !== 'super_admin') return;
+
+        const currentStatus = deckReadStatus.get(deckId);
+        const isCurrentlyRead = currentStatus?.marked_read_at !== null;
+
+        setTogglingRead(deckId);
+        try {
+            const { data, error } = await supabase.rpc('admin_toggle_deck_read_status', {
+                p_email: email.toLowerCase().trim(),
+                p_deck_id: deckId,
+                p_mark_as_read: !isCurrentlyRead
+            });
+
+            if (error) {
+                console.error('Error toggling read status:', error);
+                return;
+            }
+
+            // Update local state
+            setDeckReadStatus(prev => {
+                const newMap = new Map(prev);
+                if (data === 'marked_read') {
+                    newMap.set(deckId, {
+                        deck_id: deckId,
+                        opened_at: currentStatus?.opened_at || new Date().toISOString(),
+                        marked_read_at: new Date().toISOString()
+                    });
+                } else if (data === 'marked_unread') {
+                    const existing = newMap.get(deckId);
+                    if (existing) {
+                        newMap.set(deckId, { ...existing, marked_read_at: null });
+                    }
+                }
+                return newMap;
+            });
+        } catch (err) {
+            console.error('Error toggling read status:', err);
+        } finally {
+            setTogglingRead(null);
         }
     };
 
@@ -348,9 +451,17 @@ const ProvisionPage: React.FC = () => {
                                 <input
                                     type="email"
                                     value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    onChange={(e) => {
+                                        setEmail(e.target.value);
+                                        setShowDropdown(true);
+                                    }}
+                                    onFocus={() => setShowDropdown(true)}
+                                    onBlur={() => {
+                                        // Delay hiding to allow click on dropdown
+                                        setTimeout(() => setShowDropdown(false), 200);
+                                    }}
                                     required
-                                    placeholder="user@example.com"
+                                    placeholder="Start typing to search users..."
                                     style={{
                                         width: '100%',
                                         padding: '0.75rem',
@@ -384,6 +495,64 @@ const ProvisionPage: React.FC = () => {
                                         <span style={{ color: '#e40028' }}>✗ NOT FOUND</span>
                                     )}
                                 </div>
+
+                                {/* Autocomplete Dropdown */}
+                                {showDropdown && email.length > 0 && (
+                                    <div style={{
+                                        position: 'absolute',
+                                        top: '100%',
+                                        left: 0,
+                                        right: 0,
+                                        background: '#1a1a1a',
+                                        border: '1px solid #333',
+                                        borderTop: 'none',
+                                        maxHeight: '200px',
+                                        overflowY: 'auto',
+                                        zIndex: 100
+                                    }}>
+                                        {allUsers
+                                            .filter(u =>
+                                                u.email.toLowerCase().includes(email.toLowerCase()) ||
+                                                (u.name && u.name.toLowerCase().includes(email.toLowerCase()))
+                                            )
+                                            .slice(0, 8)
+                                            .map(user => (
+                                                <div
+                                                    key={user.id}
+                                                    onClick={() => {
+                                                        setEmail(user.email);
+                                                        setShowDropdown(false);
+                                                    }}
+                                                    style={{
+                                                        padding: '0.6rem 0.75rem',
+                                                        cursor: 'pointer',
+                                                        borderBottom: '1px solid #222',
+                                                        transition: 'background 0.15s'
+                                                    }}
+                                                    onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(228, 0, 40, 0.1)'}
+                                                    onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                                >
+                                                    <div style={{ color: 'white', fontSize: '0.8rem' }}>
+                                                        {user.name || user.email}
+                                                    </div>
+                                                    {user.name && (
+                                                        <div style={{ color: '#666', fontSize: '0.7rem' }}>
+                                                            {user.email}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            ))
+                                        }
+                                        {allUsers.filter(u =>
+                                            u.email.toLowerCase().includes(email.toLowerCase()) ||
+                                            (u.name && u.name.toLowerCase().includes(email.toLowerCase()))
+                                        ).length === 0 && (
+                                                <div style={{ padding: '0.6rem 0.75rem', color: '#666', fontSize: '0.8rem' }}>
+                                                    No matching users
+                                                </div>
+                                            )}
+                                    </div>
+                                )}
                             </div>
                             {userExists === false && (
                                 <div style={{
@@ -484,7 +653,7 @@ const ProvisionPage: React.FC = () => {
                                                 transition: 'all 0.2s'
                                             }}
                                         >
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1 }}>
                                                 <span style={{
                                                     fontSize: '0.8rem',
                                                     color: isSelected ? 'white' : '#666'
@@ -514,6 +683,62 @@ const ProvisionPage: React.FC = () => {
                                                     </span>
                                                 )}
                                             </div>
+
+                                            {/* Read Status Badge & Toggle (super_admin only) */}
+                                            {currentUserRole === 'super_admin' && userExists && (
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginRight: '0.75rem' }}>
+                                                    {(() => {
+                                                        const status = deckReadStatus.get(deck.id);
+                                                        const isRead = status?.marked_read_at !== null && status?.marked_read_at !== undefined;
+                                                        const hasOpened = status?.opened_at !== null && status?.opened_at !== undefined;
+
+                                                        return (
+                                                            <button
+                                                                onClick={() => handleToggleReadStatus(deck.id)}
+                                                                disabled={togglingRead === deck.id}
+                                                                title={hasOpened
+                                                                    ? (isRead ? 'Mark as unread' : 'Mark as read')
+                                                                    : 'User has not opened this deck'
+                                                                }
+                                                                style={{
+                                                                    background: isRead
+                                                                        ? 'rgba(76, 175, 80, 0.15)'
+                                                                        : hasOpened
+                                                                            ? 'rgba(255, 193, 7, 0.15)'
+                                                                            : 'rgba(102, 102, 102, 0.15)',
+                                                                    border: `1px solid ${isRead
+                                                                        ? 'rgba(76, 175, 80, 0.4)'
+                                                                        : hasOpened
+                                                                            ? 'rgba(255, 193, 7, 0.4)'
+                                                                            : 'rgba(102, 102, 102, 0.3)'}`,
+                                                                    color: isRead
+                                                                        ? '#4CAF50'
+                                                                        : hasOpened
+                                                                            ? '#FFC107'
+                                                                            : '#666',
+                                                                    padding: '0.2rem 0.5rem',
+                                                                    borderRadius: '3px',
+                                                                    fontSize: '0.6rem',
+                                                                    fontFamily: 'inherit',
+                                                                    cursor: togglingRead === deck.id ? 'wait' : 'pointer',
+                                                                    transition: 'all 0.2s',
+                                                                    opacity: togglingRead === deck.id ? 0.6 : 1,
+                                                                    whiteSpace: 'nowrap'
+                                                                }}
+                                                            >
+                                                                {togglingRead === deck.id
+                                                                    ? '...'
+                                                                    : isRead
+                                                                        ? '✓ READ'
+                                                                        : hasOpened
+                                                                            ? '○ OPENED'
+                                                                            : '— NOT OPENED'}
+                                                            </button>
+                                                        );
+                                                    })()}
+                                                </div>
+                                            )}
+
                                             <ToggleSwitch
                                                 checked={isSelected}
                                                 onChange={() => handleDeckToggle(deck.id)}
@@ -695,6 +920,76 @@ const ProvisionPage: React.FC = () => {
                                         </div>
                                         <div style={{ color: '#888', fontSize: '0.7rem' }}>
                                             {user.email}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* All Users */}
+                    <div style={{
+                        border: '1px solid #333',
+                        background: 'rgba(255, 255, 255, 0.02)',
+                        padding: '1.5rem'
+                    }}>
+                        <div style={{
+                            fontSize: '0.8rem',
+                            letterSpacing: '1px',
+                            color: '#888',
+                            marginBottom: '1rem',
+                            paddingBottom: '1rem',
+                            borderBottom: '1px solid #333'
+                        }}>
+                            ALL USERS ({allUsers.length})
+                        </div>
+
+                        {allUsers.length === 0 ? (
+                            <div style={{ color: '#666', fontSize: '0.85rem' }}>
+                                Loading users...
+                            </div>
+                        ) : (
+                            <div style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '0.5rem',
+                                maxHeight: '300px',
+                                overflowY: 'auto'
+                            }}>
+                                {allUsers.map((user) => (
+                                    <div
+                                        key={user.id}
+                                        onClick={() => setEmail(user.email)}
+                                        style={{
+                                            padding: '0.5rem 0.75rem',
+                                            background: 'rgba(0, 0, 0, 0.2)',
+                                            borderLeft: user.decks.length > 0
+                                                ? '3px solid #4CAF50'
+                                                : '3px solid #333',
+                                            cursor: 'pointer',
+                                            transition: 'background 0.2s'
+                                        }}
+                                        onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                                        onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.2)'}
+                                    >
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center'
+                                        }}>
+                                            <div>
+                                                <span style={{ color: 'white', fontSize: '0.8rem' }}>
+                                                    {user.name || user.email}
+                                                </span>
+                                                {user.name && (
+                                                    <div style={{ color: '#666', fontSize: '0.65rem' }}>
+                                                        {user.email}
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <span style={{ color: '#666', fontSize: '0.65rem' }}>
+                                                {user.decks.length} deck{user.decks.length !== 1 ? 's' : ''}
+                                            </span>
                                         </div>
                                     </div>
                                 ))}
