@@ -131,8 +131,8 @@ export const MARKET_SIZING_CONFIG: MarketSizingConfig = {
         description: "ArrestDelta is sold as enterprise decision infrastructure, not a per-check commodity.",
         bullets: [
             "Enterprise contracts",
-            "Multi-year potential",
-            "ACV expands with: Coverage, Geography, Additional \"Delta\" products, Depth of workflow integration"
+            "Becomes embedded in core risk workflows",
+            "ACV expands with:\nSurface expansion: Coverage, Geography\nDepth expansion: Delta products, Workflow integration"
         ]
     },
 
@@ -160,7 +160,7 @@ export const MARKET_SIZING_CONFIG: MarketSizingConfig = {
         },
         pricing: {
             acvRange: "$150k–$250k",
-            midpoint: "$175k",
+            midpoint: "$175k ARR",
             anchoringNote: "Anchored to existing enterprise spend on screening, monitoring, and manual review workflows."
         },
         calculation: {
@@ -251,7 +251,7 @@ export const MARKET_SIZING_CONFIG: MarketSizingConfig = {
             "Clear path from $1M → $10M → $100M ARR"
         ],
         closingStatement: "This is not a volume business.",
-        positioning: "It is a trust-and-decision business, which historically supports large, defensible companies."
+        positioning: "It is a trust-and-decision business, where accuracy compounds and switching costs increase over time."
     },
 
     investorSummary: {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import MarkAsReadButton from '../../deckhub/MarkAsReadButton';
 
 const Slide12_Positioning: React.FC = () => {
     return (
@@ -50,14 +51,11 @@ const Slide12_Positioning: React.FC = () => {
                 </div>
 
                 {/* Back to Decks Button */}
-                <div className="animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-                    <Link
-                        to="/decks"
-                        className="btn btn-secondary"
-                        style={{ fontSize: '0.85rem' }}
-                    >
-                        ← BACK TO DECKS
+                <div className="animate-fade-in-up" style={{ animationDelay: '0.6s', display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <Link to="/" className="btn btn-secondary" style={{ fontSize: '0.85rem', padding: '1rem 2rem' }}>
+                        Return to Main Site
                     </Link>
+                    <MarkAsReadButton deckId="revenue-model" />
                 </div>
             </div>
 

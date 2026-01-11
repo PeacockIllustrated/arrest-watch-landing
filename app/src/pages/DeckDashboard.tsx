@@ -7,8 +7,11 @@ import OnboardingModal from '../components/investor/_legacy/OnboardingModal';
 import { DECKS, type Deck } from '../lib/decks';
 import { getDecksGroupedBySection } from '../lib/dataRoomPlan';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { DeckReadStatusProvider, useDeckReadStatus } from '../hooks/useDeckReadStatus';
 import '../styles/brand.css';
 import LeadershipBiosSection from '../components/data-room/LeadershipBiosSection';
+import AdminReviewPanel from '../components/data-room/AdminReviewPanel';
+import { SuperAdminReviewProvider, useSuperAdminReview } from '../hooks/useSuperAdminReview';
 
 // ============ TYPING EFFECT COMPONENT ============
 const TypingText: React.FC<{ text: string; delay?: number }> = ({ text, delay = 50 }) => {
@@ -57,8 +60,7 @@ const DataStreamParticle: React.FC<{ index: number }> = ({ index }) => {
         fontFamily: 'var(--font-mono)',
         color: 'var(--color-alert-red)',
         opacity: 0.06,
-        animation: `floatUp ${12 + Math.random() * 8}s linear infinite`,
-        animationDelay: `${index * 0.5}s`,
+        animation: `floatUp ${12 + Math.random() * 8}s linear ${index * 0.5}s infinite`,
     };
 
     return <span style={style}>{char}</span>;
@@ -146,6 +148,8 @@ const DeckCard: React.FC<{
     onRequestAccess: () => void;
 }> = ({ deck, index, isLocked, sectionTitle, onRequestAccess }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const [checkHovered, setCheckHovered] = useState(false);
+    const { hasOpened, isRead, toggleRead } = useDeckReadStatus();
 
     const CardContent = (
         <div
@@ -274,6 +278,66 @@ const DeckCard: React.FC<{
 
             {/* Locked Overlay */}
             {isLocked && <LockedOverlay onRequestAccess={onRequestAccess} />}
+
+            {/* Read Status Checkmark (bottom-right) */}
+            {!isLocked && (
+                <div
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (hasOpened(deck.id)) {
+                            toggleRead(deck.id);
+                        }
+                    }}
+                    onMouseEnter={() => setCheckHovered(true)}
+                    onMouseLeave={() => setCheckHovered(false)}
+                    style={{
+                        position: 'absolute',
+                        bottom: '1rem',
+                        right: '1.5rem',
+                        width: '24px',
+                        height: '24px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: hasOpened(deck.id) ? 'pointer' : 'not-allowed',
+                        opacity: hasOpened(deck.id) ? 1 : 0.25,
+                        transition: 'all 0.2s ease',
+                        transform: checkHovered && hasOpened(deck.id) ? 'scale(1.15)' : 'scale(1)',
+                        zIndex: 5,
+                    }}
+                    title={
+                        isRead(deck.id)
+                            ? 'Marked as read ✓'
+                            : hasOpened(deck.id)
+                                ? 'Click to mark as read'
+                                : 'Open deck to enable read mark'
+                    }
+                >
+                    {/* Checkmark box */}
+                    <div style={{
+                        width: '18px',
+                        height: '18px',
+                        border: `2px solid ${isRead(deck.id) ? '#4CAF50' : hasOpened(deck.id) ? 'var(--color-alert-red)' : '#444'}`,
+                        borderRadius: '3px',
+                        background: isRead(deck.id) ? '#4CAF50' : 'transparent',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.2s ease',
+                        boxShadow: isRead(deck.id) ? '0 0 8px rgba(76, 175, 80, 0.5)' : checkHovered && hasOpened(deck.id) ? '0 0 8px rgba(228, 0, 40, 0.3)' : 'none',
+                    }}>
+                        {isRead(deck.id) && (
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                <path d="M2 6L5 9L10 3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        )}
+                    </div>
+                </div>
+            )}
+
+            {/* Super Admin Review Panel - ONLY for super_admin with review mode ON */}
+            {!isLocked && <AdminReviewPanel deckId={deck.id} />}
         </div>
     );
 
@@ -407,6 +471,8 @@ const DeckHubContent: React.FC = () => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
                         {isAuthenticated ? (
                             <>
+                                {/* Super Admin Review Mode Toggle - ONLY visible to super_admin */}
+                                <SuperAdminReviewToggle />
                                 <span className="deck-hub-email text-mono" style={{ fontSize: '0.65rem', color: '#4CAF50', maxWidth: '120px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                     ● {user?.email}
                                 </span>
@@ -598,11 +664,60 @@ const DeckHubContent: React.FC = () => {
     );
 };
 
+// ============ SUPER ADMIN REVIEW TOGGLE (only for super_admin) ============
+const SuperAdminReviewToggle: React.FC = () => {
+    const { isSuperAdmin, reviewModeEnabled, toggleReviewMode } = useSuperAdminReview();
+
+    // CRITICAL: Render absolutely nothing for non-super-admins
+    if (!isSuperAdmin) return null;
+
+    return (
+        <button
+            onClick={toggleReviewMode}
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                padding: '0.3rem 0.6rem',
+                background: reviewModeEnabled ? 'rgba(228, 0, 40, 0.15)' : 'transparent',
+                border: `1px solid ${reviewModeEnabled ? 'var(--color-alert-red)' : '#333'}`,
+                color: reviewModeEnabled ? 'var(--color-alert-red)' : '#666',
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.55rem',
+                cursor: 'pointer',
+                letterSpacing: '0.05em',
+                whiteSpace: 'nowrap',
+                transition: 'all 0.2s ease',
+            }}
+        >
+            <span style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                background: reviewModeEnabled ? '#e40028' : '#444',
+                transition: 'all 0.2s ease',
+            }} />
+            REVIEW
+        </button>
+    );
+};
+
 // ============ MAIN COMPONENT WITH PROVIDER ============
+const DeckHubWithReadStatus: React.FC = () => {
+    const { user } = useDeckHubAuth();
+    return (
+        <SuperAdminReviewProvider>
+            <DeckReadStatusProvider userId={user?.id}>
+                <DeckHubContent />
+            </DeckReadStatusProvider>
+        </SuperAdminReviewProvider>
+    );
+};
+
 const DeckDashboard: React.FC = () => {
     return (
         <DeckHubAuthProvider>
-            <DeckHubContent />
+            <DeckHubWithReadStatus />
         </DeckHubAuthProvider>
     );
 };

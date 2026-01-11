@@ -15,8 +15,12 @@ const Slide02_Solution: React.FC = () => {
                             <span className="text-red">LIABILITY IS INSTANT.</span>
                         </h2>
 
+                        <p className="text-mono text-muted" style={{ marginTop: '1.5rem', maxWidth: '550px', fontSize: '0.95rem', lineHeight: 1.5 }}>
+                            Most enterprise systems are refresh-based, not state-aware — they cannot tell when something meaningful has actually changed.
+                        </p>
+
                         <p className="text-muted" style={{ marginTop: '2rem', maxWidth: '500px', fontSize: '1.2rem', lineHeight: 1.6 }}>
-                            If a driver or courier commits a violent or sexual offence while active on the platform, discovery can take months. ArrestDelta closes that window to minutes.
+                            If a worker's legal risk profile changes while active on a platform, discovery often takes months. During that window, companies continue operating without awareness, exposing themselves to preventable liability. ArrestDelta closes that gap by surfacing verified state changes in minutes.
                         </p>
                     </div>
 

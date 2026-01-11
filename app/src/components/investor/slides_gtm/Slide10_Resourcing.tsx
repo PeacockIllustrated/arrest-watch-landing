@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import MarkAsReadButton from '../../deckhub/MarkAsReadButton';
 
 const Slide10_Resourcing: React.FC = () => {
     const allocation = [
@@ -109,13 +110,12 @@ const Slide10_Resourcing: React.FC = () => {
                             "Focused. Credible. Relationship-driven. <span className="text-red">Disciplined.</span>"
                         </p>
                     </div>
-                    <Link
-                        to="/decks"
-                        className="btn btn-secondary"
-                        style={{ fontSize: '0.85rem' }}
-                    >
-                        ← BACK TO DECKS
-                    </Link>
+                    <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <Link to="/" className="btn btn-secondary" style={{ fontSize: '0.85rem', padding: '1rem 2rem' }}>
+                            Return to Main Site
+                        </Link>
+                        <MarkAsReadButton deckId="gtm-plan" />
+                    </div>
                 </div>
             </div>
         </section>

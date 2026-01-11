@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
+import MarkAsReadButton from '../../components/deckhub/MarkAsReadButton';
 import '../../styles/brand.css';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { FOUNDER_INVESTOR_FIT_CONFIG } from '../../lib/founderInvestorFitConfig';
@@ -560,13 +561,11 @@ const FounderInvestorFit: React.FC = () => {
                             </div>
 
                             {/* CTA Buttons */}
-                            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '2.5rem' }}>
-                                <Link to="/decks" className="btn">
-                                    ← Back to Data Room
+                            <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', marginTop: '2.5rem', alignItems: 'center' }}>
+                                <Link to="/" className="btn btn-secondary" style={{ padding: '1rem 2rem' }}>
+                                    Return to Main Site
                                 </Link>
-                                <Link to="/" className="btn btn-secondary">
-                                    Main Site
-                                </Link>
+                                <MarkAsReadButton deckId="founder-investor-fit" />
                             </div>
                         </div>
                     </div>
@@ -602,11 +601,6 @@ const FounderInvestorFit: React.FC = () => {
                                 boxShadow: i === activeIndex ? '0 0 10px var(--color-alert-red)' : 'none'
                             }}
                         />
-                        {i === activeIndex && (
-                            <span className="text-mono text-red animate-fade-in-up" style={{ position: 'absolute', bottom: '20px', fontSize: '0.6rem', whiteSpace: 'nowrap', textTransform: 'uppercase' }}>
-                                {title}
-                            </span>
-                        )}
                     </div>
                 ))}
             </div>

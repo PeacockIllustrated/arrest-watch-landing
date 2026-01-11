@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
 import RadarNode from '../../components/investor/ui/RadarNode';
+import MarkAsReadButton from '../../components/deckhub/MarkAsReadButton';
 import '../../styles/brand.css';
 import { usePageTitle } from '../../hooks/usePageTitle';
 
@@ -433,13 +434,11 @@ const InvestorQuestions: React.FC = () => {
                                 <span className="text-red text-glow">WE MONITOR THE PRESENT.</span>
                             </h2>
 
-                            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                                <Link to="/decks" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
-                                    ← Back to Data Room
+                            <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+                                <Link to="/" className="btn btn-secondary" style={{ fontSize: '0.9rem', padding: '1rem 2rem' }}>
+                                    Return to Main Site
                                 </Link>
-                                <Link to="/" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
-                                    Visit Website
-                                </Link>
+                                <MarkAsReadButton deckId="why-problem" />
                             </div>
                         </div>
                     </div>
@@ -474,11 +473,6 @@ const InvestorQuestions: React.FC = () => {
                                 boxShadow: i === activeIndex ? '0 0 10px var(--color-alert-red)' : 'none'
                             }}
                         />
-                        {i === activeIndex && (
-                            <span className="text-mono text-red animate-fade-in-up" style={{ position: 'absolute', bottom: '20px', fontSize: '0.6rem', whiteSpace: 'nowrap', textTransform: 'uppercase' }}>
-                                {title}
-                            </span>
-                        )}
                     </div>
                 ))}
             </div>

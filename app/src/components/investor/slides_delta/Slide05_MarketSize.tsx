@@ -14,17 +14,18 @@ const Slide05_MarketSize: React.FC = () => {
                             SYSTEM ARCHITECTURE.
                         </h2>
 
-                        {/* Moat Amendment Box */}
+                        {/* Key Quote */}
                         <div className="glass-panel" style={{ marginTop: '2rem', padding: '1.5rem', borderLeft: '4px solid var(--color-alert-red)', background: 'rgba(228, 0, 40, 0.05)' }}>
                             <p className="text-white" style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>
-                                Latency, not data, is the moat. In risk, the winner isn’t who has the data, it’s who acts first.
+                                Decision latency, not raw data access, defines the moat. Verified action beats fast noise.
                             </p>
                         </div>
 
+                        {/* Architecture Pillars */}
                         <div style={{ marginTop: '3rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                            <div className="text-mono text-white">1. API-FIRST DESIGN</div>
-                            <div className="text-mono text-white">2. PROPRIETARY ETL PIPELINE</div>
-                            <div className="text-mono text-white">3. HIGH DATA THROUGHPUT</div>
+                            <div className="text-mono text-white">1. API-FIRST, EVENT-DRIVEN ARCHITECTURE</div>
+                            <div className="text-mono text-white">2. JURISDICTION-NORMALISING ETL WITH STATE AWARENESS</div>
+                            <div className="text-mono text-white">3. HIGH-THROUGHPUT PIPELINES WITH VERIFICATION GATES</div>
                         </div>
                     </div>
 
@@ -46,9 +47,10 @@ const Slide05_MarketSize: React.FC = () => {
                             </div>
                         </div>
 
+                        {/* Supporting Copy */}
                         <div className="glass-panel" style={{ marginTop: '2rem', padding: '1.5rem' }}>
                             <p className="text-muted" style={{ fontSize: '0.9rem' }}>
-                                Biometric matching creates defensibility. It eliminates false identities during onboarding and gives enterprises a risk engine they cannot build internally.
+                                Biometric-assisted identity resolution reduces false positives and compounds defensibility over time.
                             </p>
                         </div>
                     </div>

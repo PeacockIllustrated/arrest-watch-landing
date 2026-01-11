@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
+import MarkAsReadButton from '../../components/deckhub/MarkAsReadButton';
 import '../../styles/brand.css';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import TECHNICAL_APPENDIX_SYSTEM_LOGIC_CONFIG from '../../lib/technicalAppendixSystemLogicConfig';
@@ -414,10 +415,11 @@ const TechnicalAppendixSystemLogic: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'flex-end' }}>
-                                <Link to="/decks" className="btn btn-secondary" style={{ fontSize: '0.9rem' }}>
-                                    ← BACK TO DATA ROOM
+                            <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'flex-end', gap: '2rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                                <Link to="/" className="btn btn-secondary" style={{ fontSize: '0.9rem', padding: '1rem 2rem' }}>
+                                    Return to Main Site
                                 </Link>
+                                <MarkAsReadButton deckId="technical-appendix-system-logic" />
                             </div>
                         </div>
                     </div>
@@ -445,11 +447,6 @@ const TechnicalAppendixSystemLogic: React.FC = () => {
                                 boxShadow: i === activeIndex ? '0 0 10px var(--color-alert-red)' : 'none'
                             }}
                         />
-                        {i === activeIndex && (
-                            <span className="text-mono text-red animate-fade-in-up" style={{ position: 'absolute', bottom: '20px', fontSize: '0.6rem', whiteSpace: 'nowrap', textTransform: 'uppercase' }}>
-                                {title}
-                            </span>
-                        )}
                     </div>
                 ))}
             </div>

@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
 import RadarNode from '../../components/investor/ui/RadarNode';
+import MarkAsReadButton from '../../components/deckhub/MarkAsReadButton';
 import '../../styles/brand.css';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { MARKET_SIZING_CONFIG } from '../../lib/marketSizingConfig';
@@ -278,6 +279,9 @@ const MarketSizing: React.FC = () => {
                                 <div className="text-white" style={{ marginTop: '1rem', fontSize: '0.9rem' }}>
                                     {MARKET_SIZING_CONFIG.sam.calculation.contextNote}
                                 </div>
+                                <div className="text-muted" style={{ marginTop: '1rem', fontSize: '0.75rem', fontStyle: 'italic' }}>
+                                    Excludes geographic expansion, additional Delta products, and deeper workflow penetration.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -357,6 +361,9 @@ const MarketSizing: React.FC = () => {
 
                             <div style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px dashed var(--color-grid)' }}>
                                 <p className="text-white" style={{ margin: 0 }}>{MARKET_SIZING_CONFIG.som.alignment}</p>
+                                <p className="text-muted" style={{ margin: '1rem 0 0 0', fontSize: '0.8rem', fontStyle: 'italic' }}>
+                                    Represents meaningful scale while maintaining focus on product quality, data accuracy, and enterprise trust.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -514,13 +521,11 @@ const MarketSizing: React.FC = () => {
                             Clear expansion paths support multi-billion-dollar potential as ArrestDelta becomes embedded decision infrastructure.
                         </p>
 
-                        <div className="animate-fade-in-up" style={{ animationDelay: '0.3s', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-                            <Link to="/investor-delta" className="btn btn-secondary">
-                                ← Back to Investor Deck
+                        <div className="animate-fade-in-up" style={{ animationDelay: '0.3s', display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+                            <Link to="/" className="btn btn-secondary" style={{ padding: '1rem 2rem' }}>
+                                Return to Main Site
                             </Link>
-                            <Link to="/decks" className="btn btn-secondary">
-                                Data Room
-                            </Link>
+                            <MarkAsReadButton deckId="market-sizing" />
                         </div>
                     </div>
                 </section>
@@ -546,11 +551,6 @@ const MarketSizing: React.FC = () => {
                                 boxShadow: i === activeIndex ? '0 0 10px var(--color-alert-red)' : 'none'
                             }}
                         />
-                        {i === activeIndex && (
-                            <span className="text-mono text-red animate-fade-in-up" style={{ position: 'absolute', bottom: '20px', fontSize: '0.6rem', whiteSpace: 'nowrap', textTransform: 'uppercase' }}>
-                                {title}
-                            </span>
-                        )}
                     </div>
                 ))}
             </div>

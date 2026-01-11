@@ -40,6 +40,9 @@ const GTMPackDelta = lazy(() => import('./pages/GTMPackDelta'));
 const RevenueModelPack = lazy(() => import('./pages/RevenueModelPack'));
 const ComponentsPage = lazy(() => import('./pages/ComponentsPage'));
 
+// Deck Page Wrapper for tracking read status
+import DeckPageWrapper from './components/deckhub/DeckPageWrapper';
+
 // Admin Pages (Internal)
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
 const DashboardHome = lazy(() => import('./pages/admin/DashboardHome'));
@@ -122,27 +125,27 @@ function App() {
               <Route path="/one-pager" element={<OnePager />} />
               <Route path="/brand" element={<BrandPack />} />
               <Route path="/investor" element={<InvestorPack />} />
-              <Route path="/investor-delta" element={<InvestorPackDelta />} />
-              <Route path="/investor-delta/appendix/valuation" element={<ValuationRationale />} />
-              <Route path="/investor-delta/why" element={<InvestorQuestions />} />
-              <Route path="/investor-delta/appendix/market-sizing" element={<MarketSizing />} />
-              <Route path="/investor-delta/appendix/why-now" element={<WhyNow />} />
-              <Route path="/investor-delta/appendix/use-of-funds" element={<UseOfFunds />} />
-              <Route path="/investor-delta/appendix/technical-defensibility" element={<TechnicalDefensibility />} />
-              <Route path="/investor-delta/appendix/kill-criteria" element={<KillCriteria />} />
-              <Route path="/investor-delta/appendix/founder-investor-fit" element={<FounderInvestorFit />} />
-              <Route path="/investor-delta/appendix/customer-proof" element={<CustomerProof />} />
+              <Route path="/investor-delta" element={<DeckPageWrapper deckId="investor-deck"><InvestorPackDelta /></DeckPageWrapper>} />
+              <Route path="/investor-delta/appendix/valuation" element={<DeckPageWrapper deckId="valuation"><ValuationRationale /></DeckPageWrapper>} />
+              <Route path="/investor-delta/why" element={<DeckPageWrapper deckId="why-problem"><InvestorQuestions /></DeckPageWrapper>} />
+              <Route path="/investor-delta/appendix/market-sizing" element={<DeckPageWrapper deckId="market-sizing"><MarketSizing /></DeckPageWrapper>} />
+              <Route path="/investor-delta/appendix/why-now" element={<DeckPageWrapper deckId="why-now"><WhyNow /></DeckPageWrapper>} />
+              <Route path="/investor-delta/appendix/use-of-funds" element={<DeckPageWrapper deckId="use-of-funds"><UseOfFunds /></DeckPageWrapper>} />
+              <Route path="/investor-delta/appendix/technical-defensibility" element={<DeckPageWrapper deckId="technical-defensibility"><TechnicalDefensibility /></DeckPageWrapper>} />
+              <Route path="/investor-delta/appendix/kill-criteria" element={<DeckPageWrapper deckId="kill-criteria"><KillCriteria /></DeckPageWrapper>} />
+              <Route path="/investor-delta/appendix/founder-investor-fit" element={<DeckPageWrapper deckId="founder-investor-fit"><FounderInvestorFit /></DeckPageWrapper>} />
+              <Route path="/investor-delta/appendix/customer-proof" element={<DeckPageWrapper deckId="customer-proof"><CustomerProof /></DeckPageWrapper>} />
               <Route path="/investor-delta/appendix/customer-access" element={<CustomerAccessTargeting />} />
-              <Route path="/investor-delta/appendix/competitive-landscape" element={<CompetitiveLandscape />} />
+              <Route path="/investor-delta/appendix/competitive-landscape" element={<DeckPageWrapper deckId="competitive-landscape"><CompetitiveLandscape /></DeckPageWrapper>} />
 
-              <Route path="/investor-delta/appendix/technical-appendix-system-logic" element={<TechnicalAppendixSystemLogic />} />
-              <Route path="/investor-delta/operational-scenarios" element={<OperationalScenarios />} />
-              <Route path="/uber" element={<UberPack />} />
-              <Route path="/uber-close" element={<UberClosePlan />} />
-              <Route path="/uber-economics" element={<UberEconomics />} />
+              <Route path="/investor-delta/appendix/technical-appendix-system-logic" element={<DeckPageWrapper deckId="technical-appendix-system-logic"><TechnicalAppendixSystemLogic /></DeckPageWrapper>} />
+              <Route path="/investor-delta/operational-scenarios" element={<DeckPageWrapper deckId="operational-scenarios"><OperationalScenarios /></DeckPageWrapper>} />
+              <Route path="/uber" element={<DeckPageWrapper deckId="uber-overview"><UberPack /></DeckPageWrapper>} />
+              <Route path="/uber-close" element={<DeckPageWrapper deckId="uber-close"><UberClosePlan /></DeckPageWrapper>} />
+              <Route path="/uber-economics" element={<DeckPageWrapper deckId="uber-economics"><UberEconomics /></DeckPageWrapper>} />
               <Route path="/decks" element={<DeckDashboard />} />
-              <Route path="/gtm" element={<GTMPackDelta />} />
-              <Route path="/revenue-model" element={<RevenueModelPack />} />
+              <Route path="/gtm" element={<DeckPageWrapper deckId="gtm-plan"><GTMPackDelta /></DeckPageWrapper>} />
+              <Route path="/revenue-model" element={<DeckPageWrapper deckId="revenue-model"><RevenueModelPack /></DeckPageWrapper>} />
               <Route path="/components" element={<ComponentsPage />} />
             </Route>
 

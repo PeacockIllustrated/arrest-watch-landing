@@ -2,11 +2,13 @@ import React from 'react';
 import { LEADERSHIP_BIOS, type LeadershipBio } from '../../lib/leadershipBios';
 import founderImg from '../../assets/founder.png';
 import cofounderImg from '../../assets/co-founder.png';
+import markImg from '../../assets/mark.png';
 
 // Image map to resolve asset imports
 const imageMap: Record<string, string> = {
     'founder.png': founderImg,
     'co-founder.png': cofounderImg,
+    'mark.png': markImg,
 };
 
 /**

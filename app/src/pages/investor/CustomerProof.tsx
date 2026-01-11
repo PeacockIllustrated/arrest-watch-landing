@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
+import MarkAsReadButton from '../../components/deckhub/MarkAsReadButton';
 import '../../styles/brand.css';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { CUSTOMER_PROOF_CONFIG } from '../../lib/customerProofConfig';
@@ -736,13 +737,11 @@ const CustomerProof: React.FC = () => {
                             </p>
 
                             {/* CTA Buttons */}
-                            <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                                <Link to="/decks" className="btn" style={{ minWidth: '180px' }}>
-                                    ← BACK TO DATA ROOM
+                            <div style={{ marginTop: '2.5rem', display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+                                <Link to="/" className="btn btn-secondary" style={{ minWidth: '180px', padding: '1rem 2rem' }}>
+                                    Return to Main Site
                                 </Link>
-                                <Link to="/" className="btn btn-secondary" style={{ minWidth: '180px' }}>
-                                    MAIN SITE
-                                </Link>
+                                <MarkAsReadButton deckId="customer-proof" />
                             </div>
                         </div>
                     </div>
@@ -778,11 +777,6 @@ const CustomerProof: React.FC = () => {
                                 boxShadow: i === activeIndex ? '0 0 10px var(--color-alert-red)' : 'none'
                             }}
                         />
-                        {i === activeIndex && (
-                            <span className="text-mono text-red animate-fade-in-up" style={{ position: 'absolute', bottom: '20px', fontSize: '0.6rem', whiteSpace: 'nowrap', textTransform: 'uppercase' }}>
-                                {title}
-                            </span>
-                        )}
                     </div>
                 ))}
             </div>

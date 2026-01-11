@@ -14,7 +14,7 @@ const Slide04_Customers: React.FC = () => {
                             PROVEN CORE CONCEPTS.
                         </h2>
                         <p className="text-muted" style={{ marginTop: '2rem', maxWidth: '500px', fontSize: '1.2rem', lineHeight: 1.6 }}>
-                            The technical foundation is already functional enough to demonstrate to enterprise buyers. We have moved beyond theory to execution.
+                            The technical foundation is already functional enough to demonstrate verified state-change detection and alert gating to enterprise buyers. We have moved beyond theory to execution.
                         </p>
                     </div>
 
@@ -33,7 +33,7 @@ const Slide04_Customers: React.FC = () => {
                         <div className="glass-panel" style={{ padding: '1.5rem', border: '1px solid var(--border-color)' }}>
                             <div className="text-mono text-white" style={{ marginBottom: '0.5rem' }}>BIOMETRIC MATCHING</div>
                             <p className="text-muted" style={{ fontSize: '0.9rem' }}>
-                                Working integration with AWS Rekognition. Generates embeddings to link arrest records to real workforce identities.
+                                Working integration with AWS Rekognition. Generates embeddings to link arrest records to real workforce identities. Applied selectively and only where legally permitted, as an identity-resolution aid, not as a standalone decision signal.
                             </p>
                         </div>
 
@@ -49,7 +49,7 @@ const Slide04_Customers: React.FC = () => {
                         <div className="glass-panel" style={{ padding: '1.5rem', border: '1px solid var(--border-color)' }}>
                             <div className="text-mono text-white" style={{ marginBottom: '0.5rem' }}>LIVE DASHBOARD</div>
                             <p className="text-muted" style={{ fontSize: '0.9rem' }}>
-                                Live MVP with monitored drivers, recent arrests, high-risk alerts, and facial matching demonstrations.
+                                Operational dashboard for reviewing verified alerts, confidence scores, and case context prior to action.
                             </p>
                         </div>
 

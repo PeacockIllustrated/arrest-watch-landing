@@ -42,7 +42,7 @@ Tom's ethos is preventative engineering — identify failure modes early, design
         name: 'mark collins',
         role: 'Senior Policing Advisor',
         bio: `At Arrest Delta, Mark brings the perspective of a senior policing leader who was ultimately accountable for high-risk operational decisions. Having served as both Chief Constable in the UK and Police Commissioner of the Virgin Islands, Mark spent decades making time-critical decisions based on incomplete and rapidly changing information, where acting on outdated or unverified data carried real consequences. His role at ArrestDelta is to ensure the platform reflects how senior law risk leaders actually make decisions: by detecting meaningful change, validating it rigorously, and enabling action only when the signal can be trusted.`,
-        image: null, // No image available for Mark
+        image: 'mark.png',
     },
 ];
 

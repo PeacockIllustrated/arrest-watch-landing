@@ -6,6 +6,7 @@ import RadarNode from '../../components/investor/ui/RadarNode';
 import '../../styles/brand.css';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { OPERATIONAL_SCENARIOS_CONFIG } from '../../lib/operationalScenariosConfig';
+import MarkAsReadButton from '../../components/deckhub/MarkAsReadButton';
 
 const SLIDE_TITLES = OPERATIONAL_SCENARIOS_CONFIG.slideNavTitles;
 
@@ -168,14 +169,12 @@ const OperationalScenarios: React.FC = () => {
                                 </button>
                             </div>
 
-                            <div style={{ marginTop: '3rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-                                <Link to="/investor-delta" className="text-link text-muted" style={{ fontSize: '0.9rem' }}>
-                                    ← Back to Main Deck
+                            {/* Mark as Read */}
+                            <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+                                <Link to="/" className="btn btn-secondary" style={{ fontSize: '0.9rem', padding: '1rem 2rem' }}>
+                                    Return to Main Site
                                 </Link>
-                                <span className="text-muted">|</span>
-                                <Link to="/decks" className="text-link text-muted" style={{ fontSize: '0.9rem' }}>
-                                    Data Room
-                                </Link>
+                                <MarkAsReadButton deckId="operational-scenarios" />
                             </div>
                         </div>
                     </div>
@@ -302,11 +301,6 @@ const OperationalScenarios: React.FC = () => {
                                 boxShadow: i === activeIndex ? '0 0 10px var(--color-alert-red)' : 'none'
                             }}
                         />
-                        {i === activeIndex && (
-                            <span className="text-mono text-red animate-fade-in-up" style={{ position: 'absolute', bottom: '20px', fontSize: '0.6rem', whiteSpace: 'nowrap', textTransform: 'uppercase' }}>
-                                {title}
-                            </span>
-                        )}
                     </div>
                 ))}
             </div>

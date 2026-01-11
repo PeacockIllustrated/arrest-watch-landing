@@ -77,6 +77,7 @@ export interface InfrastructureSection {
     content: string;
     expansionBenefits: string[];
     flywheel: string;
+    learningNote: string;
     callout: string;
 }
 
@@ -92,6 +93,7 @@ export interface RestraintSection {
     id: string;
     eyebrow: string;
     headline: string;
+    deliberateChoicesIntro: string;
     deliberateChoices: string[];
     callout: string;
     closing: string;
@@ -229,13 +231,14 @@ export const TECHNICAL_DEFENSIBILITY_CONFIG: TechnicalDefensibilityConfig = {
         id: 'infrastructure',
         eyebrow: 'CROSS-CUSTOMER LEARNING',
         headline: 'Infrastructure Gets Stronger With Each Customer',
-        content: 'Arrest Delta benefits from cross-customer learning without sharing customer data.',
+        content: 'ArrestDelta benefits from cross-customer learning at the decision infrastructure layer without sharing customer data.',
         expansionBenefits: [
             'More jurisdictions are observed',
             'More update patterns are learned',
             'Verification improves globally'
         ],
         flywheel: 'Coverage → learning → accuracy → trust → expansion',
+        learningNote: 'This learning requires long-running observation of real correction behavior across jurisdictions — something that cannot be simulated or backfilled.',
         callout: 'A new entrant starts at zero.'
     },
 
@@ -245,9 +248,9 @@ export const TECHNICAL_DEFENSIBILITY_CONFIG: TechnicalDefensibilityConfig = {
         headline: 'Why This Is Hard to Copy Quickly',
         competitorNeeds: [
             'Monitor hundreds of jurisdictions continuously',
-            'Build state-aware models for each',
+            'Build and maintain jurisdiction-specific state-aware models',
             'Learn correction and update behaviors over time',
-            'Absorb false-positive pain across real customers',
+            'Absorb false-positive pain across real enterprise customers',
             'Earn enterprise trust while iterating'
         ],
         callout: 'This is not a 6-month engineering project. It is a multi-year operational learning curve.'
@@ -257,8 +260,9 @@ export const TECHNICAL_DEFENSIBILITY_CONFIG: TechnicalDefensibilityConfig = {
         id: 'restraint',
         eyebrow: 'STRATEGIC DISCIPLINE',
         headline: 'Our Defensibility Grows With Restraint',
+        deliberateChoicesIntro: 'We deliberately trade short-term optics for long-term defensibility:',
         deliberateChoices: [
-            'Avoid over-expansion',
+            'Avoid premature over-expansion',
             'Limit event types',
             'Prioritize accuracy over speed'
         ],
@@ -268,7 +272,7 @@ export const TECHNICAL_DEFENSIBILITY_CONFIG: TechnicalDefensibilityConfig = {
 
     investorSummary: {
         eyebrow: 'INVESTOR SUMMARY',
-        summary: 'Arrest Delta is defensible because it solves the hardest part of arrest intelligence - verified change detection under real-world variability - and that advantage compounds with every jurisdiction and every event observed.'
+        summary: 'Arrest Delta is defensible because it solves the hardest problem in arrest intelligence: verified change detection under real-world variability. That advantage compounds with every jurisdiction and every event observed.'
     },
 
     slideNavTitles: [

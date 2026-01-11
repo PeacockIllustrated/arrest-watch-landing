@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import RadarNode from '../ui/RadarNode';
 import ScanLine from '../ui/ScanLine';
+import MarkAsReadButton from '../../deckhub/MarkAsReadButton';
 
 const Slide15_Closing: React.FC = () => {
     return (
@@ -20,7 +21,7 @@ const Slide15_Closing: React.FC = () => {
                             <span className="text-red text-glow">WE MONITOR THE PRESENT.</span>
                         </h2>
 
-                        <div className="mobile-stack" style={{ display: 'flex', justifyContent: 'center', gap: '3rem', marginBottom: '5rem' }}>
+                        <div className="mobile-stack" style={{ display: 'flex', justifyContent: 'center', gap: '3rem', marginBottom: '3rem' }}>
                             <div className="glass-panel" style={{ padding: '1rem 2rem' }}>
                                 <span className="text-mono text-white">REAL-TIME</span>
                             </div>
@@ -33,27 +34,11 @@ const Slide15_Closing: React.FC = () => {
                         </div>
 
                         {/* Navigation Buttons */}
-                        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-                            <Link
-                                to="/decks"
-                                className="btn btn-secondary"
-                                style={{
-                                    fontSize: '0.9rem',
-                                    padding: '0.75rem 1.5rem'
-                                }}
-                            >
-                                ← Back to Decks
+                        <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+                            <Link to="/" className="btn btn-secondary" style={{ padding: '1rem 2rem' }}>
+                                Return to Main Site
                             </Link>
-                            <Link
-                                to="/"
-                                className="btn btn-secondary"
-                                style={{
-                                    fontSize: '0.9rem',
-                                    padding: '0.75rem 1.5rem'
-                                }}
-                            >
-                                Visit Website
-                            </Link>
+                            <MarkAsReadButton deckId="investor-deck" />
                         </div>
                     </div>
                 </div>

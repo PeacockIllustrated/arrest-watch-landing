@@ -198,6 +198,11 @@ export const COMPETITIVE_LANDSCAPE_CONFIG: CompetitiveLandscapeConfig = {
     slideNavTitles: [
         "Thesis",
         "Landscape",
+        "Traditional",
+        "Continuous",
+        "Aggregators",
+        "OSINT",
+        "Internal",
         "Different",
         "Standalone",
         "Summary"

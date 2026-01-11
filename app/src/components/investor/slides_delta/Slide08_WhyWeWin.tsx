@@ -68,8 +68,9 @@ const Slide08_WhyWeWin: React.FC = () => {
                             <div className="text-mono text-white" style={{ fontSize: '2rem', lineHeight: 1 }}>100x</div>
                             <div className="text-mono text-red" style={{ fontSize: '0.8rem' }}>FASTER RESPONSE TIME</div>
                             <p className="text-muted text-mono" style={{ marginTop: '2rem', maxWidth: '500px' }}>
-                                Latency, not data, is the moat. In risk, the winner isn’t who has the data, it’s who acts first.
-                            </p></div>
+                                Decision latency, not raw data access, defines the moat. Verified action beats fast noise.
+                            </p>
+                        </div>
                     </div>
 
                 </div>

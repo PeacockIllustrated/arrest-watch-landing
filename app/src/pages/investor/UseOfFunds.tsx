@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
 import PieChart from '../../components/investor/ui/PieChart';
 import RadarNode from '../../components/investor/ui/RadarNode';
+import MarkAsReadButton from '../../components/deckhub/MarkAsReadButton';
 import '../../styles/brand.css';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { USE_OF_FUNDS_CONFIG } from '../../lib/useOfFundsConfig';
@@ -396,11 +397,11 @@ const UseOfFunds: React.FC = () => {
                         <RadarNode size="1000px" type="radar" />
                     </div>
                     <div className="animate-fade-in-up" style={{ maxWidth: '1100px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 2 }}>
-                        <div style={{ marginBottom: '5rem' }}>
+                        <div style={{ marginBottom: '2rem' }}>
                             <span className="label text-mono" style={{ color: 'var(--color-alert-red)', letterSpacing: '2px' }}>INVESTOR PROTOCOL // SUMMARY</span>
-                            <div style={{ position: 'relative', display: 'inline-block', marginTop: '3rem' }}>
-                                <span style={{ position: 'absolute', top: '-2rem', left: '-3rem', fontSize: '6rem', color: 'rgba(228, 0, 40, 0.3)', fontFamily: 'serif' }}>“</span>
-                                <h2 className="text-large" style={{ fontSize: '3.5rem', lineHeight: 1.3, margin: '0', fontWeight: 400, borderLeft: '4px solid var(--color-alert-red)', paddingLeft: '2rem' }}>
+                            <div style={{ position: 'relative', display: 'inline-block', marginTop: '1.5rem' }}>
+                                <span style={{ position: 'absolute', top: '-1.5rem', left: '-2rem', fontSize: '4rem', color: 'rgba(228, 0, 40, 0.3)', fontFamily: 'serif' }}>"</span>
+                                <h2 className="text-large" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', lineHeight: 1.3, margin: '0', fontWeight: 400, borderLeft: '4px solid var(--color-alert-red)', paddingLeft: '1.5rem' }}>
                                     {parseMarkdown(USE_OF_FUNDS_CONFIG.investorSummary.content)}
                                 </h2>
                             </div>
@@ -419,7 +420,7 @@ const UseOfFunds: React.FC = () => {
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
-                                padding: '1rem 2rem',
+                                padding: '0.75rem 1.5rem',
                                 borderBottom: '1px solid rgba(228, 0, 40, 0.3)',
                                 background: 'rgba(228, 0, 40, 0.1)'
                             }}>
@@ -433,14 +434,22 @@ const UseOfFunds: React.FC = () => {
                             </div>
 
                             {/* Content */}
-                            <div style={{ padding: '3rem' }}>
-                                <span className="text-mono text-muted" style={{ display: 'block', marginBottom: '1.5rem', fontSize: '0.9rem', letterSpacing: '1px' }}>
+                            <div style={{ padding: '1.5rem 2rem' }}>
+                                <span className="text-mono text-muted" style={{ display: 'block', marginBottom: '1rem', fontSize: '0.8rem', letterSpacing: '1px' }}>
                                     {USE_OF_FUNDS_CONFIG.disciplineStatement.title.toUpperCase()}
                                 </span>
-                                <p className="text-mono" style={{ fontSize: '1.2rem', margin: 0, color: '#e0e0e0', lineHeight: 1.6 }}>
+                                <p className="text-mono" style={{ fontSize: '1rem', margin: 0, color: '#e0e0e0', lineHeight: 1.5 }}>
                                     {parseMarkdown(USE_OF_FUNDS_CONFIG.disciplineStatement.content)}
                                 </p>
                             </div>
+                        </div>
+
+                        {/* CTA Buttons */}
+                        <div style={{ marginTop: '2rem', display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+                            <Link to="/" className="btn btn-secondary" style={{ padding: '1rem 2rem' }}>
+                                Return to Main Site
+                            </Link>
+                            <MarkAsReadButton deckId="use-of-funds" />
                         </div>
                     </div>
                 </section >
@@ -513,11 +522,6 @@ const UseOfFunds: React.FC = () => {
                                     boxShadow: i === activeIndex ? '0 0 10px var(--color-alert-red)' : 'none'
                                 }}
                             />
-                            {i === activeIndex && (
-                                <span className="text-mono text-red animate-fade-in-up" style={{ position: 'absolute', bottom: '20px', fontSize: '0.6rem', whiteSpace: 'nowrap', textTransform: 'uppercase' }}>
-                                    {title}
-                                </span>
-                            )}
                         </div>
                     ))
                 }

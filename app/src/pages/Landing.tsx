@@ -445,7 +445,7 @@ const Landing: React.FC = () => {
                     </p>
                     <div className="flex-row" style={{ justifyContent: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
                         <button className="btn btn-cta" onClick={() => setIsModalOpen(true)}>REGISTER INTEREST</button>
-                        <a href="/decks" className="btn btn-secondary" style={{ textDecoration: 'none' }}>VIEW DECK LIBRARY →</a>
+                        <a href="/decks" className="btn btn-secondary" style={{ textDecoration: 'none' }}>VIEW DATA ROOM →</a>
                     </div>
                 </div>
                 <style>{`
@@ -477,7 +477,7 @@ const Landing: React.FC = () => {
                         <div>
                             <div className="text-mono" style={{ fontSize: '0.8rem', color: '#666', marginBottom: '1rem' }}>RESOURCES</div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                <a href="/decks" style={{ color: '#888', textDecoration: 'none', fontSize: '0.85rem' }}>Deck Library</a>
+                                <a href="/decks" style={{ color: '#888', textDecoration: 'none', fontSize: '0.85rem' }}>Data Room</a>
                                 <a href="/privacy" style={{ color: '#888', textDecoration: 'none', fontSize: '0.85rem' }}>Privacy Policy</a>
                                 <a href="/terms" style={{ color: '#888', textDecoration: 'none', fontSize: '0.85rem' }}>Terms of Service</a>
                             </div>

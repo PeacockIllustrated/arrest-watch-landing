@@ -35,17 +35,27 @@ const Slide03_Product: React.FC = () => {
                                 <span className="text-green" style={{ color: '#4CAF50' }}>&lt;500ms</span>
                             </li>
                         </ul>
-                        <div style={{ marginTop: '3rem', height: '100px', border: '1px solid var(--color-grid)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <span className="text-mono" style={{ fontSize: '3rem', opacity: 0.2 }}>JSON</span>
+
+                        {/* Visual: Sample JSON Output */}
+                        <div style={{ marginTop: '2rem', padding: '1rem', background: '#000', border: '1px solid var(--color-grid)', fontFamily: 'monospace', fontSize: '0.75rem' }}>
+                            <div className="text-muted" style={{ fontSize: '0.65rem', marginBottom: '0.5rem' }}>STRUCTURED VERIFICATION OUTPUT</div>
+                            <div style={{ color: '#4CAF50', lineHeight: 1.4 }}>
+                                {'{'}<br />
+                                &nbsp;&nbsp;"status": "VERIFIED",<br />
+                                &nbsp;&nbsp;"identity_match": 0.98,<br />
+                                &nbsp;&nbsp;"sources_checked": 47,<br />
+                                &nbsp;&nbsp;"response_ms": 312<br />
+                                {'}'}
+                            </div>
                         </div>
                     </div>
 
                     {/* PANEL 2: Monitoring */}
                     <div className="glass-panel border-glow animate-fade-in-up" style={{ padding: '2rem', animationDelay: '0.2s' }}>
                         <div className="text-mono text-red" style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--color-alert-red)', paddingBottom: '0.5rem' }}>
-                            ENGINE_B: MONITOR
+                            ENGINE_B: MONITOR — Identity-Certain Event Monitoring
                         </div>
-                        <h3 className="text-white text-large" style={{ fontSize: '1.8rem' }}>Live Arrest Events</h3>
+                        <h3 className="text-white text-large" style={{ fontSize: '1.8rem' }}>Identity-Certain Event Monitoring</h3>
 
                         <div style={{ margin: '2rem 0' }}>
                             <HeatTiles />
@@ -54,7 +64,10 @@ const Slide03_Product: React.FC = () => {
                         <div className="text-muted" style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
                             Push-based alert system detecting bookings, warrants, and releases in real-time.
                         </div>
-                        <div style={{ marginTop: '2rem', padding: '1rem', background: 'rgba(228, 0, 40, 0.1)', border: '1px dashed var(--color-alert-red)' }}>
+                        <div className="text-mono text-white" style={{ marginTop: '1rem', fontSize: '0.85rem', padding: '0.75rem', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--color-grid)' }}>
+                            Identity resolution and verification gates applied before any alert is surfaced.
+                        </div>
+                        <div style={{ marginTop: '1rem', padding: '1rem', background: 'rgba(228, 0, 40, 0.1)', border: '1px dashed var(--color-alert-red)' }}>
                             <span className="text-mono text-red" style={{ fontSize: '0.8rem' }}>ALERT ROUTING: WEBHOOK / EMAIL / SLACK</span>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import MarkAsReadButton from '../deckhub/MarkAsReadButton';
 
 const UberAsk: React.FC = () => {
     return (
@@ -25,21 +26,15 @@ const UberAsk: React.FC = () => {
                 </div>
 
                 <div style={{ marginTop: '3rem' }}>
-                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
-                        <Link
-                            to="/decks"
-                            className="btn btn-secondary"
-                            style={{ fontSize: 'clamp(0.8rem, 4vw, 1rem)', padding: '1rem 2rem' }}
-                        >
-                            ← Back to Decks
-                        </Link>
+                    <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
                         <Link
                             to="/"
                             className="btn btn-secondary"
                             style={{ fontSize: 'clamp(0.8rem, 4vw, 1rem)', padding: '1rem 2rem' }}
                         >
-                            Visit Website
+                            Return to Main Site
                         </Link>
+                        <MarkAsReadButton deckId="uber-overview" />
                     </div>
                     <p className="text-muted text-mono" style={{ fontSize: '0.7rem' }}>
                         EXCLUSIVE PARTNERSHIP OPPORTUNITY

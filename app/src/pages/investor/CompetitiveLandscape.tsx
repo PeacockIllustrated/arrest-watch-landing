@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
+import MarkAsReadButton from '../../components/deckhub/MarkAsReadButton';
 import '../../styles/brand.css';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { COMPETITIVE_LANDSCAPE_CONFIG } from '../../lib/competitiveLandscapeConfig';
@@ -421,13 +422,11 @@ const CompetitiveLandscape: React.FC = () => {
                                 </p>
                             </div>
 
-                            <div style={{ marginTop: '3rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                                <Link to="/decks" className="btn">
-                                    ← BACK TO DATA ROOM
+                            <div style={{ marginTop: '3rem', display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+                                <Link to="/" className="btn btn-secondary" style={{ padding: '1rem 2rem' }}>
+                                    Return to Main Site
                                 </Link>
-                                <Link to="/" className="btn btn-secondary">
-                                    MAIN SITE
-                                </Link>
+                                <MarkAsReadButton deckId="competitive-landscape" />
                             </div>
                         </div>
                     </div>
@@ -455,11 +454,6 @@ const CompetitiveLandscape: React.FC = () => {
                                 boxShadow: i === activeIndex ? '0 0 10px var(--color-alert-red)' : 'none'
                             }}
                         />
-                        {i === activeIndex && (
-                            <span className="text-mono text-red animate-fade-in-up" style={{ position: 'absolute', bottom: '20px', fontSize: '0.6rem', whiteSpace: 'nowrap', textTransform: 'uppercase' }}>
-                                {title}
-                            </span>
-                        )}
                     </div>
                 ))}
             </div>

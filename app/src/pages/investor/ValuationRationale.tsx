@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
 import RadarNode from '../../components/investor/ui/RadarNode';
 import OnboardingModal from '../../components/investor/_legacy/OnboardingModal';
+import MarkAsReadButton from '../../components/deckhub/MarkAsReadButton';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import '../../styles/brand.css';
 
@@ -598,19 +599,14 @@ const ValuationRationale: React.FC = () => {
                         </div>
 
                         {/* CTAs */}
-                        <div className="animate-fade-in-up" style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', justifyContent: 'center', animationDelay: '0.35s' }}>
-                            <Link to="/decks" className="btn btn-secondary" style={{
-                                fontSize: '0.95rem',
-                                padding: '1rem 2rem'
-                            }}>
-                                ← Back to Data Room
-                            </Link>
+                        <div className="animate-fade-in-up" style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', animationDelay: '0.35s' }}>
                             <Link to="/" className="btn btn-secondary" style={{
                                 fontSize: '0.95rem',
                                 padding: '1rem 2rem'
                             }}>
-                                Visit Website
+                                Return to Main Site
                             </Link>
+                            <MarkAsReadButton deckId="valuation" />
                         </div>
 
                         <OnboardingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
@@ -653,11 +649,6 @@ const ValuationRationale: React.FC = () => {
                                 boxShadow: i === activeIndex ? '0 0 10px var(--color-alert-red)' : 'none'
                             }}
                         />
-                        {i === activeIndex && (
-                            <span className="text-mono text-red animate-fade-in-up" style={{ position: 'absolute', bottom: '20px', fontSize: '0.6rem', whiteSpace: 'nowrap', textTransform: 'uppercase' }}>
-                                {title}
-                            </span>
-                        )}
                     </div>
                 ))}
             </div>

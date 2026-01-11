@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
 import RadarNode from '../../components/investor/ui/RadarNode';
+import MarkAsReadButton from '../../components/deckhub/MarkAsReadButton';
 import '../../styles/brand.css';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { WHY_NOW_CONFIG } from '../../lib/whyNowConfig';
@@ -934,17 +935,16 @@ const WhyNow: React.FC = () => {
                         <div className="animate-fade-in-up" style={{
                             marginTop: '1rem',
                             display: 'flex',
-                            gap: '1rem',
+                            gap: '2rem',
                             justifyContent: 'center',
+                            alignItems: 'center',
                             animationDelay: '0.4s',
                             flexWrap: 'wrap'
                         }}>
-                            <Link to="/investor-delta" className="btn btn-secondary">
-                                ← Back to Investor Deck
+                            <Link to="/" className="btn btn-secondary" style={{ padding: '1rem 2rem' }}>
+                                Return to Main Site
                             </Link>
-                            <Link to="/decks" className="btn btn-secondary">
-                                Data Room
-                            </Link>
+                            <MarkAsReadButton deckId="why-now" />
                         </div>
 
                         {/* System status indicator */}
@@ -1006,11 +1006,6 @@ const WhyNow: React.FC = () => {
                                 boxShadow: i === activeIndex ? '0 0 10px var(--color-alert-red)' : 'none'
                             }}
                         />
-                        {i === activeIndex && (
-                            <span className="text-mono text-red animate-fade-in-up" style={{ position: 'absolute', bottom: '20px', fontSize: '0.6rem', whiteSpace: 'nowrap', textTransform: 'uppercase' }}>
-                                {title}
-                            </span>
-                        )}
                     </div>
                 ))}
             </div>

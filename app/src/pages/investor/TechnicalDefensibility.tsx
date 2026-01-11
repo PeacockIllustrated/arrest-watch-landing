@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
+import MarkAsReadButton from '../../components/deckhub/MarkAsReadButton';
 import '../../styles/brand.css';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { TECHNICAL_DEFENSIBILITY_CONFIG } from '../../lib/technicalDefensibilityConfig';
@@ -691,7 +692,14 @@ const TechnicalDefensibility: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="glass-panel" style={{ marginTop: '2.5rem', padding: '1.5rem', borderLeft: '4px solid var(--color-alert-red)' }}>
+                            {/* Learning Note - cannot be simulated or backfilled */}
+                            <div style={{ marginTop: '2rem', maxWidth: '800px' }}>
+                                <p className="text-muted" style={{ fontSize: '1rem', fontStyle: 'italic', margin: 0 }}>
+                                    {CONFIG.infrastructure.learningNote}
+                                </p>
+                            </div>
+
+                            <div className="glass-panel" style={{ marginTop: '2rem', padding: '1.5rem', borderLeft: '4px solid var(--color-alert-red)' }}>
                                 <p className="text-white" style={{ fontSize: '1.15rem', margin: 0, fontWeight: 500 }}>
                                     {CONFIG.infrastructure.callout}
                                 </p>
@@ -768,7 +776,7 @@ const TechnicalDefensibility: React.FC = () => {
                             <div className="td-restraint-container">
                                 {/* Deliberate choices */}
                                 <div>
-                                    <p className="text-muted" style={{ fontSize: '1rem', marginBottom: '1.5rem' }}>We deliberately:</p>
+                                    <p className="text-muted" style={{ fontSize: '1rem', marginBottom: '1.5rem' }}>{CONFIG.restraint.deliberateChoicesIntro}</p>
                                     {CONFIG.restraint.deliberateChoices.map((choice, i) => (
                                         <div key={i} className="glass-panel" style={{
                                             padding: '1.25rem 1.5rem',
@@ -867,13 +875,11 @@ const TechnicalDefensibility: React.FC = () => {
                                 </p>
                             </div>
 
-                            <div style={{ marginTop: '3rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                                <Link to="/decks" className="btn">
-                                    ← BACK TO DATA ROOM
+                            <div style={{ marginTop: '3rem', display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+                                <Link to="/" className="btn btn-secondary" style={{ padding: '1rem 2rem' }}>
+                                    Return to Main Site
                                 </Link>
-                                <Link to="/" className="btn btn-secondary">
-                                    MAIN SITE
-                                </Link>
+                                <MarkAsReadButton deckId="technical-defensibility" />
                             </div>
                         </div>
                     </div>
@@ -901,11 +907,6 @@ const TechnicalDefensibility: React.FC = () => {
                                 boxShadow: i === activeIndex ? '0 0 10px var(--color-alert-red)' : 'none'
                             }}
                         />
-                        {i === activeIndex && (
-                            <span className="text-mono text-red animate-fade-in-up" style={{ position: 'absolute', bottom: '20px', fontSize: '0.6rem', whiteSpace: 'nowrap', textTransform: 'uppercase' }}>
-                                {title}
-                            </span>
-                        )}
                     </div>
                 ))}
             </div>
