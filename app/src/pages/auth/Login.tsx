@@ -93,7 +93,7 @@ const Login: React.FC = () => {
 
                 <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div>
-                        <label style={{ display: 'block', fontSize: '0.7rem', marginBottom: '0.5rem', opacity: 0.7 }}>OPERATOR ID</label>
+                        <label style={{ display: 'block', fontSize: '0.7rem', marginBottom: '0.5rem', opacity: 0.7 }}>EMAIL</label>
                         <input
                             type="email"
                             value={email}
@@ -112,7 +112,7 @@ const Login: React.FC = () => {
                     </div>
 
                     <div>
-                        <label style={{ display: 'block', fontSize: '0.7rem', marginBottom: '0.5rem', opacity: 0.7 }}>ACCESS KEY</label>
+                        <label style={{ display: 'block', fontSize: '0.7rem', marginBottom: '0.5rem', opacity: 0.7 }}>PASSWORD</label>
                         <input
                             type="password"
                             value={password}

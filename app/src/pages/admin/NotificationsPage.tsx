@@ -65,13 +65,16 @@ function formatDate(dateString: string): string {
 type FilterType = 'all' | 'unread' | 'new_signup' | 'deck_access_request';
 
 // ============ NOTIFICATION ROW ============
+type ActionStatus = 'approved' | 'denied' | 'granted' | null;
+
 interface NotificationRowProps {
     notification: AdminNotification;
-    onApprove?: (requestId: string) => void;
-    onDeny?: (requestId: string) => void;
-    onGrantAll?: (userId: string) => void;
+    onApprove?: (requestId: string, notificationId: string) => void;
+    onDeny?: (requestId: string, notificationId: string) => void;
+    onGrantAll?: (userId: string, notificationId: string) => void;
     onDismiss: (id: string) => void;
     isActioning?: boolean;
+    actionStatus?: ActionStatus;
 }
 
 const NotificationRow: React.FC<NotificationRowProps> = ({
@@ -80,15 +83,28 @@ const NotificationRow: React.FC<NotificationRowProps> = ({
     onDeny,
     onGrantAll,
     onDismiss,
-    isActioning
+    isActioning,
+    actionStatus
 }) => {
     const isSignup = notification.type === 'new_signup';
     const isAccessRequest = notification.type === 'deck_access_request';
 
+    // Determine row background based on status
+    const getRowBackground = () => {
+        if (actionStatus === 'approved' || actionStatus === 'granted') {
+            return 'rgba(76, 175, 80, 0.08)';
+        }
+        if (actionStatus === 'denied') {
+            return 'rgba(228, 0, 40, 0.06)';
+        }
+        return notification.is_read ? 'transparent' : 'rgba(228, 0, 40, 0.03)';
+    };
+
     return (
         <tr style={{
             borderBottom: '1px solid #222',
-            background: notification.is_read ? 'transparent' : 'rgba(228, 0, 40, 0.03)'
+            background: getRowBackground(),
+            transition: 'background 0.3s'
         }}>
             {/* Type */}
             <td style={{ padding: '1rem', width: '50px' }}>
@@ -96,13 +112,32 @@ const NotificationRow: React.FC<NotificationRowProps> = ({
                     width: '36px',
                     height: '36px',
                     borderRadius: '50%',
-                    background: isSignup ? 'rgba(76, 175, 80, 0.15)' : 'rgba(228, 0, 40, 0.15)',
+                    background: actionStatus === 'approved' || actionStatus === 'granted'
+                        ? 'rgba(76, 175, 80, 0.25)'
+                        : actionStatus === 'denied'
+                            ? 'rgba(228, 0, 40, 0.25)'
+                            : isSignup
+                                ? 'rgba(76, 175, 80, 0.15)'
+                                : 'rgba(228, 0, 40, 0.15)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: isSignup ? '#4CAF50' : '#e40028'
+                    color: actionStatus === 'approved' || actionStatus === 'granted'
+                        ? '#4CAF50'
+                        : actionStatus === 'denied'
+                            ? '#e40028'
+                            : isSignup ? '#4CAF50' : '#e40028',
+                    transition: 'all 0.3s'
                 }}>
-                    {isSignup ? <UserPlusIcon size={18} /> : <KeyIcon size={18} />}
+                    {actionStatus === 'approved' || actionStatus === 'granted' ? (
+                        <CheckIcon size={18} />
+                    ) : actionStatus === 'denied' ? (
+                        <XIcon size={18} />
+                    ) : isSignup ? (
+                        <UserPlusIcon size={18} />
+                    ) : (
+                        <KeyIcon size={18} />
+                    )}
                 </div>
             </td>
 
@@ -127,18 +162,47 @@ const NotificationRow: React.FC<NotificationRowProps> = ({
             </td>
 
             {/* Status */}
-            <td style={{ padding: '1rem', width: '100px' }}>
-                <span style={{
-                    display: 'inline-block',
-                    padding: '0.25rem 0.5rem',
-                    borderRadius: '4px',
-                    fontSize: '0.7rem',
-                    fontFamily: 'var(--font-mono)',
-                    background: notification.is_read ? '#222' : 'rgba(228, 0, 40, 0.15)',
-                    color: notification.is_read ? '#666' : '#e40028'
-                }}>
-                    {notification.is_read ? 'READ' : 'UNREAD'}
-                </span>
+            <td style={{ padding: '1rem', width: '120px' }}>
+                {actionStatus ? (
+                    <span style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.3rem',
+                        padding: '0.35rem 0.6rem',
+                        borderRadius: '4px',
+                        fontSize: '0.7rem',
+                        fontFamily: 'var(--font-mono)',
+                        fontWeight: 600,
+                        background: actionStatus === 'approved' || actionStatus === 'granted'
+                            ? 'rgba(76, 175, 80, 0.2)'
+                            : 'rgba(228, 0, 40, 0.15)',
+                        color: actionStatus === 'approved' || actionStatus === 'granted'
+                            ? '#4CAF50'
+                            : '#e40028',
+                        border: `1px solid ${actionStatus === 'approved' || actionStatus === 'granted' ? '#4CAF50' : '#e40028'}`
+                    }}>
+                        {actionStatus === 'approved' || actionStatus === 'granted' ? (
+                            <CheckIcon size={12} />
+                        ) : (
+                            <XIcon size={12} />
+                        )}
+                        {actionStatus === 'approved' && 'APPROVED'}
+                        {actionStatus === 'denied' && 'DENIED'}
+                        {actionStatus === 'granted' && 'GRANTED'}
+                    </span>
+                ) : (
+                    <span style={{
+                        display: 'inline-block',
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '4px',
+                        fontSize: '0.7rem',
+                        fontFamily: 'var(--font-mono)',
+                        background: notification.is_read ? '#222' : 'rgba(228, 0, 40, 0.15)',
+                        color: notification.is_read ? '#666' : '#e40028'
+                    }}>
+                        {notification.is_read ? 'READ' : 'UNREAD'}
+                    </span>
+                )}
             </td>
 
             {/* Date */}
@@ -149,83 +213,88 @@ const NotificationRow: React.FC<NotificationRowProps> = ({
             {/* Actions */}
             <td style={{ padding: '1rem', width: '280px' }}>
                 <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    {isAccessRequest && onApprove && notification.metadata?.request_id && (
-                        <button
-                            onClick={() => onApprove(notification.metadata.request_id!)}
-                            disabled={isActioning}
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '0.3rem',
-                                padding: '0.4rem 0.6rem',
-                                background: 'rgba(76, 175, 80, 0.15)',
-                                border: '1px solid #4CAF50',
-                                color: '#4CAF50',
-                                fontSize: '0.65rem',
-                                fontFamily: 'var(--font-mono)',
-                                cursor: isActioning ? 'wait' : 'pointer',
-                                opacity: isActioning ? 0.5 : 1
-                            }}
-                        >
-                            <CheckIcon size={12} /> APPROVE
-                        </button>
+                    {/* Show action buttons only if no action taken */}
+                    {!actionStatus && (
+                        <>
+                            {isAccessRequest && onApprove && notification.metadata?.request_id && (
+                                <button
+                                    onClick={() => onApprove(notification.metadata.request_id!, notification.id)}
+                                    disabled={isActioning}
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '0.3rem',
+                                        padding: '0.4rem 0.6rem',
+                                        background: 'rgba(76, 175, 80, 0.15)',
+                                        border: '1px solid #4CAF50',
+                                        color: '#4CAF50',
+                                        fontSize: '0.65rem',
+                                        fontFamily: 'var(--font-mono)',
+                                        cursor: isActioning ? 'wait' : 'pointer',
+                                        opacity: isActioning ? 0.5 : 1
+                                    }}
+                                >
+                                    <CheckIcon size={12} /> APPROVE
+                                </button>
+                            )}
+                            {isAccessRequest && onDeny && notification.metadata?.request_id && (
+                                <button
+                                    onClick={() => onDeny(notification.metadata.request_id!, notification.id)}
+                                    disabled={isActioning}
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '0.3rem',
+                                        padding: '0.4rem 0.6rem',
+                                        background: 'transparent',
+                                        border: '1px solid #666',
+                                        color: '#888',
+                                        fontSize: '0.65rem',
+                                        fontFamily: 'var(--font-mono)',
+                                        cursor: isActioning ? 'wait' : 'pointer',
+                                        opacity: isActioning ? 0.5 : 1
+                                    }}
+                                >
+                                    <XIcon size={12} /> DENY
+                                </button>
+                            )}
+                            {isSignup && onGrantAll && notification.user_id && (
+                                <button
+                                    onClick={() => onGrantAll(notification.user_id!, notification.id)}
+                                    disabled={isActioning}
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '0.3rem',
+                                        padding: '0.4rem 0.6rem',
+                                        background: 'rgba(76, 175, 80, 0.15)',
+                                        border: '1px solid #4CAF50',
+                                        color: '#4CAF50',
+                                        fontSize: '0.65rem',
+                                        fontFamily: 'var(--font-mono)',
+                                        cursor: isActioning ? 'wait' : 'pointer',
+                                        opacity: isActioning ? 0.5 : 1
+                                    }}
+                                >
+                                    <CheckIcon size={12} /> GRANT ALL
+                                </button>
+                            )}
+                            <button
+                                onClick={() => onDismiss(notification.id)}
+                                style={{
+                                    padding: '0.4rem 0.6rem',
+                                    background: 'transparent',
+                                    border: '1px solid #333',
+                                    color: '#666',
+                                    fontSize: '0.65rem',
+                                    fontFamily: 'var(--font-mono)',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                DISMISS
+                            </button>
+                        </>
                     )}
-                    {isAccessRequest && onDeny && notification.metadata?.request_id && (
-                        <button
-                            onClick={() => onDeny(notification.metadata.request_id!)}
-                            disabled={isActioning}
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '0.3rem',
-                                padding: '0.4rem 0.6rem',
-                                background: 'transparent',
-                                border: '1px solid #666',
-                                color: '#888',
-                                fontSize: '0.65rem',
-                                fontFamily: 'var(--font-mono)',
-                                cursor: isActioning ? 'wait' : 'pointer',
-                                opacity: isActioning ? 0.5 : 1
-                            }}
-                        >
-                            <XIcon size={12} /> DENY
-                        </button>
-                    )}
-                    {isSignup && onGrantAll && notification.user_id && (
-                        <button
-                            onClick={() => onGrantAll(notification.user_id!)}
-                            disabled={isActioning}
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '0.3rem',
-                                padding: '0.4rem 0.6rem',
-                                background: 'rgba(76, 175, 80, 0.15)',
-                                border: '1px solid #4CAF50',
-                                color: '#4CAF50',
-                                fontSize: '0.65rem',
-                                fontFamily: 'var(--font-mono)',
-                                cursor: isActioning ? 'wait' : 'pointer',
-                                opacity: isActioning ? 0.5 : 1
-                            }}
-                        >
-                            <CheckIcon size={12} /> GRANT ALL
-                        </button>
-                    )}
-                    <button
-                        onClick={() => onDismiss(notification.id)}
-                        style={{
-                            padding: '0.4rem 0.6rem',
-                            background: 'transparent',
-                            border: '1px solid #333',
-                            color: '#666',
-                            fontSize: '0.65rem',
-                            fontFamily: 'var(--font-mono)',
-                            cursor: 'pointer'
-                        }}
-                    >
-                        DISMISS
-                    </button>
                 </div>
             </td>
         </tr>
@@ -248,6 +317,8 @@ const NotificationsPage: React.FC = () => {
 
     const [filter, setFilter] = useState<FilterType>('all');
     const [actioningId, setActioningId] = useState<string | null>(null);
+    // Track action status per notification ID
+    const [actionStatuses, setActionStatuses] = useState<Record<string, ActionStatus>>({});
 
     // Filter notifications
     const filteredNotifications = notifications.filter(n => {
@@ -260,21 +331,30 @@ const NotificationsPage: React.FC = () => {
     const signupCount = notifications.filter(n => n.type === 'new_signup').length;
     const requestCount = notifications.filter(n => n.type === 'deck_access_request').length;
 
-    const handleApprove = async (requestId: string) => {
+    const handleApprove = async (requestId: string, notificationId: string) => {
         setActioningId(requestId);
-        await approveRequest(requestId);
+        const result = await approveRequest(requestId);
+        if (result.success) {
+            setActionStatuses(prev => ({ ...prev, [notificationId]: 'approved' }));
+        }
         setActioningId(null);
     };
 
-    const handleDeny = async (requestId: string) => {
+    const handleDeny = async (requestId: string, notificationId: string) => {
         setActioningId(requestId);
-        await denyRequest(requestId);
+        const result = await denyRequest(requestId);
+        if (result.success) {
+            setActionStatuses(prev => ({ ...prev, [notificationId]: 'denied' }));
+        }
         setActioningId(null);
     };
 
-    const handleGrantAll = async (userId: string) => {
+    const handleGrantAll = async (userId: string, notificationId: string) => {
         setActioningId(userId);
-        await grantAllDecks(userId);
+        const result = await grantAllDecks(userId);
+        if (result.success) {
+            setActionStatuses(prev => ({ ...prev, [notificationId]: 'granted' }));
+        }
         setActioningId(null);
     };
 
@@ -426,6 +506,7 @@ const NotificationsPage: React.FC = () => {
                                         actioningId === notification.metadata?.request_id ||
                                         actioningId === notification.user_id
                                     }
+                                    actionStatus={actionStatuses[notification.id] || null}
                                 />
                             ))}
                         </tbody>

@@ -198,7 +198,7 @@ const SiteGatePage: React.FC = () => {
 
                     <div>
                         <label style={{ display: 'block', fontSize: '0.7rem', marginBottom: '0.5rem', opacity: 0.7 }}>
-                            {mode === 'signin' ? 'OPERATOR ID' : 'EMAIL'}
+                            {mode === 'signin' ? 'EMAIL' : 'EMAIL'}
                         </label>
                         <input
                             type="email"
@@ -219,7 +219,7 @@ const SiteGatePage: React.FC = () => {
 
                     <div>
                         <label style={{ display: 'block', fontSize: '0.7rem', marginBottom: '0.5rem', opacity: 0.7 }}>
-                            {mode === 'signin' ? 'ACCESS KEY' : 'CREATE PASSWORD'}
+                            {mode === 'signin' ? 'PASSWORD' : 'CREATE PASSWORD'}
                         </label>
                         <input
                             type="password"
