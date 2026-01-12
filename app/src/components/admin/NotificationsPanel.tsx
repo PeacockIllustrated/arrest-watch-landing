@@ -45,6 +45,15 @@ const XIcon: React.FC<{ size?: number }> = ({ size = 14 }) => (
     </svg>
 );
 
+const CalendarIcon: React.FC<{ size?: number }> = ({ size = 16 }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
+    </svg>
+);
+
 // ============ HELPER FUNCTIONS ============
 function getDeckTitle(deckId: string): string {
     const deck = DECKS.find(d => d.id === deckId);
@@ -90,6 +99,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 }) => {
     const isSignup = notification.type === 'new_signup';
     const isAccessRequest = notification.type === 'deck_access_request';
+    const isMeetingRequest = notification.type === 'meeting_request';
 
     // Determine background based on action status
     const getBackground = () => {
@@ -142,6 +152,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
                         <XIcon size={16} />
                     ) : isSignup ? (
                         <UserPlusIcon size={16} />
+                    ) : isMeetingRequest ? (
+                        <CalendarIcon size={16} />
                     ) : (
                         <KeyIcon size={16} />
                     )}
@@ -172,6 +184,20 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
                             letterSpacing: '0.05em'
                         }}>
                             Deck: {getDeckTitle(notification.metadata.deck_id)}
+                        </div>
+                    )}
+                    {isMeetingRequest && (
+                        <div style={{
+                            fontSize: '0.7rem',
+                            color: '#666',
+                            marginTop: '0.25rem',
+                            fontStyle: 'italic',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden'
+                        }}>
+                            {notification.message || (notification.metadata as any)?.message}
                         </div>
                     )}
                 </div>

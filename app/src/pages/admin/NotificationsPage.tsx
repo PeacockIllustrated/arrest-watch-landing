@@ -44,6 +44,15 @@ const RefreshIcon: React.FC<{ size?: number }> = ({ size = 16 }) => (
     </svg>
 );
 
+const CalendarIcon: React.FC<{ size?: number }> = ({ size = 18 }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
+    </svg>
+);
+
 // ============ HELPERS ============
 function getDeckTitle(deckId: string): string {
     const deck = DECKS.find(d => d.id === deckId);
@@ -62,7 +71,7 @@ function formatDate(dateString: string): string {
 }
 
 // ============ FILTER TABS ============
-type FilterType = 'all' | 'unread' | 'new_signup' | 'deck_access_request';
+type FilterType = 'all' | 'unread' | 'new_signup' | 'deck_access_request' | 'meeting_request';
 
 // ============ NOTIFICATION ROW ============
 type ActionStatus = 'approved' | 'denied' | 'granted' | null;
@@ -88,6 +97,7 @@ const NotificationRow: React.FC<NotificationRowProps> = ({
 }) => {
     const isSignup = notification.type === 'new_signup';
     const isAccessRequest = notification.type === 'deck_access_request';
+    const isMeetingRequest = notification.type === 'meeting_request';
 
     // Determine row background based on status
     const getRowBackground = () => {
@@ -135,6 +145,8 @@ const NotificationRow: React.FC<NotificationRowProps> = ({
                         <XIcon size={18} />
                     ) : isSignup ? (
                         <UserPlusIcon size={18} />
+                    ) : isMeetingRequest ? (
+                        <CalendarIcon size={18} />
                     ) : (
                         <KeyIcon size={18} />
                     )}
@@ -157,6 +169,20 @@ const NotificationRow: React.FC<NotificationRowProps> = ({
                         marginTop: '0.25rem'
                     }}>
                         Deck: {getDeckTitle(notification.metadata.deck_id)}
+                    </div>
+                )}
+                {isMeetingRequest && (
+                    <div style={{
+                        fontSize: '0.75rem',
+                        color: '#666',
+                        marginTop: '0.25rem',
+                        fontStyle: 'italic',
+                        maxWidth: '400px',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
+                    }}>
+                        {notification.message || (notification.metadata as any)?.message}
                     </div>
                 )}
             </td>
@@ -330,6 +356,7 @@ const NotificationsPage: React.FC = () => {
     // Counts
     const signupCount = notifications.filter(n => n.type === 'new_signup').length;
     const requestCount = notifications.filter(n => n.type === 'deck_access_request').length;
+    const meetingCount = notifications.filter(n => n.type === 'meeting_request').length;
 
     const handleApprove = async (requestId: string, notificationId: string) => {
         setActioningId(requestId);
@@ -426,6 +453,7 @@ const NotificationsPage: React.FC = () => {
                     { key: 'unread', label: 'Unread', count: unreadCount },
                     { key: 'new_signup', label: 'Signups', count: signupCount },
                     { key: 'deck_access_request', label: 'Access Requests', count: requestCount },
+                    { key: 'meeting_request', label: 'Meetings', count: meetingCount },
                 ].map(tab => (
                     <button
                         key={tab.key}

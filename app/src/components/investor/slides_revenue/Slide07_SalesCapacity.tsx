@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 const Slide07_SalesCapacity: React.FC = () => {
     return (
@@ -39,11 +39,11 @@ const Slide07_SalesCapacity: React.FC = () => {
                         {/* Panel 1: Founder-led */}
                         <div className="glass-panel border-glow" style={{ padding: '1.75rem', borderLeft: '3px solid var(--color-alert-red)' }}>
                             <div className="text-mono text-red" style={{ fontSize: '0.8rem', letterSpacing: '0.1em', marginBottom: '1rem' }}>
-                                FOUNDER-LED (MONTHS 1–9)
+                                FOUNDER-LED (MONTHS 1-9)
                             </div>
                             <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                                 <li className="text-mono text-white" style={{ fontSize: '0.95rem' }}>
-                                    <span className="text-red">→</span> 3–4 deals
+                                    <span className="text-red">→</span> 3-4 deals
                                 </li>
                                 <li className="text-mono text-white" style={{ fontSize: '0.95rem' }}>
                                     <span className="text-red">→</span> All strategic accounts
@@ -57,11 +57,11 @@ const Slide07_SalesCapacity: React.FC = () => {
                         {/* Panel 2: Enterprise AE */}
                         <div className="glass-panel" style={{ padding: '1.75rem', borderLeft: '3px solid var(--color-grid)' }}>
                             <div className="text-mono text-muted" style={{ fontSize: '0.8rem', letterSpacing: '0.1em', marginBottom: '1rem' }}>
-                                ENTERPRISE AE (MONTHS 6–12)
+                                ENTERPRISE AE (MONTHS 6-12)
                             </div>
                             <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                                 <li className="text-mono text-white" style={{ fontSize: '0.95rem' }}>
-                                    <span className="text-muted">→</span> 2–3 qualified closes OR late-stage pipeline
+                                    <span className="text-muted">→</span> 2-3 qualified closes OR late-stage pipeline
                                 </li>
                                 <li className="text-mono text-white" style={{ fontSize: '0.95rem' }}>
                                     <span className="text-muted">→</span> Does not carry full quota Year 1

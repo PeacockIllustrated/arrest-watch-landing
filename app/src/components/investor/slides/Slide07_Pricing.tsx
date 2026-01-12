@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import MetricTicker from '../ui/MetricTicker';
 
 const Slide07_Pricing: React.FC = () => {
@@ -33,15 +33,15 @@ const Slide07_Pricing: React.FC = () => {
                         <div className="mobile-stack" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '2rem' }}>
                             <div className="mobile-border-none" style={{ borderRight: '1px solid var(--glass-border)' }}>
                                 <div className="text-white text-large" style={{ fontSize: '1.5rem' }}>Starter</div>
-                                <div className="text-mono text-muted">$3–$5 / mo</div>
+                                <div className="text-mono text-muted">$3-$5 / mo</div>
                             </div>
                             <div className="mobile-border-none" style={{ borderRight: '1px solid var(--glass-border)' }}>
                                 <div className="text-white text-large" style={{ fontSize: '1.5rem' }}>Professional</div>
-                                <div className="text-mono text-muted">$7–$10 / mo</div>
+                                <div className="text-mono text-muted">$7-$10 / mo</div>
                             </div>
                             <div>
                                 <div className="text-white text-large" style={{ fontSize: '1.5rem' }}>Enterprise</div>
-                                <div className="text-mono text-muted">$12–$20 / mo</div>
+                                <div className="text-mono text-muted">$12-$20 / mo</div>
                             </div>
                         </div>
 

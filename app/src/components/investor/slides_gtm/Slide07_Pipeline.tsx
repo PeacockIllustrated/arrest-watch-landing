@@ -1,8 +1,8 @@
-import React from 'react';
+﻿import React from 'react';
 
 const Slide07_Pipeline: React.FC = () => {
     const funnelStages = [
-        { stage: 'SERIOUS CONVERSATIONS', count: '45–50', color: 'var(--color-text-muted)' },
+        { stage: 'SERIOUS CONVERSATIONS', count: '45-50', color: 'var(--color-text-muted)' },
         { stage: 'PILOT DISCUSSIONS', count: '~25', color: 'var(--color-signal-white)' },
         { stage: 'QUALIFIED OPPS', count: '18', color: 'var(--color-alert-red)' },
         { stage: 'CLOSED CUSTOMERS', count: '6', color: 'var(--color-alert-red)' },
@@ -108,7 +108,7 @@ const Slide07_Pipeline: React.FC = () => {
                                 <span className="text-white">To close 6 customers:</span><br />
                                 • Need 18 qualified opps<br />
                                 • Need ~25 pilot discussions<br />
-                                • Need ~45–50 serious conversations
+                                • Need ~45-50 serious conversations
                             </div>
                         </div>
                     </div>

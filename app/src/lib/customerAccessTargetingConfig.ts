@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Customer Access & Targeting Configuration
  * 
  * CANONICAL SOURCE: /supporting-docs/ArrestDelta - Customer Access & Trageting.md
@@ -106,7 +106,7 @@ export const CUSTOMER_ACCESS_TARGETING_CONFIG: CustomerAccessTargetingConfig = {
                 'Content shared internally by champions to Legal and Ops'
             ],
             outcome: [
-                '3–5 enterprise customers',
+                '3-5 enterprise customers',
                 'High reference value',
                 'Strong early validation'
             ]
@@ -136,7 +136,7 @@ export const CUSTOMER_ACCESS_TARGETING_CONFIG: CustomerAccessTargetingConfig = {
                 'Technical content demonstrating false-positive reduction'
             ],
             outcome: [
-                '2–4 enterprise contracts or partnerships',
+                '2-4 enterprise contracts or partnerships',
                 'Distribution leverage',
                 'Strategic optionality'
             ]
@@ -167,7 +167,7 @@ export const CUSTOMER_ACCESS_TARGETING_CONFIG: CustomerAccessTargetingConfig = {
                 'Content designed for Legal, not just Security'
             ],
             outcome: [
-                '2–3 high-ACV customers',
+                '2-3 high-ACV customers',
                 'Slower cycles, very durable contracts'
             ],
             permissionNote: 'Marketing here creates permission to engage, not demand volume.'

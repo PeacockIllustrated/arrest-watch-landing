@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 const InvestorIntro: React.FC = () => {
     return (
@@ -25,7 +25,7 @@ const InvestorIntro: React.FC = () => {
                             </div>
                         </div>
                         <p className="text-muted" style={{ fontSize: '1.1rem' }}>
-                            Today, companies like Uber and Lyft rely on static background checks every 3–12 months. They miss the most dangerous window: the moment a worker is arrested and continues operating for days before discovery.
+                            Today, companies like Uber and Lyft rely on static background checks every 3-12 months. They miss the most dangerous window: the moment a worker is arrested and continues operating for days before discovery.
                         </p>
                     </div>
                 </div>

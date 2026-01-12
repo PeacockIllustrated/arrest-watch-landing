@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Why Now Configuration
  * 
  * CANONICAL SOURCE: /supporting-docs/ArrestDelta - Why Now.md
@@ -168,7 +168,7 @@ export const WHY_NOW_CONFIG: WhyNowConfig = {
         id: 'enterprise-ready',
         eyebrow: 'INFRASTRUCTURE MATURITY',
         headline: 'Enterprise Architecture Has Finally Caught Up',
-        content: 'What was not viable 5–10 years ago is now practical:',
+        content: 'What was not viable 5-10 years ago is now practical:',
         capabilities: [
             'Event-driven systems are standard',
             'Webhooks and real-time pipelines are expected',

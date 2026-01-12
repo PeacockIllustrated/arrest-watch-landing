@@ -53,7 +53,7 @@ const Slide03_Product: React.FC = () => {
                     {/* PANEL 2: Monitoring */}
                     <div className="glass-panel border-glow animate-fade-in-up" style={{ padding: '2rem', animationDelay: '0.2s' }}>
                         <div className="text-mono text-red" style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--color-alert-red)', paddingBottom: '0.5rem' }}>
-                            ENGINE_B: MONITOR — Identity-Certain Event Monitoring
+                            ENGINE_B: MONITOR - Identity-Certain Event Monitoring
                         </div>
                         <h3 className="text-white text-large" style={{ fontSize: '1.8rem' }}>Identity-Certain Event Monitoring</h3>
 

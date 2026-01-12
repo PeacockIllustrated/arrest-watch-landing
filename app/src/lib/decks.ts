@@ -1,4 +1,4 @@
-// Shared deck configuration for both DeckDashboard and admin
+﻿// Shared deck configuration for both DeckDashboard and admin
 // Add new decks here - they'll automatically appear everywhere
 
 export interface Deck {
@@ -91,7 +91,7 @@ export const DECKS: Deck[] = [
 
     {
         id: 'founder-investor-fit',
-        title: 'FOUNDER–INVESTOR FIT',
+        title: 'FOUNDER-INVESTOR FIT',
         route: '/investor-delta/appendix/founder-investor-fit',
         category: 'investor',
         description: 'Values and operating system alignment for long-term partnership',

@@ -12,6 +12,73 @@ import '../styles/brand.css';
 import LeadershipBiosSection from '../components/data-room/LeadershipBiosSection';
 import AdminReviewPanel from '../components/data-room/AdminReviewPanel';
 import { SuperAdminReviewProvider, useSuperAdminReview } from '../hooks/useSuperAdminReview';
+import { supabase } from '../lib/supabase';
+
+// ============ BOOK MEETING BUTTON COMPONENT ============
+const BookMeetingButton: React.FC = () => {
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const { isAuthenticated } = useDeckHubAuth();
+
+    const handleBookMeeting = async () => {
+        if (!isAuthenticated) return;
+        setStatus('loading');
+
+        try {
+            const { data, error } = await supabase.rpc('request_meeting', {
+                message: 'User requested a meeting via Data Room dashboard.'
+            });
+
+            if (error) throw error;
+
+            if (data === 'success') {
+                setStatus('success');
+            } else {
+                throw new Error(data || 'Failed to request meeting');
+            }
+        } catch (err) {
+            console.error('Error booking meeting:', err);
+            setStatus('error');
+            setTimeout(() => setStatus('idle'), 3000);
+        }
+    };
+
+    if (status === 'success') {
+        return (
+            <button
+                disabled
+                className="btn"
+                style={{
+                    background: 'rgba(76, 175, 80, 0.15)',
+                    border: '1px solid #4CAF50',
+                    color: '#4CAF50',
+                    cursor: 'default',
+                    padding: '1rem 2rem',
+                    fontSize: '0.9rem'
+                }}
+            >
+                ✓ REQUEST SENT. WE WILL BE IN TOUCH.
+            </button>
+        );
+    }
+
+    return (
+        <button
+            onClick={handleBookMeeting}
+            disabled={!isAuthenticated || status === 'loading'}
+            className="btn btn-primary"
+            style={{
+                position: 'relative',
+                overflow: 'hidden',
+                padding: '1rem 3rem',
+                fontSize: '1rem',
+                letterSpacing: '0.1em'
+            }}
+        >
+            {status === 'loading' ? 'TRANSMITTING...' : 'BOOK MEETING'}
+            {status === 'error' && <span style={{ marginLeft: '10px', fontSize: '0.8em', color: '#ff3355' }}>ERROR</span>}
+        </button>
+    );
+};
 
 // ============ TYPING EFFECT COMPONENT ============
 const TypingText: React.FC<{ text: string; delay?: number }> = ({ text, delay = 50 }) => {
@@ -573,6 +640,16 @@ const DeckHubContent: React.FC = () => {
                             </div>
                         ))}
                     </div>
+
+                    <div className="animate-fade-in-up" style={{
+                        marginTop: '2.5rem',
+                        fontSize: '0.8rem',
+                        color: '#666',
+                        fontFamily: 'var(--font-mono)',
+                        animationDelay: '0.4s'
+                    }}>
+                        Additional materials are unlocked as conversations progress
+                    </div>
                 </header>
 
                 {/* Data Room Sections */}
@@ -646,6 +723,36 @@ const DeckHubContent: React.FC = () => {
                 ))}
 
                 {/* Leadership Bios Section */}
+                {/* Book Meeting Section */}
+                <div style={{
+                    maxWidth: '1400px',
+                    marginInline: 'auto',
+                    marginBottom: '6rem',
+                    textAlign: 'center',
+                    padding: '3rem',
+                    background: 'linear-gradient(180deg, rgba(228, 0, 40, 0.05) 0%, transparent 100%)',
+                    borderTop: '1px solid rgba(228, 0, 40, 0.2)',
+                    borderBottom: '1px solid rgba(228, 0, 40, 0.2)',
+                    position: 'relative',
+                    overflow: 'hidden'
+                }}>
+                    <div style={{
+                        position: 'absolute',
+                        top: 0, left: 0, right: 0, bottom: 0,
+                        background: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(228, 0, 40, 0.02) 10px, rgba(228, 0, 40, 0.02) 20px)',
+                        pointerEvents: 'none'
+                    }} />
+
+                    <h3 className="text-huge" style={{ fontSize: '2rem', marginBottom: '1rem' }}>
+                        READY TO <span className="text-red">ENGAGE?</span>
+                    </h3>
+                    <p className="text-muted" style={{ maxWidth: '600px', marginInline: 'auto', marginBottom: '2rem' }}>
+                        Schedule a direct briefing with our leadership team to discuss the opportunity.
+                    </p>
+
+                    <BookMeetingButton />
+                </div>
+
                 <LeadershipBiosSection />
 
                 {/* Footer */}

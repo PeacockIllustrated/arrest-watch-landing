@@ -1,8 +1,8 @@
-import React from 'react';
+﻿import React from 'react';
 
 const Slide09_SanityCheck: React.FC = () => {
     const metrics = [
-        { label: 'ARR (12 months)', value: '$1.0M–$1.1M' },
+        { label: 'ARR (12 months)', value: '$1.0M-$1.1M' },
         { label: 'Sales & Marketing Spend', value: '$400k' },
         { label: 'ARR / S&M Ratio', value: '2.5x' },
         { label: 'Gross Margin', value: 'High (Data & Infra)' },

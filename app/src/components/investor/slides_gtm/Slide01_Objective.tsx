@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 const Slide01_Objective: React.FC = () => {
     return (
@@ -32,7 +32,7 @@ const Slide01_Objective: React.FC = () => {
                         <div style={{ display: 'flex', gap: '3rem', marginTop: '3rem' }}>
                             <div>
                                 <div className="text-mono text-red text-glow" style={{ fontSize: '2.5rem', fontWeight: 700 }}>
-                                    $900k–$1.2m
+                                    $900k-$1.2m
                                 </div>
                                 <div className="text-mono text-muted" style={{ fontSize: '0.85rem', letterSpacing: '0.05em' }}>
                                     YEAR 1 ARR
@@ -41,7 +41,7 @@ const Slide01_Objective: React.FC = () => {
                             <div style={{ width: '1px', background: 'var(--color-grid)' }} />
                             <div>
                                 <div className="text-mono text-red text-glow" style={{ fontSize: '2.5rem', fontWeight: 700 }}>
-                                    18–24
+                                    18-24
                                 </div>
                                 <div className="text-mono text-muted" style={{ fontSize: '0.85rem', letterSpacing: '0.05em' }}>
                                     QUALIFIED OPPS (3:1)
@@ -62,8 +62,8 @@ const Slide01_Objective: React.FC = () => {
                                 <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                     {[
                                         '6 enterprise customers',
-                                        '$900k–$1.2m ARR',
-                                        '18–24 qualified opportunities',
+                                        '$900k-$1.2m ARR',
+                                        '18-24 qualified opportunities',
                                         '3:1 pipeline coverage'
                                     ].map((item, i) => (
                                         <li key={i} className="text-mono" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1rem' }}>
@@ -84,8 +84,8 @@ const Slide01_Objective: React.FC = () => {
                                 </div>
                                 <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                     {[
-                                        '15–20 enterprise customers',
-                                        '$3.5m–$5m ARR run-rate',
+                                        '15-20 enterprise customers',
+                                        '$3.5m-$5m ARR run-rate',
                                         'Category leader positioning'
                                     ].map((item, i) => (
                                         <li key={i} className="text-mono text-muted" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.95rem' }}>

@@ -64,7 +64,7 @@ const Slide01_Problem: React.FC = () => {
                                     That gap is where exposure lives.
                                 </p>
                                 <p className="text-muted" style={{ fontSize: '0.85rem', lineHeight: 1.5, margin: 0 }}>
-                                    ArrestDelta closes this gap by continuously detecting arrest-related state changes, resolving identity, and verifying transitions before alerts are surfaced — enabling action when it matters, not months later.
+                                    ArrestDelta closes this gap by continuously detecting arrest-related state changes, resolving identity, and verifying transitions before alerts are surfaced - enabling action when it matters, not months later.
                                 </p>
                             </div>
 

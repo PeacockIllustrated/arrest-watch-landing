@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 const Slide08_Marketing: React.FC = () => {
     return (
@@ -24,7 +24,7 @@ const Slide08_Marketing: React.FC = () => {
                 <div className="grid-2 mobile-stack" style={{ gap: '1.25rem' }}>
                     <div className="glass-panel animate-fade-in-up" style={{ padding: '1.75rem', animationDelay: '0.3s' }}>
                         <div className="text-mono text-red" style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem' }}>01 AUTHORITY CONTENT</div>
-                        <div className="text-muted" style={{ fontSize: '0.9rem', marginBottom: '1rem' }}>6–8 long-form articles:</div>
+                        <div className="text-muted" style={{ fontSize: '0.9rem', marginBottom: '1rem' }}>6-8 long-form articles:</div>
                         <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                             {['False positives in screening', 'Delta-based vs static monitoring', 'Legal risk of stale data'].map((t, i) => (
                                 <li key={i} className="text-white" style={{ fontSize: '0.9rem' }}><span className="text-red">→</span> {t}</li>

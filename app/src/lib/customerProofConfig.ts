@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Customer Proof - Early Validation Configuration
  * 
  * CANONICAL SOURCE: /supporting-docs/ArrestDelta - Customer Proof _ Early Validation.md
@@ -250,7 +250,7 @@ export const CUSTOMER_PROOF_CONFIG: CustomerProofConfig = {
             },
             {
                 id: 'mile-3',
-                text: 'Establish 1–2 referenceable enterprise customers',
+                text: 'Establish 1-2 referenceable enterprise customers',
                 isNext: false
             },
             {

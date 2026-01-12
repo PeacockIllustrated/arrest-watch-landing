@@ -1,5 +1,5 @@
-/**
- * Founder–Investor Fit Configuration
+﻿/**
+ * Founder-Investor Fit Configuration
  * 
  * CANONICAL SOURCE: /supporting-docs/ArrestDelta - Founder - Investor Fit.md
  * All content preserved verbatim from original with minimal overlay improvements.
@@ -97,7 +97,7 @@ export interface FounderInvestorFitConfig {
 export const FOUNDER_INVESTOR_FIT_CONFIG: FounderInvestorFitConfig = {
     thesis: {
         id: 'thesis',
-        eyebrow: 'FOUNDER–INVESTOR FIT',
+        eyebrow: 'FOUNDER-INVESTOR FIT',
         headline: 'How We Think About Building ArrestDelta',
         subheadline: 'Enterprise decision infrastructure in a regulated, high-stakes environment.',
         keyStance: 'Accuracy and trust are the engine of scale.',

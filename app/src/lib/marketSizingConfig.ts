@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Market Sizing Configuration
  * 
  * CANONICAL SOURCE: /supporting-docs/Market Sizing.md
@@ -140,7 +140,7 @@ export const MARKET_SIZING_CONFIG: MarketSizingConfig = {
         eyebrow: "SERVICEABLE AVAILABLE MARKET (SAM)",
         headline: "Near-Term Target",
         targetBuyerUniverse: {
-            title: "Target Buyer Universe (Year 1–3)",
+            title: "Target Buyer Universe (Year 1-3)",
             description: "We focus initially on enterprises that:",
             criteria: [
                 "Make ongoing arrest-related decisions",
@@ -154,12 +154,12 @@ export const MARKET_SIZING_CONFIG: MarketSizingConfig = {
             { id: "regulated", name: "Regulated enterprises with continuous risk review" }
         ],
         buyerCount: {
-            range: "~1,000–1,500",
+            range: "~1,000-1,500",
             footnote: "Directional estimate based on category counts across public company lists and known platform categories.",
             geographicFocus: "Initial geographic focus: United States"
         },
         pricing: {
-            acvRange: "$150k–$250k",
+            acvRange: "$150k-$250k",
             midpoint: "$175k ARR",
             anchoringNote: "Anchored to existing enterprise spend on screening, monitoring, and manual review workflows."
         },
@@ -175,11 +175,11 @@ export const MARKET_SIZING_CONFIG: MarketSizingConfig = {
         headline: "First 36 Months",
         penetrationAssumption: {
             title: "Conservative Capture Assumption",
-            rate: "2–3% penetration of SAM over 3 years"
+            rate: "2-3% penetration of SAM over 3 years"
         },
         range: {
-            customers: "20–30 enterprise customers",
-            arr: "$3.5M–$5.5M ARR"
+            customers: "20-30 enterprise customers",
+            arr: "$3.5M-$5.5M ARR"
         },
         alignment: "This aligns directly with our GTM plan and revenue model."
     },

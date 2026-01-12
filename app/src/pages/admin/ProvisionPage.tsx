@@ -732,7 +732,7 @@ const ProvisionPage: React.FC = () => {
                                                                         ? '✓ READ'
                                                                         : hasOpened
                                                                             ? '○ OPENED'
-                                                                            : '— NOT OPENED'}
+                                                                            : '- NOT OPENED'}
                                                             </button>
                                                         );
                                                     })()}

@@ -1,4 +1,4 @@
-export interface Milestone {
+﻿export interface Milestone {
     id: string;
     title: string;
     months: string;
@@ -54,7 +54,7 @@ export const USE_OF_FUNDS_CONFIG: UseOfFundsConfig = {
         headline: "Capital Is a Tool to De-Risk the Business, Not to Fund Exploration",
         content: [
             "We are raising this pre-seed round to achieve a **specific, measurable set of milestones** that materially de-risk Arrest Delta and position the company for a strong Series A.",
-            "We are not using this capital to “find product–market fit.”"
+            "We are not using this capital to “find product-market fit.”"
         ],
         subContent: "We are using it to **prove it, harden it, and scale it responsibly**."
     },
@@ -70,10 +70,10 @@ export const USE_OF_FUNDS_CONFIG: UseOfFundsConfig = {
         {
             id: "m1",
             title: "Enterprise Validation",
-            months: "Months 0–4",
+            months: "Months 0-4",
             objective: "Prove that enterprises will pay for Arrest Delta and deploy it in live environments.",
             unlocks: [
-                "1–2 paid design partner agreements",
+                "1-2 paid design partner agreements",
                 "Clear pilot success criteria defined with enterprise buyers",
                 "Validation of pricing, scope, and procurement pathway"
             ],
@@ -87,7 +87,7 @@ export const USE_OF_FUNDS_CONFIG: UseOfFundsConfig = {
         {
             id: "m2",
             title: "Signal Quality & Trust",
-            months: "Months 3–6",
+            months: "Months 3-6",
             objective: "Demonstrate that Arrest Delta materially reduces false positives and improves confidence in arrest-change detection.",
             unlocks: [
                 "Live validation of verification logic",
@@ -104,11 +104,11 @@ export const USE_OF_FUNDS_CONFIG: UseOfFundsConfig = {
         {
             id: "m3",
             title: "Reference Customers & ARR",
-            months: "Months 6–9",
+            months: "Months 6-9",
             objective: "Convert early pilots into long-term enterprise contracts and establish reference credibility.",
             unlocks: [
-                "3–4 enterprise customers under contract",
-                "$500k–$700k ARR",
+                "3-4 enterprise customers under contract",
+                "$500k-$700k ARR",
                 "At least one referenceable customer"
             ],
             capitalDeployed: [
@@ -121,7 +121,7 @@ export const USE_OF_FUNDS_CONFIG: UseOfFundsConfig = {
         {
             id: "m4",
             title: "Scalable Growth Foundation",
-            months: "Months 9–12",
+            months: "Months 9-12",
             objective: "Prepare the business for sustained growth and Series A readiness.",
             unlocks: [
                 "6 enterprise customers live",

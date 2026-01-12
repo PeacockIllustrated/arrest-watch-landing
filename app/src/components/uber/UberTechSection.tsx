@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 const UberTechSection: React.FC = () => {
     return (
@@ -9,7 +9,7 @@ const UberTechSection: React.FC = () => {
                         <span className="label">06. Defensibility</span>
                         <h2 className="text-large">System Architecture.</h2>
                         <p className="text-muted" style={{ marginTop: '2rem', fontSize: '1.2rem' }}>
-                            ArrestDelta’s advantage is not simply scraping—it is the system architecture. Latency is the product. The faster we identify a risk, the more valuable the platform becomes.
+                            ArrestDelta’s advantage is not simply scraping-it is the system architecture. Latency is the product. The faster we identify a risk, the more valuable the platform becomes.
                         </p>
                         <ul style={{ listStyle: 'none', marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <li className="text-mono text-white">1. API-FIRST DESIGN</li>

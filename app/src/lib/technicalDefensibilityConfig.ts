@@ -238,7 +238,7 @@ export const TECHNICAL_DEFENSIBILITY_CONFIG: TechnicalDefensibilityConfig = {
             'Verification improves globally'
         ],
         flywheel: 'Coverage → learning → accuracy → trust → expansion',
-        learningNote: 'This learning requires long-running observation of real correction behavior across jurisdictions — something that cannot be simulated or backfilled.',
+        learningNote: 'This learning requires long-running observation of real correction behavior across jurisdictions - something that cannot be simulated or backfilled.',
         callout: 'A new entrant starts at zero.'
     },
 

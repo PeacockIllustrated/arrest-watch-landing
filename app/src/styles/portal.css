@@ -1,11 +1,11 @@
-/* Import brand fonts - MUST be first */
+﻿/* Import brand fonts - MUST be first */
 @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@300;400;500;600&family=Roboto+Mono:wght@400;500;700&display=swap');
 
 /* Uber fonts - loaded from Google Fonts alternative (similar to UberMove) */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 /* =============================================================================
-   ArrestDelta Portal — Theme System
+   ArrestDelta Portal - Theme System
    CSS Variables-based multi-theme system with 4 themes
    ============================================================================= */
 
@@ -172,7 +172,7 @@
 
 /* -----------------------------------------------------------------------------
    Theme: Uber
-   BaseUI-aligned dark theme — White primary, subtle blue highlights
+   BaseUI-aligned dark theme - White primary, subtle blue highlights
    ----------------------------------------------------------------------------- */
 [data-theme="stealth"] {
   /* Backgrounds - Uber Black + BaseUI grays */
@@ -378,7 +378,7 @@ html body .portal-root textarea {
   cursor: text !important;
 }
 
-/* Typography — Theme-responsive */
+/* Typography - Theme-responsive */
 .portal-root h1,
 .portal-root h2,
 .portal-root h3,

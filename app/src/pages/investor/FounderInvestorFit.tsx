@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+﻿import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
 import MarkAsReadButton from '../../components/deckhub/MarkAsReadButton';
@@ -10,7 +10,7 @@ const CONFIG = FOUNDER_INVESTOR_FIT_CONFIG;
 const SLIDE_TITLES = CONFIG.slideNavTitles;
 
 const FounderInvestorFit: React.FC = () => {
-    usePageTitle('Founder–Investor Fit');
+    usePageTitle('Founder-Investor Fit');
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showPrev, setShowPrev] = useState(false);
     const [showNext, setShowNext] = useState(true);

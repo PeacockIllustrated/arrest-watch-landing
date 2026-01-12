@@ -1,11 +1,11 @@
-import React from 'react';
+﻿import React from 'react';
 
 const Slide03_Timeline: React.FC = () => {
     const quarters = [
-        { quarter: 'Q1', months: 'Months 1–3', newCustomers: 1, cumulative: 1 },
-        { quarter: 'Q2', months: 'Months 4–6', newCustomers: 2, cumulative: 3 },
-        { quarter: 'Q3', months: 'Months 7–8', newCustomers: 2, cumulative: 5 },
-        { quarter: 'Q4', months: 'Months 9–12', newCustomers: 1, cumulative: 6 },
+        { quarter: 'Q1', months: 'Months 1-3', newCustomers: 1, cumulative: 1 },
+        { quarter: 'Q2', months: 'Months 4-6', newCustomers: 2, cumulative: 3 },
+        { quarter: 'Q3', months: 'Months 7-8', newCustomers: 2, cumulative: 5 },
+        { quarter: 'Q4', months: 'Months 9-12', newCustomers: 1, cumulative: 6 },
     ];
 
     return (

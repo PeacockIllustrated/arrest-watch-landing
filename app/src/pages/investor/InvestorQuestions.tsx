@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+﻿import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
 import RadarNode from '../../components/investor/ui/RadarNode';
@@ -323,7 +323,7 @@ const InvestorQuestions: React.FC = () => {
                                 {
                                     title: "3. MODERN AUTOMATION",
                                     items: ["Headless browsers", "Resilient scraping", "Normalization pipelines", "Event-based delivery"],
-                                    note: "Tools that didn't exist 5–10 years ago."
+                                    note: "Tools that didn't exist 5-10 years ago."
                                 },
                                 {
                                     title: "4. HARDEST PART SOLVED",
@@ -358,7 +358,7 @@ const InvestorQuestions: React.FC = () => {
                         <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
                             <span className="label">04. TAILWINDS</span>
                             <h2 className="text-large" style={{ fontSize: '2rem', marginBottom: '0' }}>
-                                WHAT TAILWINDS SUPPORT THIS <span className="text-red">OVER 4–10 YEARS?</span>
+                                WHAT TAILWINDS SUPPORT THIS <span className="text-red">OVER 4-10 YEARS?</span>
                             </h2>
                         </div>
 

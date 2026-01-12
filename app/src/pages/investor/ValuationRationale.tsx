@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+﻿import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationArrows from '../../components/NavigationArrows';
 import RadarNode from '../../components/investor/ui/RadarNode';
@@ -192,7 +192,7 @@ const ValuationRationale: React.FC = () => {
                     <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                         <div style={{ marginBottom: '2rem' }}>
                             <span className="label">02. PREMIUM MULTIPLES</span>
-                            <h2 className="text-large" style={{ fontSize: '2.5rem' }}>MONITORING SAAS COMMANDS <span className="text-red">8–15× ARR</span></h2>
+                            <h2 className="text-large" style={{ fontSize: '2.5rem' }}>MONITORING SAAS COMMANDS <span className="text-red">8-15× ARR</span></h2>
                         </div>
 
                         {/* Investor Quote */}
@@ -261,7 +261,7 @@ const ValuationRationale: React.FC = () => {
 
                         {/* Why They Trade High */}
                         <div className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-                            <p className="text-muted" style={{ marginBottom: '1rem' }}>These businesses trade at <span className="text-red text-mono">8–15× ARR</span> because:</p>
+                            <p className="text-muted" style={{ marginBottom: '1rem' }}>These businesses trade at <span className="text-red text-mono">8-15× ARR</span> because:</p>
                             <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
                                 {["Revenue is recurring", "Churn is low", "Customers depend on alerts"].map((item, i) => (
                                     <span key={i} className="text-mono text-white" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -485,7 +485,7 @@ const ValuationRationale: React.FC = () => {
                                     {[
                                         "Founders retain proper ownership",
                                         "Enough capital to hit value-inflection milestones",
-                                        "Clean step-up to a $30–40M Seed is realistic"
+                                        "Clean step-up to a $30-40M Seed is realistic"
                                     ].map((item, i) => (
                                         <li key={i} className="animate-fade-in-up" style={{
                                             display: 'flex', alignItems: 'flex-start', gap: '1rem', fontSize: '1.1rem', color: 'white',
@@ -589,7 +589,7 @@ const ValuationRationale: React.FC = () => {
                                 <div className="text-mono text-muted" style={{ fontSize: '0.7rem', letterSpacing: '0.1em' }}>PRE-SEED VALUATION</div>
                             </div>
                             <div className="glass-panel" style={{ padding: '1rem 2rem', textAlign: 'center' }}>
-                                <div className="text-mono text-red" style={{ fontSize: '1.8rem', fontWeight: 700 }}>8–15×</div>
+                                <div className="text-mono text-red" style={{ fontSize: '1.8rem', fontWeight: 700 }}>8-15×</div>
                                 <div className="text-mono text-muted" style={{ fontSize: '0.7rem', letterSpacing: '0.1em' }}>CATEGORY MULTIPLES</div>
                             </div>
                             <div className="glass-panel" style={{ padding: '1rem 2rem', textAlign: 'center' }}>

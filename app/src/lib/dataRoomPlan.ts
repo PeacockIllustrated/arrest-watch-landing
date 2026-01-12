@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Data Room Plan - Single Source of Truth
  * 
  * This file defines the complete structure of the Data Room:
@@ -44,7 +44,7 @@ export const DATA_ROOM_SECTIONS: DataRoomSection[] = [
         isGated: true,
         gatedBadge: 'Request access',
         gatedSubheader: 'Selected enterprise materials are available on request to keep the core diligence path clean.',
-        gatedFooter: 'Questions welcome — we\'ll share full access to customer-specific materials on request.'
+        gatedFooter: 'Questions welcome - we\'ll share full access to customer-specific materials on request.'
     }
 ];
 
@@ -75,7 +75,7 @@ export const DATA_ROOM_DECK_PLAN: DeckPlanEntry[] = [
     { title: 'Market Sizing', sectionId: 'core-thesis', orderWithinSection: 4 },
     { title: 'Competitive Landscape', sectionId: 'core-thesis', orderWithinSection: 5 },
     { title: 'Technical Defensibility', sectionId: 'core-thesis', orderWithinSection: 6 },
-    { title: 'Technical Appendix — System Logic', sectionId: 'core-thesis', orderWithinSection: 7 },
+    { title: 'Technical Appendix - System Logic', sectionId: 'core-thesis', orderWithinSection: 7 },
     { title: 'Operational Scenarios', sectionId: 'core-thesis', orderWithinSection: 8 },
 
     // SECTION 2: EXECUTION PLAN (7 decks)
@@ -84,7 +84,7 @@ export const DATA_ROOM_DECK_PLAN: DeckPlanEntry[] = [
     { title: '12-Month Revenue Model', sectionId: 'execution-plan', orderWithinSection: 3 },
     { title: 'Use of Funds', sectionId: 'execution-plan', orderWithinSection: 4 },
     { title: 'Kill Criteria', sectionId: 'execution-plan', orderWithinSection: 5 },
-    { title: 'Founder–Investor Fit', sectionId: 'execution-plan', orderWithinSection: 6 },
+    { title: 'Founder-Investor Fit', sectionId: 'execution-plan', orderWithinSection: 6 },
     { title: 'Valuation Rationale', sectionId: 'execution-plan', orderWithinSection: 7 },
 
     // SECTION 3: EARLY TRACTION (3 gated decks)
@@ -103,7 +103,7 @@ export const DATA_ROOM_DECK_PLAN: DeckPlanEntry[] = [
 function normalizeTitle(title: string): string {
     return title
         .toLowerCase()
-        .replace(/[—–-]/g, ' ')  // Normalize dashes
+        .replace(/[---]/g, ' ')  // Normalize dashes
         .replace(/[^\w\s]/g, '') // Remove punctuation
         .replace(/\s+/g, ' ')    // Collapse whitespace
         .trim();

@@ -16,7 +16,7 @@ const Slide02_Solution: React.FC = () => {
                         </h2>
 
                         <p className="text-mono text-muted" style={{ marginTop: '1.5rem', maxWidth: '550px', fontSize: '0.95rem', lineHeight: 1.5 }}>
-                            Most enterprise systems are refresh-based, not state-aware — they cannot tell when something meaningful has actually changed.
+                            Most enterprise systems are refresh-based, not state-aware - they cannot tell when something meaningful has actually changed.
                         </p>
 
                         <p className="text-muted" style={{ marginTop: '2rem', maxWidth: '500px', fontSize: '1.2rem', lineHeight: 1.6 }}>

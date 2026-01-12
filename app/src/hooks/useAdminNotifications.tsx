@@ -10,7 +10,7 @@ import { supabase } from '../lib/supabase';
 
 export interface AdminNotification {
     id: string;
-    type: 'new_signup' | 'deck_access_request' | 'system';
+    type: 'new_signup' | 'deck_access_request' | 'system' | 'meeting_request';
     title: string;
     message: string | null;
     user_id: string | null;

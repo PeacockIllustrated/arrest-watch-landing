@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Link } from 'react-router-dom';
 import MarkAsReadButton from '../../deckhub/MarkAsReadButton';
 
@@ -13,10 +13,10 @@ const Slide10_Resourcing: React.FC = () => {
     ];
 
     const timeline = [
-        { phase: '0–3', focus: 'Foundation: first 2 design partners, content pipeline, legal framework' },
-        { phase: '4–6', focus: 'Momentum: 3–4 customers, hire enterprise AE, pilot conversions' },
-        { phase: '7–9', focus: 'Scale: marketing assets live, 5+ active pilots, reference accounts' },
-        { phase: '10–12', focus: 'Close: 6 customers, ARR locked, category positioning established' },
+        { phase: '0-3', focus: 'Foundation: first 2 design partners, content pipeline, legal framework' },
+        { phase: '4-6', focus: 'Momentum: 3-4 customers, hire enterprise AE, pilot conversions' },
+        { phase: '7-9', focus: 'Scale: marketing assets live, 5+ active pilots, reference accounts' },
+        { phase: '10-12', focus: 'Close: 6 customers, ARR locked, category positioning established' },
     ];
 
     const kpis = [

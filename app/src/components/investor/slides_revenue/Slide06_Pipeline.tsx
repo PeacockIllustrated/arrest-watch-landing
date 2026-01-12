@@ -1,8 +1,8 @@
-import React from 'react';
+﻿import React from 'react';
 
 const Slide06_Pipeline: React.FC = () => {
     const metrics = [
-        { label: 'Qualified opps', value: '18–24' },
+        { label: 'Qualified opps', value: '18-24' },
         { label: 'Average opp size', value: '~$175k' },
         { label: 'Discovery → Pilot', value: '~40%' },
         { label: 'Pilot → Close', value: '~50%' },

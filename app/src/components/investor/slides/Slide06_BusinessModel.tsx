@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 const Slide06_BusinessModel: React.FC = () => {
     return (
@@ -24,11 +24,11 @@ const Slide06_BusinessModel: React.FC = () => {
                         <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed var(--color-grid)', paddingBottom: '0.5rem' }}>
                                 <span className="text-mono">Basic Search</span>
-                                <span className="text-white">$2–$5</span>
+                                <span className="text-white">$2-$5</span>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed var(--color-grid)', paddingBottom: '0.5rem' }}>
                                 <span className="text-mono">Enhanced / Fuzzy</span>
-                                <span className="text-white">$6–$10</span>
+                                <span className="text-white">$6-$10</span>
                             </div>
                             <div style={{ marginTop: '1rem', fontSize: '0.8rem' }} className="text-mono text-muted">
                                 HIGH VOLUME ENTRY POINT

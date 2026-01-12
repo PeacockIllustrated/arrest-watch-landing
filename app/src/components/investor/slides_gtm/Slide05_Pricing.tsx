@@ -1,9 +1,9 @@
-import React from 'react';
+﻿import React from 'react';
 
 const Slide05_Pricing: React.FC = () => {
     const tiers = [
-        { tier: 'DESIGN PARTNER', acv: '$100k–$150k', desc: 'Co-development, early access, case study rights' },
-        { tier: 'CORE ENTERPRISE', acv: '$150k–$250k', desc: 'Full platform access, standard SLA, dedicated support' },
+        { tier: 'DESIGN PARTNER', acv: '$100k-$150k', desc: 'Co-development, early access, case study rights' },
+        { tier: 'CORE ENTERPRISE', acv: '$150k-$250k', desc: 'Full platform access, standard SLA, dedicated support' },
         { tier: 'STRATEGIC PLATFORM', acv: '$300k+', desc: 'Custom integration, white-glove onboarding, executive alignment' },
     ];
 

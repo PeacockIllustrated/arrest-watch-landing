@@ -29,11 +29,11 @@ As CEO, Michael is responsible for ensuring Arrest Delta scales with the same di
         id: 'tom-peacock',
         name: 'tom peacock',
         role: 'Co-founder & CTO',
-        bio: `Tom Peacock is Co-founder & CTO at Arrest Delta, leading product engineering end-to-end — from workflow-first UX and information architecture through to data modelling, authentication/RBAC, and production deployment.
+        bio: `Tom Peacock is Co-founder & CTO at Arrest Delta, leading product engineering end-to-end - from workflow-first UX and information architecture through to data modelling, authentication/RBAC, and production deployment.
 
 He builds the trust layer that makes Arrest Delta defensible in high-stakes environments: strict validation, explicit permissions, audit trails, and monitoring that keeps behaviour inspectable. His focus is simple: reduce noise, prevent unverified signals from becoming actions, and surface change only when it's confirmed.
 
-Tom's ethos is preventative engineering — identify failure modes early, design systems that are hard to misuse, and ship with discipline. He's driven by turning ambiguity into verified state transitions teams can act on with confidence.`,
+Tom's ethos is preventative engineering - identify failure modes early, design systems that are hard to misuse, and ship with discipline. He's driven by turning ambiguity into verified state transitions teams can act on with confidence.`,
         image: 'co-founder.png',
         email: 'tom@arrestdelta.com',
     },

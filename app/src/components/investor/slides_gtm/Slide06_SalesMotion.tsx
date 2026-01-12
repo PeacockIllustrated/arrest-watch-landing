@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 const Slide06_SalesMotion: React.FC = () => {
     return (
@@ -51,7 +51,7 @@ const Slide06_SalesMotion: React.FC = () => {
                                 border: '1px solid var(--color-grid)',
                                 fontSize: '0.8rem'
                             }}>
-                                MONTHS 0–9
+                                MONTHS 0-9
                             </div>
                         </div>
 
@@ -98,7 +98,7 @@ const Slide06_SalesMotion: React.FC = () => {
                                 border: '1px dashed var(--color-grid)',
                                 fontSize: '0.8rem'
                             }}>
-                                MONTHS 6–12
+                                MONTHS 6-12
                             </div>
                         </div>
 

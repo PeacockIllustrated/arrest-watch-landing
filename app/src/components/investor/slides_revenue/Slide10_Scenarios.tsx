@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 const Slide10_Scenarios: React.FC = () => {
     return (
@@ -74,7 +74,7 @@ const Slide10_Scenarios: React.FC = () => {
                                 </div>
                             </div>
                             <p className="text-muted" style={{ fontSize: '0.8rem', marginTop: '1rem', fontStyle: 'italic' }}>
-                                Achievable with 1–2 larger platform deals
+                                Achievable with 1-2 larger platform deals
                             </p>
                         </div>
 

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Kill Criteria & Downside Discipline Configuration
  * 
  * CANONICAL SOURCE: /supporting-docs/ArrestDelta - Kill Criteria & Downside Discipline.md
@@ -85,7 +85,7 @@ export const KILL_CRITERIA_CONFIG: KillCriteriaConfig = {
         {
             id: 'willingness-to-pay',
             title: 'Lack of Willingness to Pay',
-            condition: 'If enterprises validate the problem but are unwilling to engage in paid pilots or early contracts within 6–9 months.',
+            condition: 'If enterprises validate the problem but are unwilling to engage in paid pilots or early contracts within 6-9 months.',
             rationale: 'Time investment without budget commitment indicates interest, not demand.',
             action: [
                 'ICP focus',
@@ -93,7 +93,7 @@ export const KILL_CRITERIA_CONFIG: KillCriteriaConfig = {
                 'Buyer persona alignment'
             ],
             actionSummary: 'We would reassess. We will not subsidize validation indefinitely.',
-            timeWindowBadge: '6–9 months'
+            timeWindowBadge: '6-9 months'
         },
         {
             id: 'non-repeatable-sales',

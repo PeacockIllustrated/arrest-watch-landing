@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+﻿import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationArrows from '../components/NavigationArrows';
 import MarkAsReadButton from '../components/deckhub/MarkAsReadButton';
@@ -94,7 +94,7 @@ const UberClosePlan: React.FC = () => {
                                 <span className="text-red text-glow">PLAN</span>
                             </h1>
                             <p className="text-mono text-muted" style={{ fontSize: '1.2rem', marginBottom: '2rem' }}>
-                                Framework: Miller Heiman – Strategic Selling (Blue Sheet)
+                                Framework: Miller Heiman - Strategic Selling (Blue Sheet)
                             </p>
                             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3rem' }}>
                                 <span className="badge outline">Account: Uber</span>
@@ -127,7 +127,7 @@ const UberClosePlan: React.FC = () => {
                             background: 'linear-gradient(135deg, rgba(228,0,40,0.05), transparent)'
                         }}>
                             <p className="text-white" style={{ fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)', lineHeight: 1.6, margin: 0 }}>
-                                Secure a paid <span className="text-red" style={{ fontWeight: 700 }}>90–120 day pilot</span> of ArrestDelta
+                                Secure a paid <span className="text-red" style={{ fontWeight: 700 }}>90-120 day pilot</span> of ArrestDelta
                                 with Uber Public Safety / Security, scoped to U.S. arrest-change monitoring, with success
                                 metrics tied to:
                             </p>

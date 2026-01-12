@@ -1,8 +1,8 @@
-import React from 'react';
+﻿import React from 'react';
 
 const Slide05_ARRBuild: React.FC = () => {
     const arrData = [
-        { period: 'Months 1–2', addition: '$0', cumulative: '$0' },
+        { period: 'Months 1-2', addition: '$0', cumulative: '$0' },
         { period: 'Month 3', addition: '+$125k', cumulative: '$125k' },
         { period: 'Month 4', addition: '+$175k', cumulative: '$300k' },
         { period: 'Month 6', addition: '+$175k', cumulative: '$475k' },
