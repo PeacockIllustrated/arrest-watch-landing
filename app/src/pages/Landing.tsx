@@ -444,7 +444,7 @@ const Landing: React.FC = () => {
                         ArrestDelta is built to ensure decisions are based on <span className="text-white">verified change</span>, not noisy data.
                     </p>
                     <div className="flex-row" style={{ justifyContent: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
-                        <button className="btn btn-cta" onClick={() => setIsModalOpen(true)}>REGISTER INTEREST</button>
+
                         <a href="/decks" className="btn btn-secondary" style={{ textDecoration: 'none' }}>VIEW DATA ROOM →</a>
                     </div>
                 </div>
