@@ -5,7 +5,7 @@ const Slide09_ARR_Early: React.FC = () => {
     return (
         <section className="brand-section" id="slide-09">
             <div className="grid-bg-overlay" />
-            <div style={{ maxWidth: '1600px', margin: '0 auto', width: '100%' }}>
+            <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
                 <div className="mobile-mb-2" style={{ marginBottom: '4rem' }}>
                     <span className="label">09. TRACTION</span>
                     <h2 className="text-large" style={{ fontSize: '3rem' }}>EARLY REVENUE <span className="text-red">MODEL.</span></h2>

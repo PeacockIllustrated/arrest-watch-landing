@@ -16,7 +16,6 @@ import SiteProtectedRoute from './components/SiteProtectedRoute';
 const InvestorOnePager = lazy(() => import('./pages/investor/InvestorOnePager'));
 
 // Investor Deck Pages
-const OnePager = lazy(() => import('./pages/OnePager'));
 const BrandPack = lazy(() => import('./pages/BrandPack'));
 const InvestorPack = lazy(() => import('./pages/InvestorPack'));
 const InvestorPackDelta = lazy(() => import('./pages/InvestorPackDelta'));
@@ -125,8 +124,9 @@ function App() {
 
             {/* Protected Marketing Routes */}
             <Route element={<SiteProtectedRoute><Layout /></SiteProtectedRoute>}>
-              <Route path="/" element={<Landing />} />
-              <Route path="/one-pager" element={<OnePager />} />
+              <Route path="/" element={<InvestorOnePager />} />
+              <Route path="/landing" element={<Landing />} />
+              <Route path="/one-pager" element={<Navigate to="/" replace />} />
               <Route path="/investor-delta/one-pager" element={<DeckPageWrapper deckId="investor-one-pager"><InvestorOnePager /></DeckPageWrapper>} />
               <Route path="/brand" element={<BrandPack />} />
               <Route path="/investor" element={<InvestorPack />} />

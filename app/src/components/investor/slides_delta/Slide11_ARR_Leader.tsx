@@ -5,7 +5,7 @@ const Slide11_ARR_Leader: React.FC = () => {
     return (
         <section className="brand-section" id="slide-11">
             <div className="grid-bg-overlay" />
-            <div style={{ maxWidth: '1600px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
+            <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
                 <div className="mobile-stack" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center', width: '100%' }}>
 
                     {/* LEFT: Text */}

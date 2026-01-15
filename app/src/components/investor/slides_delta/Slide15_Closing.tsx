@@ -8,7 +8,7 @@ const Slide15_Closing: React.FC = () => {
     return (
         <section className="brand-section" id="slide-15">
             <div className="grid-bg-overlay" />
-            <div style={{ maxWidth: '1600px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
                 <div style={{ position: 'absolute', opacity: 0.4 }}>
                     <RadarNode size="800px" type="radar" />

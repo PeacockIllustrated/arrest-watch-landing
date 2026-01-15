@@ -5,7 +5,7 @@ const Slide13_Raise: React.FC = () => {
     return (
         <section className="brand-section" id="slide-13">
             <div className="grid-bg-overlay" />
-            <div style={{ maxWidth: '1600px', margin: '0 auto', width: '100%' }}>
+            <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
                 <div className="grid-2" style={{ gap: '6rem' }}>
 
                     {/* LEFT: The Ask */}

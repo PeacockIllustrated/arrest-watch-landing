@@ -5,7 +5,7 @@ const Slide14_WhyNow: React.FC = () => {
     return (
         <section className="brand-section" id="slide-14">
             <div className="grid-bg-overlay" />
-            <div style={{ maxWidth: '1600px', margin: '0 auto', width: '100%' }}>
+            <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
                 <div className="grid-2" style={{ gap: '4rem' }}>
 
                     {/* LEFT: Context */}

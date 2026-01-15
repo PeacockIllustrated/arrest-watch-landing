@@ -4,7 +4,7 @@ const Slide01_Problem: React.FC = () => {
     return (
         <section className="brand-section" id="slide-01">
             <div className="grid-bg-overlay" />
-            <div style={{ maxWidth: '1600px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 2rem' }}>
+            <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 2rem' }}>
                 <div className="grid-2" style={{ alignItems: 'flex-start' }}>
 
                     {/* LEFT: Cinematic Hero */}

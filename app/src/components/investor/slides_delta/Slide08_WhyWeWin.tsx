@@ -4,7 +4,7 @@ const Slide08_WhyWeWin: React.FC = () => {
     return (
         <section className="brand-section" id="slide-08">
             <div className="grid-bg-overlay" />
-            <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 
                 <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
                     <span className="label">08. COMPETITIVE ADVANTAGE</span>

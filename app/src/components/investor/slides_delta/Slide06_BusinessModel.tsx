@@ -4,7 +4,7 @@ const Slide06_BusinessModel: React.FC = () => {
     return (
         <section className="brand-section" id="slide-06">
             <div className="grid-bg-overlay" />
-            <div style={{ maxWidth: '1600px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
+            <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
                 <div style={{ width: '100%' }}>
 
                     {/* TOP: Heading */}

@@ -5,7 +5,7 @@ const Slide03_Product: React.FC = () => {
     return (
         <section className="brand-section" id="slide-03">
             <div className="grid-bg-overlay" />
-            <div style={{ maxWidth: '1600px', margin: '0 auto', width: '100%' }}>
+            <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
 
                 <div style={{ marginBottom: '3rem' }}>
                     <span className="label">03. THE PLATFORM</span>

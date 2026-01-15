@@ -4,7 +4,7 @@ const Slide07_Pricing: React.FC = () => {
     return (
         <section className="brand-section" id="slide-07">
             <div className="grid-bg-overlay" />
-            <div style={{ maxWidth: '1600px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 
                 <div style={{ textAlign: 'center', marginBottom: '4rem', maxWidth: '900px' }}>
                     <span className="label text-mono text-muted" style={{ display: 'block', marginBottom: '1rem' }}>07. NEXT STEPS</span>
@@ -16,7 +16,7 @@ const Slide07_Pricing: React.FC = () => {
                     </p>
                 </div>
 
-                <div className="grid-2 mobile-stack" style={{ gap: '2rem', width: '100%', maxWidth: '1000px', marginBottom: '3rem' }}>
+                <div className="grid-2 mobile-stack" style={{ gap: '2rem', width: '100%', marginBottom: '3rem' }}>
 
                     {/* Box 1 */}
                     <div className="glass-panel" style={{ padding: '2.5rem', border: '1px solid var(--border-color)' }}>

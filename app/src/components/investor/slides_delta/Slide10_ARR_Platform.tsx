@@ -4,7 +4,7 @@ const Slide10_ARR_Platform: React.FC = () => {
     return (
         <section className="brand-section" id="slide-10">
             <div className="grid-bg-overlay" />
-            <div style={{ maxWidth: '1600px', margin: '0 auto', width: '100%' }}>
+            <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
                 <div style={{ marginBottom: '3rem', textAlign: 'center' }}>
                     <span className="label">10. PLATFORM SCALE</span>
                     <h2 className="text-huge">ADOPTION <span className="text-red">VELOCITY.</span></h2>

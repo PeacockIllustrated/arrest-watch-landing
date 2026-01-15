@@ -18,7 +18,7 @@ import USAMapViz from '../../components/visuals/USAMapViz';
 import InteractiveSideNav from '../../components/visuals/InteractiveSideNav';
 
 const InvestorOnePager: React.FC = () => {
-    usePageTitle('Investor One-Pager');
+    usePageTitle('Home');
     const observerRef = useRef<IntersectionObserver | null>(null);
 
     const SECTIONS = [
