@@ -27,14 +27,14 @@ const Slide05_MarketSize: React.FC = () => {
                                 </li>
                                 <li style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <span className="text-red">TRUST-CRITICAL SEGMENT</span>
-                                    <span className="text-red">~50M</span>
+                                    <span className="text-red">~73M</span>
                                 </li>
                                 <li style={{ marginBottom: '1.5rem', fontSize: '0.8rem', paddingLeft: '1rem', borderLeft: '1px solid #333' }}>
                                     Healthcare, Education, Gig, Transport
                                 </li>
                                 <li style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <span className="text-white">AVG. REVENUE</span>
-                                    <span className="text-white">~$100 / YR</span>
+                                    <span className="text-white">$144 / YR</span>
                                 </li>
                             </ul>
                         </div>
@@ -53,7 +53,7 @@ const Slide05_MarketSize: React.FC = () => {
                             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                             zIndex: 2, background: 'rgba(0,0,0,0.8)', animationDelay: '0.2s'
                         }}>
-                            <MetricTicker value="$5.0B" label="IMMEDIATE TAM" />
+                            <MetricTicker value="~$10.5B" label="SERVICEABLE MARKET (SAM)" />
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
                                 <span className="text-mono text-green" style={{ fontSize: '1rem', background: 'rgba(76, 175, 80, 0.1)', padding: '0.2rem 0.5rem', border: '1px solid #4CAF50' }}>
                                     ▲ 12% CAGR
@@ -61,7 +61,7 @@ const Slide05_MarketSize: React.FC = () => {
                             </div>
                             <div className="text-mono text-muted text-center" style={{ fontSize: '0.9rem', marginTop: '1.5rem', maxWidth: '250px', lineHeight: 1.4 }}>
                                 ANNUAL REVENUE POTENTIAL<br />
-                                <span style={{ opacity: 0.7 }}>(50M Users @ $100/yr)</span>
+                                <span style={{ opacity: 0.7 }}>(73M Users @ $144/yr)</span>
                             </div>
                         </div>
 

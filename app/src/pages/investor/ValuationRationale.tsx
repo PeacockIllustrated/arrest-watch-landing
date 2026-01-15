@@ -313,7 +313,7 @@ const ValuationRationale: React.FC = () => {
                                 <span className="text-mono text-muted" style={{ fontSize: '2rem' }}>×</span>
                                 <div style={{ textAlign: 'center', padding: '1.5rem 2rem', background: 'rgba(0,0,0,0.5)', border: '1px solid var(--color-grid)' }}>
                                     <div className="text-mono text-muted" style={{ fontSize: '0.65rem', marginBottom: '0.5rem', letterSpacing: '0.1em' }}>ARPU / MONTH</div>
-                                    <div className="text-mono text-white" style={{ fontSize: '2rem', fontWeight: 700 }}>$6</div>
+                                    <div className="text-mono text-white" style={{ fontSize: '2rem', fontWeight: 700 }}>$12</div>
                                 </div>
                             </div>
 
@@ -321,7 +321,7 @@ const ValuationRationale: React.FC = () => {
                             <div style={{ textAlign: 'center', paddingTop: '2rem', borderTop: '1px solid var(--color-grid)' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem' }}>
                                     <span className="text-mono text-red" style={{ fontSize: '2rem' }}>→</span>
-                                    <span className="text-huge text-red text-glow" style={{ fontSize: '3.5rem' }}>$14.4M ARR</span>
+                                    <span className="text-huge text-red text-glow" style={{ fontSize: '3.5rem' }}>$28.8M ARR</span>
                                 </div>
                                 <p className="text-mono text-muted" style={{ marginTop: '1rem' }}>from a single customer</p>
                             </div>
@@ -593,7 +593,7 @@ const ValuationRationale: React.FC = () => {
                                 <div className="text-mono text-muted" style={{ fontSize: '0.7rem', letterSpacing: '0.1em' }}>CATEGORY MULTIPLES</div>
                             </div>
                             <div className="glass-panel" style={{ padding: '1rem 2rem', textAlign: 'center' }}>
-                                <div className="text-mono text-red" style={{ fontSize: '1.8rem', fontWeight: 700 }}>$14.4M</div>
+                                <div className="text-mono text-red" style={{ fontSize: '1.8rem', fontWeight: 700 }}>$28.8M</div>
                                 <div className="text-mono text-muted" style={{ fontSize: '0.7rem', letterSpacing: '0.1em' }}>ARR / SINGLE PLATFORM</div>
                             </div>
                         </div>

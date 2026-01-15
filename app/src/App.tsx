@@ -13,6 +13,8 @@ import SiteProtectedRoute from './components/SiteProtectedRoute';
 // These load on-demand when the route is visited, reducing initial bundle
 // =============================================================================
 
+const InvestorOnePager = lazy(() => import('./pages/investor/InvestorOnePager'));
+
 // Investor Deck Pages
 const OnePager = lazy(() => import('./pages/OnePager'));
 const BrandPack = lazy(() => import('./pages/BrandPack'));
@@ -125,6 +127,7 @@ function App() {
             <Route element={<SiteProtectedRoute><Layout /></SiteProtectedRoute>}>
               <Route path="/" element={<Landing />} />
               <Route path="/one-pager" element={<OnePager />} />
+              <Route path="/investor-delta/one-pager" element={<DeckPageWrapper deckId="investor-one-pager"><InvestorOnePager /></DeckPageWrapper>} />
               <Route path="/brand" element={<BrandPack />} />
               <Route path="/investor" element={<InvestorPack />} />
               <Route path="/investor-delta" element={<DeckPageWrapper deckId="investor-deck"><InvestorPackDelta /></DeckPageWrapper>} />

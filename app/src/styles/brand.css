@@ -2906,3 +2906,63 @@ select.input-field option:hover {
         gap: 1rem;
     }
 }
+
+/* PRINT STYLES FOR PDF EXPORT */
+@media print {
+    @page {
+        size: landscape;
+        margin: 0;
+    }
+
+    body {
+        overflow: visible !important;
+        height: auto !important;
+        background: var(--color-void) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Reset scroll container to stack slides vertically */
+    .brand-scroll-container {
+        display: block !important;
+        height: auto !important;
+        overflow: visible !important;
+        scroll-snap-type: none !important;
+    }
+
+    /* Force each section to be a full page */
+    .brand-section {
+        height: 100vh !important;
+        width: 100vw !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        overflow: hidden !important;
+        border: none !important;
+        position: relative !important;
+    }
+
+    /* Ensure overlay backgrounds print */
+    .brand-section::before,
+    .grid-bg-overlay {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Hide UI elements that shouldn't print */
+    .nav-indicators,
+    .nav-arrow,
+    .deck-progress-bar,
+    .back-link,
+    #cursor,
+    button {
+        display: none !important;
+    }
+
+    /* Ensure text colors are maintained */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}

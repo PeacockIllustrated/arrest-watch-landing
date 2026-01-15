@@ -214,12 +214,12 @@ const UberEconomics: React.FC = () => {
                                     </div>
                                     <div style={{ background: 'rgba(228,0,40,0.1)', padding: '1rem' }}>
                                         <div className="text-mono text-muted" style={{ fontSize: '0.7rem' }}>PRICE</div>
-                                        <div className="text-white" style={{ fontSize: '1.2rem', fontWeight: 600 }}>$6 / mo</div>
+                                        <div className="text-white" style={{ fontSize: '1.2rem', fontWeight: 600 }}>$12 / mo</div>
                                     </div>
                                 </div>
 
                                 <div style={{ marginBottom: '2rem' }}>
-                                    <div className="text-mono text-red text-glow" style={{ fontSize: '2rem', fontWeight: 700 }}>$14.4M</div>
+                                    <div className="text-mono text-red text-glow" style={{ fontSize: '2rem', fontWeight: 700 }}>$28.8M</div>
                                     <div className="text-mono text-muted" style={{ fontSize: '0.8rem' }}>ANNUAL COST</div>
                                 </div>
 
@@ -254,12 +254,12 @@ const UberEconomics: React.FC = () => {
 
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem' }}>
                                 <span className="text-white" style={{ fontSize: '1.2rem' }}>Live Monitoring</span>
-                                <span className="text-white" style={{ fontSize: '1.2rem' }}>$14.4M</span>
+                                <span className="text-white" style={{ fontSize: '1.2rem' }}>$28.8M</span>
                             </div>
 
                             <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '2rem', borderTop: '2px solid var(--color-alert-red)' }}>
                                 <span className="text-mono text-red" style={{ fontSize: '1.5rem', fontWeight: 700 }}>TOTAL ANNUAL COST</span>
-                                <span className="text-mono text-white" style={{ fontSize: '2rem', fontWeight: 700 }}>$17.4M</span>
+                                <span className="text-mono text-white" style={{ fontSize: '2rem', fontWeight: 700 }}>$31.8M</span>
                             </div>
                         </div>
                     </div>
@@ -276,7 +276,7 @@ const UberEconomics: React.FC = () => {
 
                         <div className="mobile-stack" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4rem', textAlign: 'center', width: '100%' }}>
                             <div style={{ textAlign: 'center', width: '100%' }}>
-                                <div className="text-mono text-green" style={{ fontSize: '3rem', fontWeight: 700 }}>$17.4M</div>
+                                <div className="text-mono text-green" style={{ fontSize: '3rem', fontWeight: 700 }}>$31.8M</div>
                                 <div className="text-mono text-muted">PILOT COST</div>
                             </div>
 

@@ -17,6 +17,14 @@ export interface Deck {
 export const DECKS: Deck[] = [
     // Investor Materials
     {
+        id: 'investor-one-pager',
+        title: 'INVESTOR ONE-PAGER',
+        route: '/investor-delta/one-pager',
+        category: 'investor',
+        description: 'A single-page overview of the thesis, buyers, market, and raise.',
+        status: 'LIVE'
+    },
+    {
         id: 'investor-deck',
         title: 'INVESTOR DECK',
         route: '/investor-delta',

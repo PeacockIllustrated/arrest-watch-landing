@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import MetricTicker from '../ui/MetricTicker';
+
 
 const Slide07_Pricing: React.FC = () => {
     return (
@@ -15,39 +15,48 @@ const Slide07_Pricing: React.FC = () => {
                 </div>
 
                 {/* Data Wall Grid */}
-                <div className="mobile-stack" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '2rem' }}>
+                <div className="mobile-stack" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '2rem' }}>
 
-                    {/* Col 1: Transactional */}
-                    <div className="glass-panel animate-fade-in-up" style={{ padding: '2rem', gridColumn: 'span 1' }}>
-                        <div className="text-mono text-muted" style={{ marginBottom: '2rem' }}>VERIFICATION</div>
-                        <MetricTicker value="$3-4" label="AVG / SEARCH" />
-                        <div className="text-mono text-muted" style={{ marginTop: '2rem', fontSize: '0.8rem', borderTop: '1px solid var(--color-grid)', paddingTop: '1rem' }}>
-                            BLENDED AVERAGE ACROSS TIERS
+                    {/* Col 1: Model Structure */}
+                    <div className="glass-panel animate-fade-in-up" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <div className="text-mono text-muted" style={{ marginBottom: '1.5rem' }}>CONTRACT STRUCTURE</div>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                            <div>
+                                <div className="text-white text-large" style={{ fontSize: '1.4rem' }}>Enterprise Contracts</div>
+                                <div className="text-muted text-mono" style={{ fontSize: '0.9rem' }}>BILLED ANNUALLY</div>
+                            </div>
+                            <div>
+                                <div className="text-white text-large" style={{ fontSize: '1.4rem' }}>Volume Based</div>
+                                <div className="text-muted text-mono" style={{ fontSize: '0.9rem' }}>ROLE & RISK DEPENDENT</div>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Col 2: Monitoring (Main Focus) */}
-                    <div className="glass-panel border-glow animate-fade-in-up" style={{ padding: '2rem', gridColumn: 'span 2', animationDelay: '0.1s' }}>
-                        <div className="text-mono text-red" style={{ marginBottom: '2rem' }}>CONTINUOUS MONITORING TIERS</div>
+                    {/* Col 2: PUPM Pricing */}
+                    <div className="glass-panel border-glow animate-fade-in-up" style={{ padding: '3rem', animationDelay: '0.1s', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
-                        <div className="mobile-stack" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '2rem' }}>
-                            <div className="mobile-border-none" style={{ borderRight: '1px solid var(--glass-border)' }}>
-                                <div className="text-white text-large" style={{ fontSize: '1.5rem' }}>Starter</div>
-                                <div className="text-mono text-muted">$3-$5 / mo</div>
+                        <div>
+                            <div className="text-mono text-red" style={{ marginBottom: '1rem' }}>PER USER / PER MONTH (PUPM)</div>
+                            <div style={{ fontSize: '5rem', fontWeight: 'bold', lineHeight: 1, letterSpacing: '-0.02em', background: 'linear-gradient(to bottom, #fff, #999)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                                $8 - $15
                             </div>
-                            <div className="mobile-border-none" style={{ borderRight: '1px solid var(--glass-border)' }}>
-                                <div className="text-white text-large" style={{ fontSize: '1.5rem' }}>Professional</div>
-                                <div className="text-mono text-muted">$7-$10 / mo</div>
-                            </div>
-                            <div>
-                                <div className="text-white text-large" style={{ fontSize: '1.5rem' }}>Enterprise</div>
-                                <div className="text-mono text-muted">$12-$20 / mo</div>
+                            <div className="text-mono text-muted" style={{ marginTop: '1rem' }}>
+                                TYPICAL PRICING RANGE
                             </div>
                         </div>
 
-                        <div className="text-mono text-white" style={{ marginTop: '3rem', padding: '1rem', background: 'rgba(255,255,255,0.05)', textAlign: 'center' }}>
-                            ENTERPRISE MINIMUMS: $1K - $5K / MONTH
+                        <div style={{ textAlign: 'right', borderLeft: '1px solid var(--glass-border)', paddingLeft: '3rem' }}>
+                            <div className="text-mono text-muted" style={{ marginBottom: '0.5rem' }}>BLENDED AVERAGE</div>
+                            <div className="text-red text-glow" style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>$12</div>
+                            <div className="text-mono text-white" style={{ fontSize: '0.9rem' }}>PUPM</div>
+
+                            <div className="text-muted text-mono" style={{ marginTop: '2rem', paddingTop: '1rem', borderTop: '1px dashed var(--glass-border)' }}>
+                                ANNUAL REV / USER
+                                <div className="text-white" style={{ fontSize: '1.2rem' }}>$144</div>
+                            </div>
                         </div>
+
                     </div>
 
                 </div>

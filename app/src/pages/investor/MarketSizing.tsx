@@ -354,7 +354,7 @@ const MarketSizing: React.FC = () => {
                                 </div>
                                 <div className="ms-som-divider"></div>
                                 <div>
-                                    <div className="text-huge text-red" style={{ fontSize: '3rem', lineHeight: 1 }}>$3.5M-$5.5M</div>
+                                    <div className="text-huge text-red" style={{ fontSize: '3rem', lineHeight: 1 }}>$6M-$9M</div>
                                     <div className="text-mono text-muted" style={{ marginTop: '0.5rem' }}>ARR</div>
                                 </div>
                             </div>
@@ -498,11 +498,11 @@ const MarketSizing: React.FC = () => {
                             animationDelay: '0.1s'
                         }}>
                             <div className="glass-panel" style={{ padding: '1.5rem', textAlign: 'center' }}>
-                                <div className="text-red text-mono" style={{ fontSize: '2rem', fontWeight: 'bold' }}>$175M+</div>
+                                <div className="text-red text-mono" style={{ fontSize: '2rem', fontWeight: 'bold' }}>$10.5B+</div>
                                 <div className="text-muted" style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}>Conservative SAM</div>
                             </div>
                             <div className="glass-panel" style={{ padding: '1.5rem', textAlign: 'center' }}>
-                                <div className="text-red text-mono" style={{ fontSize: '2rem', fontWeight: 'bold' }}>$200K</div>
+                                <div className="text-red text-mono" style={{ fontSize: '2rem', fontWeight: 'bold' }}>$300K</div>
                                 <div className="text-muted" style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}>Avg ACV</div>
                             </div>
                             <div className="glass-panel" style={{ padding: '1.5rem', textAlign: 'center' }}>

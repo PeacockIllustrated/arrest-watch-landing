@@ -303,7 +303,7 @@ const Landing: React.FC = () => {
                             </div>
                             <div className="flex-row" style={{ justifyContent: 'space-between', borderBottom: '1px solid var(--color-grid)', paddingBottom: '1rem', marginBottom: '1rem' }}>
                                 <span className="text-mono">TRUST-CRITICAL ROLES</span>
-                                <span className="text-mono text-red">50M+</span>
+                                <span className="text-mono text-red">73M+</span>
                             </div>
                             <div className="flex-row" style={{ justifyContent: 'space-between' }}>
                                 <span className="text-mono">EFFECTIVE POST-ACCESS VISIBILITY</span>
@@ -371,12 +371,12 @@ const Landing: React.FC = () => {
                                 For active workforce and fleet monitoring, with identity resolution and confidence gating.
                             </p>
                             <div className="text-center">
-                                <span className="text-large">$3.00 - $5.00</span>
-                                <span className="text-muted" style={{ fontSize: '0.8rem', display: 'block' }}>PER PERSON / MO (STARTER)*</span>
+                                <span className="text-large">$8.00 - $15.00</span>
+                                <span className="text-muted" style={{ fontSize: '0.8rem', display: 'block' }}>PER PERSON / MO (PUPM)*</span>
                             </div>
                             <div className="text-center" style={{ marginTop: '1.5rem' }}>
-                                <span className="text-large">$7.00 - $10.00</span>
-                                <span className="text-muted" style={{ fontSize: '0.8rem', display: 'block' }}>PER PERSON / MO (PRO)*</span>
+                                <span className="text-large">$12.00 AVG</span>
+                                <span className="text-muted" style={{ fontSize: '0.8rem', display: 'block' }}>BLENDED ENTERPRISE RATE*</span>
                             </div>
                         </div>
                     </div>

@@ -3,7 +3,7 @@ import React from 'react';
 const Slide02_Assumptions: React.FC = () => {
     const assumptions = [
         'Target customers (12 months): 6 enterprise accounts',
-        'ACV: $175k ARR',
+        'ACV: $300k ARR (Target Average)',
         'Annual contracts; paid upfront or net-30',
         'Sales motion: paid pilot → full contract',
         'Expansion minimal in Year 1 (upside only)'
@@ -57,7 +57,7 @@ const Slide02_Assumptions: React.FC = () => {
                             {/* Micro-callout */}
                             <div style={{ borderLeft: '3px solid var(--color-alert-red)', paddingLeft: '1rem' }}>
                                 <p className="text-mono text-white" style={{ fontSize: '0.95rem' }}>
-                                    This yields a credible <span className="text-red">$1M+ ARR</span> outcome.
+                                    This yields a credible <span className="text-red">$1.5M+ ARR</span> outcome.
                                 </p>
                             </div>
                         </div>

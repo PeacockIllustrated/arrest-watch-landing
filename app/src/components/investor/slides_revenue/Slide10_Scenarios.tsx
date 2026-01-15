@@ -42,11 +42,11 @@ const Slide10_Scenarios: React.FC = () => {
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <span className="text-mono text-muted" style={{ fontSize: '0.9rem' }}>Avg ACV</span>
-                                    <span className="text-mono text-white" style={{ fontSize: '0.95rem' }}>$150k</span>
+                                    <span className="text-mono text-white" style={{ fontSize: '0.95rem' }}>$200k</span>
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '0.5rem', borderTop: '1px solid rgba(51,51,51,0.5)' }}>
                                     <span className="text-mono text-muted" style={{ fontSize: '0.9rem' }}>ARR</span>
-                                    <span className="text-mono text-white" style={{ fontSize: '1rem', fontWeight: 600 }}>~$600k</span>
+                                    <span className="text-mono text-white" style={{ fontSize: '1rem', fontWeight: 600 }}>~$800k</span>
                                 </div>
                             </div>
                             <p className="text-muted" style={{ fontSize: '0.8rem', marginTop: '1rem', fontStyle: 'italic' }}>
@@ -66,11 +66,11 @@ const Slide10_Scenarios: React.FC = () => {
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <span className="text-mono text-muted" style={{ fontSize: '0.9rem' }}>Avg ACV</span>
-                                    <span className="text-mono text-white" style={{ fontSize: '0.95rem' }}>$225k</span>
+                                    <span className="text-mono text-white" style={{ fontSize: '0.95rem' }}>$300k</span>
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '0.5rem', borderTop: '1px solid rgba(51,51,51,0.5)' }}>
                                     <span className="text-mono text-muted" style={{ fontSize: '0.9rem' }}>ARR</span>
-                                    <span className="text-mono text-red text-glow" style={{ fontSize: '1.1rem', fontWeight: 700 }}>~$1.35M</span>
+                                    <span className="text-mono text-red text-glow" style={{ fontSize: '1.1rem', fontWeight: 700 }}>~$1.8M</span>
                                 </div>
                             </div>
                             <p className="text-muted" style={{ fontSize: '0.8rem', marginTop: '1rem', fontStyle: 'italic' }}>

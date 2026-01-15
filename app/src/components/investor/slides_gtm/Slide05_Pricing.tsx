@@ -2,9 +2,9 @@
 
 const Slide05_Pricing: React.FC = () => {
     const tiers = [
-        { tier: 'DESIGN PARTNER', acv: '$100k-$150k', desc: 'Co-development, early access, case study rights' },
-        { tier: 'CORE ENTERPRISE', acv: '$150k-$250k', desc: 'Full platform access, standard SLA, dedicated support' },
-        { tier: 'STRATEGIC PLATFORM', acv: '$300k+', desc: 'Custom integration, white-glove onboarding, executive alignment' },
+        { tier: 'DESIGN PARTNER', acv: '$150k-$250k', desc: 'Co-development, phased rollout, case study rights' },
+        { tier: 'CORE ENTERPRISE', acv: '$250k-$500k', desc: 'Full platform access, standard SLA, dedicated support' },
+        { tier: 'STRATEGIC PLATFORM', acv: '$500k+', desc: 'Custom integration, white-glove onboarding, executive alignment' },
     ];
 
     return (
@@ -86,7 +86,7 @@ const Slide05_Pricing: React.FC = () => {
                             TARGET AVERAGE CONTRACT VALUE - YEAR 1
                         </div>
                         <div className="text-mono text-red text-glow" style={{ fontSize: '4rem', fontWeight: 700, lineHeight: 1 }}>
-                            $175k
+                            $300k
                         </div>
                         <div className="text-mono text-white" style={{ fontSize: '1rem', marginTop: '0.5rem' }}>
                             ARR

@@ -117,71 +117,73 @@ export interface MarketSizingConfig {
 export const MARKET_SIZING_CONFIG: MarketSizingConfig = {
     thesis: {
         eyebrow: "MARKET SIZING",
-        headline: "We Size the Market From Where We Can Actually Sell",
-        subheadline: "We do not start with abstract global TAM.",
+        headline: "Real Demand, Real Budgets",
+        subheadline: "We do not rely on abstract global TAM. We size from verified US workforce segments that require continuous monitoring.",
         keyPoints: [
-            "We size the market from buyers who already make arrest-related decisions today, have budget authority, and feel the cost of false positives and stale data.",
-            "Our approach is serviceable-first, expandable-by-design."
+            "We size the market from buyers who already make arrest-related decisions today, have budget authority, and feel the cost of false positives.",
+            "Our approach is serviceable-first, focused on trust-critical US roles."
         ]
     },
 
     coreAssumption: {
-        eyebrow: "CORE ASSUMPTION",
-        headline: "Enterprise Decision Infrastructure",
-        description: "ArrestDelta is sold as enterprise decision infrastructure, not a per-check commodity.",
+        eyebrow: "PRICING MODEL",
+        headline: "Enterprise Subscription",
+        description: "ArrestDelta is sold as enterprise decision infrastructure with predictable annual billing.",
         bullets: [
-            "Enterprise contracts",
-            "Becomes embedded in core risk workflows",
-            "ACV expands with:\nSurface expansion: Coverage, Geography\nDepth expansion: Delta products, Workflow integration"
+            "Enterprise contracts, billed annually",
+            "Per user / per month (PUPM) pricing model",
+            "$8-$15 PUPM range (Average $12)"
         ]
     },
 
     sam: {
         eyebrow: "SERVICEABLE AVAILABLE MARKET (SAM)",
-        headline: "Near-Term Target",
+        headline: "Serviceable Market (US)",
         targetBuyerUniverse: {
-            title: "Target Buyer Universe (Year 1-3)",
-            description: "We focus initially on enterprises that:",
+            title: "Realistic US Buyers",
+            description: "We focus on regulated and high-trust segments in the US workforce (~72-75M users):",
             criteria: [
-                "Make ongoing arrest-related decisions",
-                "Already spend on background checks, monitoring, or internal review",
-                "Face legal or reputational exposure from false positives"
+                "Healthcare workers (~18M)",
+                "Government & law enforcement (~22M)",
+                "Education staff (~9M)",
+                "Mobility / delivery / drivers (~12-15M)",
+                "Other safety-critical roles (~10M)"
             ]
         },
         primarySegments: [
-            { id: "gig", name: "Gig & marketplace platforms" },
-            { id: "bgc", name: "Background screening providers (as customers/partners)" },
-            { id: "regulated", name: "Regulated enterprises with continuous risk review" }
+            { id: "healthcare", name: "Healthcare & Education Systems" },
+            { id: "gov", name: "Federal & State Agencies" },
+            { id: "mobility", name: "Mobility & Marketplace Platforms" }
         ],
         buyerCount: {
-            range: "~1,000-1,500",
-            footnote: "Directional estimate based on category counts across public company lists and known platform categories.",
-            geographicFocus: "Initial geographic focus: United States"
+            range: "~73M Users",
+            footnote: "Represents realistic US buyers we could sell into, even if not immediately targeted.",
+            geographicFocus: "Focus: United States"
         },
         pricing: {
-            acvRange: "$150k-$250k",
-            midpoint: "$175k ARR",
-            anchoringNote: "Anchored to existing enterprise spend on screening, monitoring, and manual review workflows."
+            acvRange: "$144",
+            midpoint: "$144 / Year",
+            anchoringNote: "Based on $12 PUPM blended enterprise average."
         },
         calculation: {
-            formula: "1,000 enterprises × $175k ACV",
-            result: "$175M",
-            contextNote: "This is the near-term US-focused serviceable market."
+            formula: "73M users × $144 / year",
+            result: "~$10.5B",
+            contextNote: "Total Serviceable Available Market (US)."
         }
     },
 
     som: {
         eyebrow: "SERVICEABLE OBTAINABLE MARKET (SOM)",
-        headline: "First 36 Months",
+        headline: "Initial Target Focus",
         penetrationAssumption: {
-            title: "Conservative Capture Assumption",
-            rate: "2-3% penetration of SAM over 3 years"
+            title: "Target Customers (5-7 Year Horizon)",
+            rate: "Enterprise Focus: Mobility, Healthcare, Agencies, & Large Orgs (>5k)"
         },
         range: {
-            customers: "20-30 enterprise customers",
-            arr: "$3.5M-$5.5M ARR"
+            customers: "1,200 customers",
+            arr: "~$300k ACV"
         },
-        alignment: "This aligns directly with our GTM plan and revenue model."
+        alignment: "Targeting ~1,000-1,500 enterprises. SOM estimate: ~$360M."
     },
 
     expansionLevers: [
@@ -191,16 +193,16 @@ export const MARKET_SIZING_CONFIG: MarketSizingConfig = {
             title: "Customer Expansion",
             bullets: [
                 "More enterprises with Trust & Safety, Risk, or Compliance exposure",
-                "International expansion beyond the US"
+                "Phased rollout within large organizations"
             ]
         },
         {
             id: "product",
             number: "2",
-            title: "Product Expansion (\"Delta Stack\")",
+            title: "Product Expansion",
             bullets: [
                 "ArrestDelta is the first product.",
-                "Natural adjacencies: Custody status changes, Court outcomes, Charge disposition, Warrant activity, Expungements and corrections"
+                "Adjacencies: Court outcomes, Charge disposition, Warrant activity, Expungements"
             ],
             note: "Each expands ACV and wallet share."
         },
@@ -213,7 +215,7 @@ export const MARKET_SIZING_CONFIG: MarketSizingConfig = {
                 "Confidence scores inform automation",
                 "ACV grows with dependency"
             ],
-            note: "This supports mid-six-figure and seven-figure contracts over time."
+            note: "Supports deeper embedding and higher retention."
         },
         {
             id: "platform",
@@ -224,39 +226,39 @@ export const MARKET_SIZING_CONFIG: MarketSizingConfig = {
                 "Risk platforms",
                 "Regulated service vendors"
             ],
-            note: "Distribution through partners increases reach without linear sales headcount."
+            note: "Distribution through partners increases reach."
         }
     ],
 
     tao: {
-        eyebrow: "TOTAL ADDRESSABLE OPPORTUNITY",
-        headline: "Directional, Not Inflated",
-        disclaimer: "We do not present a single \"$XXB TAM\" number.",
+        eyebrow: "TOTAL ADDRESSABLE MARKET (TAM)",
+        headline: "US Workforce Opportunity",
+        disclaimer: "Total Addressable Market based on full US employed population.",
         considerations: [
-            "Global enterprise buyers",
-            "Multiple Delta products",
-            "Deep workflow integration"
+            "~160M employed individuals (US)",
+            "Universal coverage potential",
+            "$144 annual revenue per user"
         ],
-        conclusion: "The opportunity supports multi-billion-dollar potential if ArrestDelta becomes the standard layer for arrest-related change intelligence."
+        conclusion: "160M users × $144 / year = ~$23.0B TAM"
     },
 
     ventureScale: {
         eyebrow: "VENTURE SCALE",
-        headline: "Why This Is Venture-Scale",
+        headline: "Value Drivers",
         attributes: [
-            "High ACV",
+            "High ACV ($250k-$500k blended early-stage)",
             "Strong expansion dynamics",
             "Infrastructure-level embedding",
             "Durable customer relationships",
-            "Clear path from $1M → $10M → $100M ARR"
+            "Clear path to market leadership"
         ],
-        closingStatement: "This is not a volume business.",
-        positioning: "It is a trust-and-decision business, where accuracy compounds and switching costs increase over time."
+        closingStatement: "This is a trust-and-decision business.",
+        positioning: "Accuracy compounds and switching costs increase over time."
     },
 
     investorSummary: {
         eyebrow: "INVESTOR SUMMARY",
-        summary: "We are targeting a conservative $175M serviceable market today, with clear expansion paths that support a multi-billion-dollar opportunity as ArrestDelta becomes embedded decision infrastructure."
+        summary: "Targeting a ~$10.5B serviceable US market with a clear path to ~$360M SOM via high-ACV enterprise contracts."
     },
 
     slideNavTitles: [
