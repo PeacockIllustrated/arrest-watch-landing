@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import NavigationArrows from '../components/NavigationArrows';
 import Slide01_Problem from '../components/investor/slides_delta/Slide01_Problem';
 import Slide02_Solution from '../components/investor/slides_delta/Slide02_Solution';
+import Slide02b_MarketSize from '../components/investor/slides_delta/Slide02b_MarketSize';
 import Slide03_Product from '../components/investor/slides_delta/Slide03_Product';
 import Slide04_Customers from '../components/investor/slides_delta/Slide04_Customers';
 import Slide05_MarketSize from '../components/investor/slides_delta/Slide05_MarketSize';
@@ -18,7 +19,7 @@ import Slide15_Closing from '../components/investor/slides_delta/Slide15_Closing
 import { usePageTitle } from '../hooks/usePageTitle';
 
 const SLIDE_TITLES = [
-    "Problem", "Solution", "Product", "Customers", "Market",
+    "Problem", "Solution", "Market", "Product", "Customers", "Tech",
     "Model", "Pricing", "Advantage", "Traction", "Platform",
     "Leader", "Valuation", "Raise", "Timing", "Close"
 ];
@@ -101,6 +102,7 @@ const InvestorPackDelta: React.FC = () => {
             <div className="brand-scroll-container" id="scrollContainer" ref={scrollContainerRef}>
                 <Slide01_Problem />
                 <Slide02_Solution />
+                <Slide02b_MarketSize />
                 <Slide03_Product />
                 <Slide04_Customers />
                 <Slide05_MarketSize />

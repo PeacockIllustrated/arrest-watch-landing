@@ -41,6 +41,10 @@ const GTMPackDelta = lazy(() => import('./pages/GTMPackDelta'));
 const RevenueModelPack = lazy(() => import('./pages/RevenueModelPack'));
 const ComponentsPage = lazy(() => import('./pages/ComponentsPage'));
 
+// Print Pages
+const InvestorOnePagerA4 = lazy(() => import('./pages/print/InvestorOnePagerA4.tsx'));
+
+
 // Deck Page Wrapper for tracking read status
 import DeckPageWrapper from './components/deckhub/DeckPageWrapper';
 
@@ -155,6 +159,7 @@ function App() {
             </Route>
 
             {/* Public Pages (no Layout wrapper) */}
+            <Route path="/print/investor-one-pager-a4" element={<InvestorOnePagerA4 />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
 
