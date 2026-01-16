@@ -16,7 +16,7 @@ const Search: React.FC = () => {
         <div>
             <PageHeader
                 title="Search"
-                description="Find people, vehicles, locations, and cases across all data sources"
+                description="Find personnel and entities across your monitored watchlists"
             />
 
             {/* Search Input */}

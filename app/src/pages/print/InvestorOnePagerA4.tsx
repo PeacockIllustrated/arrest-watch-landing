@@ -227,8 +227,11 @@ const InvestorOnePagerA4: React.FC = () => {
             {/* 1) Top Band: Header & Summary */}
             <div className="col-span-12 header-section">
                 <div style={{ flex: 1 }}>
-                    <h1 className="text-white">ARREST<span className="text-red">DELTA</span> <span style={{ opacity: 0.5, fontWeight: 300 }}>| INVESTOR ONE-PAGER</span></h1>
-                    <p style={{ marginTop: '8px', fontSize: '10pt', color: '#fff', maxWidth: '85%' }}>
+                    <h1 className="text-white" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        <span>ARREST<span className="text-red">DELTA</span></span>
+                        <span style={{ fontSize: '18pt', opacity: 0.5, fontWeight: 300, letterSpacing: '0.05em' }}>INVESTOR ONE-PAGER</span>
+                    </h1>
+                    <p style={{ marginTop: '12px', fontSize: '10pt', color: '#fff', maxWidth: '85%' }}>
                         ArrestDelta is enterprise infrastructure for verified arrest intelligence, replacing false positives and litigation risk with confidence-first decisioning.
                     </p>
                 </div>
@@ -386,23 +389,23 @@ const InvestorOnePagerA4: React.FC = () => {
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <span className="text-muted" style={{ fontSize: '7pt' }}>TAM</span>
-                                <span className="text-white" style={{ fontWeight: 700 }}>Multi-$B</span>
+                                <span className="text-white" style={{ fontWeight: 700 }}>~$23.0B</span>
                             </div>
-                            <p style={{ fontSize: '6.5pt' }}>Enterprise trust & compliance infra</p>
+                            <p style={{ fontSize: '6.5pt' }}>160M US workforce users × $144/yr</p>
                         </div>
                         <div style={{ borderTop: '1px solid #333', paddingTop: '4px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <span className="text-muted" style={{ fontSize: '7pt' }}>SAM</span>
-                                <span className="text-white" style={{ fontWeight: 700 }}>~$175m</span>
+                                <span className="text-white" style={{ fontWeight: 700 }}>~$10.5B</span>
                             </div>
-                            <p style={{ fontSize: '6.5pt' }}>Initial wedge (platforms w/ direct impact)</p>
+                            <p style={{ fontSize: '6.5pt' }}>~73M High-Risk Users (Healthcare, Gov, Mobility)</p>
                         </div>
                         <div style={{ borderTop: '1px solid #333', paddingTop: '4px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <span className="text-muted" style={{ fontSize: '7pt' }}>SOM</span>
-                                <span className="text-white" style={{ fontWeight: 700 }}>~1,500</span>
+                                <span className="text-white" style={{ fontWeight: 700 }}>~$360M</span>
                             </div>
-                            <p style={{ fontSize: '6.5pt' }}>Target buyers over time</p>
+                            <p style={{ fontSize: '6.5pt' }}>Target buyers (~1,200 Customers)</p>
                         </div>
                     </div>
                 </div>
@@ -417,7 +420,7 @@ const InvestorOnePagerA4: React.FC = () => {
                     </ul>
                     <div style={{ background: 'rgba(255,255,255,0.05)', padding: '8px', textAlign: 'center' }}>
                         <div style={{ fontSize: '7pt', color: '#888' }}>TARGET ACV AT SCALE</div>
-                        <div style={{ fontSize: '14pt', fontWeight: 800, color: 'white' }}>~$175k+</div>
+                        <div style={{ fontSize: '14pt', fontWeight: 800, color: 'white' }}>~$300k+</div>
                     </div>
                 </div>
 
@@ -431,7 +434,7 @@ const InvestorOnePagerA4: React.FC = () => {
                         <li className="text-white">Strong inbound (compliance)</li>
                     </ul>
                     <p style={{ fontSize: '6.5pt', fontStyle: 'italic', borderTop: '1px solid #333', paddingTop: '4px' }}>
-                        Pre-revenue by design. Round converts pilots to contracts once verification proven.
+                        Pre-revenue. Round converts pilots to contracts once verification proven.
                     </p>
                 </div>
             </div>
@@ -490,11 +493,9 @@ const InvestorOnePagerA4: React.FC = () => {
 
             {/* 5) Footer: Raise */}
             <div className="col-span-12 footer-strip">
-                <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '4rem', alignItems: 'center' }}>
                     <div>
-                        <span className="text-red" style={{ fontSize: '9pt', fontWeight: 800, letterSpacing: '0.05em' }}>PRE-SEED RAISE</span>
-                    </div>
-                    <div>
+                        <span className="text-red" style={{ fontSize: '9pt', fontWeight: 800, letterSpacing: '0.05em', marginRight: '1rem' }}>PRE-SEED RAISE</span>
                         <span style={{ fontSize: '14pt', fontWeight: 700, color: 'white', marginRight: '8px' }}>$1m</span>
                         <span style={{ fontSize: '8pt', color: '#888' }}>at $15m Pre-Money</span>
                     </div>

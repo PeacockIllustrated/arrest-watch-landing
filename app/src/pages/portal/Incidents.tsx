@@ -32,13 +32,7 @@ export interface Incident {
 // TODO: Connect to Supabase table `incidents`
 // =============================================================================
 
-const mockIncidents: Incident[] = [
-    { id: 'inc-001', employee_id: 'emp-001', employee_name: 'John Michael Smith', type: 'arrest', severity: 'critical', status: 'open', title: 'DUI Arrest - Miami-Dade County', description: 'Subject arrested for driving under the influence during routine traffic stop.', location: 'Miami-Dade County, FL', coordinates: { lat: 25.7617, lng: -80.1918 }, created_at: '2026-01-01T19:20:00Z', updated_at: '2026-01-01T19:20:00Z' },
-    { id: 'inc-002', employee_id: 'emp-002', employee_name: 'Jane Anne Doe', type: 'booking', severity: 'high', status: 'acknowledged', title: 'Booking Record Found', description: 'New booking record detected in Orange County jail system.', location: 'Orange County, FL', coordinates: { lat: 28.5383, lng: -81.3792 }, created_at: '2026-01-01T15:30:00Z', updated_at: '2026-01-01T16:00:00Z' },
-    { id: 'inc-003', employee_id: 'emp-004', employee_name: 'Maria Garcia', type: 'warrant', severity: 'critical', status: 'investigating', title: 'Active Warrant Detected', description: 'Outstanding warrant found during routine background check.', location: 'Jacksonville, FL', coordinates: { lat: 30.3322, lng: -81.6557 }, created_at: '2025-12-30T10:00:00Z', updated_at: '2025-12-31T14:00:00Z' },
-    { id: 'inc-004', employee_id: 'emp-001', employee_name: 'John Michael Smith', type: 'traffic_violation', severity: 'medium', status: 'resolved', title: 'Speeding Violation', description: 'Speeding violation recorded in Broward County.', location: 'Broward County, FL', coordinates: { lat: 26.1224, lng: -80.1373 }, created_at: '2025-12-15T08:45:00Z', updated_at: '2025-12-20T10:00:00Z' },
-    { id: 'inc-005', employee_id: 'emp-003', employee_name: 'Robert James Wilson', type: 'background_flag', severity: 'low', status: 'closed', title: 'Expired Certification', description: 'Background check flagged expired safety certification.', location: 'Tampa, FL', coordinates: { lat: 27.9506, lng: -82.4572 }, created_at: '2025-11-01T09:00:00Z', updated_at: '2025-11-05T16:00:00Z' },
-];
+const mockIncidents: Incident[] = [];
 
 // =============================================================================
 // CONFIGURATION

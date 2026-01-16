@@ -97,44 +97,17 @@ const Icons = {
     ),
 };
 
-// Navigation groups aligned with MVP structure
+// Navigation groups aligned with MVP structure - Phase 0 Uber Demo
 const navGroups: NavGroup[] = [
     {
-        title: 'Core',
+        title: '', // Flattened for Phase 0
         items: [
             { label: 'Dashboard', path: '/portal/dashboard', icon: <Icons.Dashboard /> },
-            { label: 'Employees', path: '/portal/employees', icon: <Icons.Employees /> },
-            { label: 'Incidents', path: '/portal/incidents', icon: <Icons.Incidents /> },
+            { label: 'Roster', path: '/portal/employees', icon: <Icons.Employees /> },
             { label: 'Alerts', path: '/portal/alerts', icon: <Icons.Alerts /> },
-            { label: 'Cases', path: '/portal/cases', icon: <Icons.Cases /> },
-        ],
-    },
-    {
-        title: 'Investigation',
-        items: [
-            { label: 'Database Search', path: '/portal/database-search', icon: <Icons.DatabaseSearch /> },
-            { label: 'Mugshot Search', path: '/portal/mugshot-search', icon: <Icons.MugshotSearch /> },
-        ],
-    },
-    {
-        title: 'Risk & Compliance',
-        items: [
-            { label: 'Risk Assessment', path: '/portal/risk-assessment', icon: <Icons.RiskAssessment /> },
-            { label: 'Audit & Compliance', path: '/portal/audit', icon: <Icons.Audit /> },
-        ],
-    },
-    {
-        title: 'Reporting',
-        items: [
-            { label: 'Reports', path: '/portal/reports', icon: <Icons.Reports /> },
-        ],
-    },
-    {
-        title: 'System',
-        items: [
-            { label: 'Integrations', path: '/portal/integrations', icon: <Icons.Integrations /> },
-            { label: 'Billing', path: '/portal/billing', icon: <Icons.Billing /> },
-            { label: 'Settings', path: '/portal/settings', icon: <Icons.Settings /> },
+            { label: 'Source evidence', path: '/portal/database-search', icon: <Icons.DatabaseSearch /> },
+            { label: 'Audit trail', path: '/portal/audit', icon: <Icons.Audit /> },
+            { label: 'Source health', path: '/portal/integrations', icon: <Icons.Integrations /> },
         ],
     },
 ];
@@ -215,8 +188,9 @@ export const PortalSidebar: React.FC<PortalSidebarProps> = ({ onClose }) => {
 
             {/* Navigation */}
             <nav style={{ flex: 1, overflowY: 'auto', padding: '12px 0' }}>
-                {navGroups.map((group) => (
-                    <div key={group.title} style={{ marginBottom: '8px' }}>
+                {navGroups.map((group, groupIndex) => (
+                    <div key={groupIndex} style={{ marginBottom: '8px' }}>
+                        {/* Phase 0: Hidden headers
                         <div
                             style={{
                                 padding: '8px 20px 4px',
@@ -229,6 +203,7 @@ export const PortalSidebar: React.FC<PortalSidebarProps> = ({ onClose }) => {
                         >
                             {group.title}
                         </div>
+                        */}
                         {group.items.map((item) => {
                             const active = isActive(item.path);
                             return (

@@ -21,11 +21,7 @@ interface MugshotMatch {
 // TODO: Connect to facial recognition service
 // =============================================================================
 
-const mockMatches: MugshotMatch[] = [
-    { id: 'match-001', name: 'John Michael Smith', confidence: 94.5, dob: '1985-03-15', last_known_address: 'Miami, FL', arrest_count: 3, last_arrest_date: '2026-01-01' },
-    { id: 'match-002', name: 'John M. Smithson', confidence: 78.2, dob: '1983-07-22', last_known_address: 'Orlando, FL', arrest_count: 1, last_arrest_date: '2023-11-15' },
-    { id: 'match-003', name: 'Jonathan Smith', confidence: 65.8, dob: '1987-01-10', last_known_address: 'Tampa, FL', arrest_count: 0, last_arrest_date: null },
-];
+const mockMatches: MugshotMatch[] = [];
 
 // =============================================================================
 // COMPONENT

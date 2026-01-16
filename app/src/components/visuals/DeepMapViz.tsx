@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback, useContext } from 'react';
 
 // Import the counties SVG as a raw URL
 import usaCountiesSvg from '../../assets/Usa_counties_large.svg';
 import { COUNTY_ID_TO_NAME } from '../../assets/county_map';
+import DemoSimContext from '../../context/DemoSimContext';
 
 // Types for data binding (ready for real data integration)
 export interface CountyData {
@@ -62,6 +63,9 @@ const DeepMapViz: React.FC<DeepMapVizProps> = ({
     stateData: _stateData,
     countyData: _countyData,
 }) => {
+    // Consume DemoSim context (optional - may not be available in all contexts)
+    const demoSim = useContext(DemoSimContext);
+
     // Core state
     const [currentLevel, setCurrentLevel] = useState<ZoomLevel>('country');
     const [selectedState, setSelectedState] = useState<string | null>(null);
@@ -86,6 +90,44 @@ const DeepMapViz: React.FC<DeepMapVizProps> = ({
     const svgContainerRef = useRef<HTMLDivElement>(null);
     const svgRef = useRef<SVGSVGElement | null>(null);
     const [svgLoaded, setSvgLoaded] = useState(false);
+
+    // --- PULSE AND HEALTH EFFECTS (from DemoSim context) ---
+
+    // Pulse effect - trigger animation on county when activePulse changes
+    useEffect(() => {
+        if (!demoSim?.activePulse || !svgRef.current) return;
+
+        const { jurisdictionId } = demoSim.activePulse;
+        const countyPath = svgRef.current.querySelector(`path[id="${jurisdictionId}"]`);
+
+        if (countyPath) {
+            // Apply pulse attribute
+            countyPath.setAttribute('data-pulsing', 'true');
+
+            // Remove after animation completes (~1200ms for 3 cycles at 0.4s each)
+            const timeout = setTimeout(() => {
+                countyPath.removeAttribute('data-pulsing');
+            }, 1200);
+
+            return () => clearTimeout(timeout);
+        }
+    }, [demoSim?.activePulse]);
+
+    // Health overlay effect - apply health state to county paths
+    useEffect(() => {
+        if (!demoSim?.countyHealth || !svgRef.current) return;
+
+        Object.entries(demoSim.countyHealth).forEach(([jurisdictionId, health]) => {
+            const countyPath = svgRef.current?.querySelector(`path[id="${jurisdictionId}"]`);
+            if (countyPath) {
+                if (health.state === 'healthy') {
+                    countyPath.removeAttribute('data-health');
+                } else {
+                    countyPath.setAttribute('data-health', health.state);
+                }
+            }
+        });
+    }, [demoSim?.countyHealth]);
 
     // --- HELPER FUNCTIONS ---
 
@@ -811,6 +853,21 @@ const DeepMapViz: React.FC<DeepMapVizProps> = ({
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
+}
+@keyframes countyPulse {
+    0% { fill: var(--accent, #E40028) !important; opacity: 1; }
+    50% { fill: var(--accent, #E40028) !important; opacity: 0.4; }
+    100% { fill: var(--accent, #E40028) !important; opacity: 1; }
+}
+path[data-pulsing="true"] {
+    animation: countyPulse 0.4s ease-in-out 3;
+    fill: var(--accent, #E40028) !important;
+}
+path[data-health="degraded"] {
+    fill: rgba(255, 165, 0, 0.3) !important;
+}
+path[data-health="down"] {
+    fill: rgba(100, 100, 100, 0.2) !important;
 }
                 
 .deep-map-container {

@@ -271,7 +271,7 @@ const InvestorOnePager: React.FC = () => {
                         ))}
                     </div>
                     <p className="text-muted reveal-text" style={{ marginTop: '1.5rem', fontStyle: 'italic', transitionDelay: '0.4s' }}>
-                        Pre-revenue by design. This round converts pilots into contracts once verification accuracy is proven.
+                        Pre-revenue. This round converts pilots into contracts once verification accuracy is proven.
                     </p>
                 </div>
             </section>

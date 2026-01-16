@@ -13,11 +13,7 @@ interface Case {
 }
 
 // Mock data
-const mockCases: Case[] = [
-    { id: 'c1', name: 'Operation Sunrise', status: 'active', entity_count: 12, alert_count: 5, created_at: '2025-11-01T10:00:00Z', updated_at: '2026-01-01T18:00:00Z' },
-    { id: 'c2', name: 'Fleet Vehicle Monitoring', status: 'open', entity_count: 45, alert_count: 2, created_at: '2025-10-15T14:00:00Z', updated_at: '2025-12-30T09:00:00Z' },
-    { id: 'c3', name: 'Compliance Audit Q4', status: 'closed', entity_count: 8, alert_count: 0, created_at: '2025-09-01T11:00:00Z', updated_at: '2025-12-31T16:00:00Z' },
-];
+const mockCases: Case[] = [];
 
 const statusConfig: Record<string, { variant: 'success' | 'warning' | 'default'; label: string }> = {
     open: { variant: 'warning', label: 'Open' },
