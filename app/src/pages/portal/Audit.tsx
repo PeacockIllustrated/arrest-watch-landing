@@ -1,285 +1,467 @@
 import React, { useState } from 'react';
-import { PageHeader, Card, CardHeader, CardBody, Badge, Button, Input, EmptyState } from '../../components/ui';
-import { CheckIcon, EditIcon, XIcon, EyeIcon, DocumentIcon, UserIcon, BoltIcon, ListIcon } from '../../components/portal/Icons';
+import { useNavigate } from 'react-router-dom';
+import { PageHeader, Card, CardHeader, CardBody, Badge, EmptyState } from '../../components/ui';
+import { usePageTitle } from '../../hooks/usePageTitle';
+import { useDemoSim } from '../../context/DemoSimContext';
+import { JURISDICTION_MAP } from '../../lib/demo/demoJurisdictions';
+import type { AuditEntry, AuditActionType } from '../../lib/contracts/pipeline';
 
 // =============================================================================
-// TYPES - Ready for Supabase integration
+// AUDIT TRAIL - Phase 4 "Black Box" Flight Recorder
 // =============================================================================
 
-type AuditAction = 'create' | 'update' | 'delete' | 'view' | 'export' | 'login' | 'logout' | 'assign' | 'escalate';
-type AuditTarget = 'employee' | 'incident' | 'alert' | 'case' | 'report' | 'risk_factor' | 'user' | 'settings';
+type ActorFilter = 'all' | 'system' | 'human';
 
-export interface AuditLogEntry {
-    id: string;
-    timestamp: string;
-    actor_id: string;
-    actor_name: string;
-    actor_email: string;
-    action: AuditAction;
-    target_type: AuditTarget;
-    target_id: string;
-    target_name: string;
-    metadata: Record<string, unknown>;
-    ip_address: string;
+// Format relative time
+function formatRelativeTime(isoString: string): string {
+    const diff = Date.now() - new Date(isoString).getTime();
+    const seconds = Math.floor(diff / 1000);
+    if (seconds < 60) return 'Just now';
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `${minutes}m ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h ago`;
+    const days = Math.floor(hours / 24);
+    return `${days}d ago`;
 }
 
-// =============================================================================
-// MOCK DATA - Replace with Supabase query
-// TODO: Connect to Supabase table `audit_logs`
-// =============================================================================
+// Get actor badge colour
+function getActorBadgeVariant(actorType: 'system' | 'human'): 'default' | 'accent' {
+    return actorType === 'system' ? 'default' : 'accent';
+}
 
-const mockAuditLogs: AuditLogEntry[] = [
-    { id: 'log-001', timestamp: '2026-01-02T10:30:00Z', actor_id: 'user-001', actor_name: 'Jane Admin', actor_email: 'jane@company.com', action: 'update', target_type: 'employee', target_id: 'emp-001', target_name: 'John Michael Smith', metadata: { field: 'risk_level', old_value: 'medium', new_value: 'high' }, ip_address: '192.168.1.100' },
-    { id: 'log-002', timestamp: '2026-01-02T10:15:00Z', actor_id: 'system', actor_name: 'System', actor_email: 'system@arrestdelta.com', action: 'create', target_type: 'incident', target_id: 'inc-001', target_name: 'DUI Arrest - Miami-Dade County', metadata: { source: 'automated_scan' }, ip_address: '0.0.0.0' },
-    { id: 'log-003', timestamp: '2026-01-02T09:45:00Z', actor_id: 'user-002', actor_name: 'Bob Analyst', actor_email: 'bob@company.com', action: 'export', target_type: 'report', target_id: 'rpt-001', target_name: 'Weekly Activity Summary', metadata: { format: 'PDF' }, ip_address: '192.168.1.105' },
-    { id: 'log-004', timestamp: '2026-01-02T09:30:00Z', actor_id: 'user-001', actor_name: 'Jane Admin', actor_email: 'jane@company.com', action: 'assign', target_type: 'case', target_id: 'case-001', target_name: 'Operation Sunrise', metadata: { assigned_to: 'Bob Analyst' }, ip_address: '192.168.1.100' },
-    { id: 'log-005', timestamp: '2026-01-02T09:00:00Z', actor_id: 'user-003', actor_name: 'Alice Manager', actor_email: 'alice@company.com', action: 'login', target_type: 'user', target_id: 'user-003', target_name: 'Alice Manager', metadata: { method: 'SSO' }, ip_address: '192.168.1.110' },
-    { id: 'log-006', timestamp: '2026-01-01T18:00:00Z', actor_id: 'user-001', actor_name: 'Jane Admin', actor_email: 'jane@company.com', action: 'escalate', target_type: 'incident', target_id: 'inc-001', target_name: 'DUI Arrest - Miami-Dade County', metadata: { reason: 'Critical severity' }, ip_address: '192.168.1.100' },
-    { id: 'log-007', timestamp: '2026-01-01T17:30:00Z', actor_id: 'user-002', actor_name: 'Bob Analyst', actor_email: 'bob@company.com', action: 'view', target_type: 'employee', target_id: 'emp-004', target_name: 'Maria Garcia', metadata: {}, ip_address: '192.168.1.105' },
-    { id: 'log-008', timestamp: '2026-01-01T16:00:00Z', actor_id: 'user-001', actor_name: 'Jane Admin', actor_email: 'jane@company.com', action: 'update', target_type: 'risk_factor', target_id: 'rf-001', target_name: 'Recent Arrest', metadata: { field: 'weight', old_value: 90, new_value: 95 }, ip_address: '192.168.1.100' },
-];
-
-// =============================================================================
-// ICONS - On-brand SVG icons for actions
-// =============================================================================
-
-const ActionIcons: Record<AuditAction, React.ReactNode> = {
-    create: <CheckIcon size={12} />,
-    update: <EditIcon size={12} />,
-    delete: <XIcon size={12} />,
-    view: <EyeIcon size={12} />,
-    export: <DocumentIcon size={12} />,
-    login: <CheckIcon size={12} />,
-    logout: <XIcon size={12} />,
-    assign: <UserIcon size={12} />,
-    escalate: <BoltIcon size={12} />,
-};
-
-// =============================================================================
-// CONFIGURATION
-// =============================================================================
-
-const actionConfig: Record<AuditAction, { label: string; color: string }> = {
-    create: { label: 'Created', color: 'var(--success)' },
-    update: { label: 'Updated', color: 'var(--info)' },
-    delete: { label: 'Deleted', color: 'var(--danger)' },
-    view: { label: 'Viewed', color: 'var(--text-muted)' },
-    export: { label: 'Exported', color: 'var(--warning)' },
-    login: { label: 'Logged In', color: 'var(--success)' },
-    logout: { label: 'Logged Out', color: 'var(--text-muted)' },
-    assign: { label: 'Assigned', color: 'var(--info)' },
-    escalate: { label: 'Escalated', color: 'var(--danger)' },
-};
-
-const targetLabels: Record<AuditTarget, string> = {
-    employee: 'Employee',
-    incident: 'Incident',
-    alert: 'Alert',
-    case: 'Case',
-    report: 'Report',
-    risk_factor: 'Risk Factor',
-    user: 'User',
-    settings: 'Settings',
-};
-
-// =============================================================================
-// COMPONENT
-// =============================================================================
+// Get action badge colour
+function getActionBadgeColour(actionType: AuditActionType): { bg: string; fg: string } {
+    switch (actionType) {
+        case 'snapshot_captured':
+        case 'record_parsed':
+            return { bg: 'var(--info-muted)', fg: 'var(--info)' };
+        case 'diff_computed':
+        case 'confidence_scored':
+            return { bg: 'var(--warning-muted)', fg: 'var(--warning)' };
+        case 'event_emitted':
+            return { bg: 'var(--accent-muted)', fg: 'var(--accent)' };
+        case 'viewed':
+            return { bg: 'var(--bg-elevated)', fg: 'var(--text-secondary)' };
+        case 'reviewed':
+            return { bg: 'var(--success-muted)', fg: 'var(--success)' };
+        case 'escalated':
+            return { bg: 'var(--danger-muted)', fg: 'var(--danger)' };
+        default:
+            return { bg: 'var(--bg-elevated)', fg: 'var(--text-muted)' };
+    }
+}
 
 const Audit: React.FC = () => {
-    const [selectedAction, setSelectedAction] = useState<AuditAction | 'all'>('all');
-    const [searchQuery, setSearchQuery] = useState('');
+    usePageTitle('Audit trail');
+    const navigate = useNavigate();
+    const sim = useDemoSim();
 
-    const filteredLogs = mockAuditLogs.filter((log) => {
-        if (selectedAction !== 'all' && log.action !== selectedAction) return false;
-        if (searchQuery && !log.actor_name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-            !log.target_name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+    const [actorFilter, setActorFilter] = useState<ActorFilter>('all');
+    const [expandedEntryId, setExpandedEntryId] = useState<string | null>(null);
+
+    // Filter audit entries
+    const filteredAudit = sim.audit.filter((entry) => {
+        if (actorFilter !== 'all' && entry.actor.actorType !== actorFilter) return false;
         return true;
     });
+
+    // Calculate KPIs
+    const systemCount = sim.audit.filter((e) => e.actor.actorType === 'system').length;
+    const humanCount = sim.audit.filter((e) => e.actor.actorType === 'human').length;
+    const latestEntry = sim.audit[0];
+
+    // Get county name
+    const getCountyName = (jurisdictionId: string): string => {
+        return JURISDICTION_MAP[jurisdictionId]?.displayName || jurisdictionId;
+    };
+
+    // Handle row click - pulse the county and expand/collapse
+    const handleRowClick = (entry: AuditEntry) => {
+        sim.pulse(entry.jurisdictionId);
+        setExpandedEntryId(expandedEntryId === entry.auditId ? null : entry.auditId);
+    };
+
+    // Navigate to Source Evidence with event
+    const handleViewEvent = (_eventId: string, jurisdictionId: string) => {
+        sim.pulse(jurisdictionId);
+        navigate('/portal/database-search');
+    };
+
+    // Truncate hash for display
+    const truncateHash = (hash: string | undefined): string => {
+        if (!hash) return 'GENESIS';
+        return hash.slice(0, 10);
+    };
+
+    // Empty state
+    if (sim.audit.length === 0) {
+        return (
+            <div>
+                <PageHeader
+                    title="Audit trail"
+                    description="Append-only operational record of system detections and human decisions."
+                />
+                <Card style={{ marginTop: '24px' }}>
+                    <CardBody>
+                        <EmptyState
+                            icon={
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
+                                    <rect x="9" y="3" width="6" height="4" rx="1" />
+                                    <path d="M9 12l2 2 4-4" />
+                                </svg>
+                            }
+                            title="No audit entries yet"
+                            description="Turn Sim Mode on in Dashboard to generate system telemetry."
+                            action={{
+                                label: 'Go to Dashboard',
+                                onClick: () => navigate('/portal/dashboard'),
+                            }}
+                        />
+                    </CardBody>
+                </Card>
+            </div>
+        );
+    }
 
     return (
         <div>
             <PageHeader
-                title="Audit & Compliance"
-                description="Complete audit trail of all actions in your organization"
-                actions={
-                    <Button variant="secondary" leftIcon={<DocumentIcon size={16} />}>
-                        Export Logs
-                    </Button>
-                }
+                title="Audit trail"
+                description="Append-only operational record of system detections and human decisions."
             />
 
-            {/* Filters */}
-            <Card style={{ marginBottom: '24px' }}>
+            {/* Filter Bar + KPIs */}
+            <Card style={{ marginBottom: '16px' }}>
                 <CardBody>
-                    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
-                        <div style={{ flex: 1, minWidth: '250px' }}>
-                            <Input
-                                placeholder="Search by actor or target..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                leftIcon={
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
-                                    </svg>
-                                }
-                                fullWidth
-                            />
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        flexWrap: 'wrap',
+                        gap: '16px',
+                    }}>
+                        {/* Filters */}
+                        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                            <label style={{
+                                fontSize: '0.7rem',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.05em',
+                                color: 'var(--text-muted)',
+                            }}>
+                                Actor:
+                            </label>
+                            <select
+                                value={actorFilter}
+                                onChange={(e) => setActorFilter(e.target.value as ActorFilter)}
+                                style={{
+                                    padding: '6px 10px',
+                                    background: 'var(--input-bg)',
+                                    border: '1px solid var(--input-border)',
+                                    borderRadius: '4px',
+                                    color: 'var(--text-primary)',
+                                    fontSize: '0.8rem',
+                                }}
+                            >
+                                <option value="all">All</option>
+                                <option value="system">System</option>
+                                <option value="human">Human</option>
+                            </select>
                         </div>
-                        <select
-                            value={selectedAction}
-                            onChange={(e) => setSelectedAction(e.target.value as AuditAction | 'all')}
-                            style={{
-                                padding: '8px 12px',
-                                background: 'var(--input-bg)',
-                                border: '1px solid var(--input-border)',
-                                borderRadius: '6px',
-                                color: 'var(--text-primary)',
-                                fontSize: '0.875rem',
-                            }}
-                        >
-                            <option value="all">All Actions</option>
-                            {Object.entries(actionConfig).map(([key, value]) => (
-                                <option key={key} value={key}>{value.label}</option>
-                            ))}
-                        </select>
-                        <input
-                            type="date"
-                            style={{
-                                padding: '8px 12px',
-                                background: 'var(--input-bg)',
-                                border: '1px solid var(--input-border)',
-                                borderRadius: '6px',
-                                color: 'var(--text-primary)',
-                                fontSize: '0.875rem',
-                            }}
-                            placeholder="Start Date"
-                        />
-                        <input
-                            type="date"
-                            style={{
-                                padding: '8px 12px',
-                                background: 'var(--input-bg)',
-                                border: '1px solid var(--input-border)',
-                                borderRadius: '6px',
-                                color: 'var(--text-primary)',
-                                fontSize: '0.875rem',
-                            }}
-                            placeholder="End Date"
-                        />
+
+                        {/* KPI Chips */}
+                        <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                padding: '6px 12px',
+                                background: 'var(--bg-elevated)',
+                                borderRadius: '4px',
+                            }}>
+                                <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                                    System
+                                </span>
+                                <span style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+                                    {systemCount}
+                                </span>
+                            </div>
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                padding: '6px 12px',
+                                background: 'var(--accent-muted)',
+                                borderRadius: '4px',
+                            }}>
+                                <span style={{ fontSize: '0.65rem', color: 'var(--accent)', textTransform: 'uppercase' }}>
+                                    Human
+                                </span>
+                                <span style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--accent)' }}>
+                                    {humanCount}
+                                </span>
+                            </div>
+                            {latestEntry && (
+                                <div style={{
+                                    fontSize: '0.7rem',
+                                    color: 'var(--text-muted)',
+                                }}>
+                                    Latest: {formatRelativeTime(latestEntry.atISO)}
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </CardBody>
             </Card>
 
+            {/* Immutability Callout */}
+            <div style={{
+                padding: '10px 16px',
+                background: 'var(--info-muted)',
+                border: '1px solid var(--info)',
+                borderRadius: '4px',
+                fontSize: '0.7rem',
+                color: 'var(--info)',
+                marginBottom: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+            }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0110 0v4" />
+                </svg>
+                Entries are append-only. Integrity chain links each record to the previous.
+            </div>
+
             {/* Audit Log Table */}
             <Card>
                 <CardHeader>
-                    Audit Logs ({filteredLogs.length} entries)
+                    Audit Log ({filteredAudit.length} entries)
                 </CardHeader>
                 <CardBody cardPadding="0">
-                    {filteredLogs.length === 0 ? (
-                        <EmptyState
-                            icon={<ListIcon size={32} />}
-                            title="No logs found"
-                            description="No audit logs match your current filters."
-                        />
-                    ) : (
-                        <div>
-                            {/* Table Header */}
-                            <div
-                                style={{
-                                    display: 'grid',
-                                    gridTemplateColumns: '180px 150px 120px 1fr 120px',
-                                    gap: '16px',
-                                    padding: '12px 20px',
-                                    borderBottom: '1px solid var(--border-default)',
-                                    fontFamily: 'var(--font-body, inherit)',
-                                    fontSize: '0.7rem',
-                                    fontWeight: 600,
-                                    color: 'var(--text-muted)',
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.1em',
-                                }}
-                            >
-                                <div>Timestamp</div>
-                                <div>Actor</div>
-                                <div>Action</div>
-                                <div>Target</div>
-                                <div>IP Address</div>
-                            </div>
+                    {/* Table Header */}
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: '140px 100px 140px 1fr 160px',
+                        gap: '12px',
+                        padding: '10px 16px',
+                        borderBottom: '1px solid var(--border-default)',
+                        fontSize: '0.65rem',
+                        fontWeight: 600,
+                        color: 'var(--text-muted)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.08em',
+                    }}>
+                        <div>Time</div>
+                        <div>Actor</div>
+                        <div>Action</div>
+                        <div>Summary</div>
+                        <div>Integrity</div>
+                    </div>
 
-                            {/* Table Rows */}
-                            {filteredLogs.map((log, index) => (
+                    {/* Table Rows */}
+                    <div style={{ maxHeight: 'calc(100vh - 400px)', overflowY: 'auto' }}>
+                        {filteredAudit.map((entry) => (
+                            <div key={entry.auditId}>
+                                {/* Main Row */}
                                 <div
-                                    key={log.id}
+                                    onClick={() => handleRowClick(entry)}
                                     style={{
                                         display: 'grid',
-                                        gridTemplateColumns: '180px 150px 120px 1fr 120px',
-                                        gap: '16px',
-                                        padding: '14px 20px',
+                                        gridTemplateColumns: '140px 100px 140px 1fr 160px',
+                                        gap: '12px',
+                                        padding: '12px 16px',
                                         alignItems: 'center',
-                                        borderBottom: index < filteredLogs.length - 1 ? '1px solid var(--border-subtle)' : 'none',
+                                        borderBottom: '1px solid var(--border-subtle)',
+                                        cursor: 'pointer',
+                                        transition: 'background 0.15s ease',
+                                        background: expandedEntryId === entry.auditId ? 'var(--bg-elevated)' : 'transparent',
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        if (expandedEntryId !== entry.auditId) {
+                                            e.currentTarget.style.background = 'var(--sidebar-item-hover)';
+                                        }
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        if (expandedEntryId !== entry.auditId) {
+                                            e.currentTarget.style.background = 'transparent';
+                                        }
                                     }}
                                 >
-                                    <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                                        {new Date(log.timestamp).toLocaleString('en-GB')}
-                                    </div>
+                                    {/* Time */}
                                     <div>
-                                        <div style={{ fontWeight: 500, color: 'var(--text-primary)', fontSize: '0.85rem' }}>
-                                            {log.actor_name}
+                                        <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                                            {formatRelativeTime(entry.atISO)}
                                         </div>
-                                        <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-                                            {log.actor_email}
+                                        <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontFamily: 'monospace' }}>
+                                            {entry.atISO.slice(11, 19)}
                                         </div>
                                     </div>
+
+                                    {/* Actor */}
                                     <div>
-                                        <Badge
-                                            size="sm"
-                                            style={{
-                                                background: `${actionConfig[log.action].color}20`,
-                                                color: actionConfig[log.action].color,
-                                                border: `1px solid ${actionConfig[log.action].color}`,
-                                                display: 'inline-flex',
-                                                alignItems: 'center',
-                                                gap: '4px',
-                                            }}
-                                        >
-                                            {ActionIcons[log.action]} {actionConfig[log.action].label}
+                                        <Badge variant={getActorBadgeVariant(entry.actor.actorType)} size="sm">
+                                            {entry.actor.actorLabel}
                                         </Badge>
                                     </div>
+
+                                    {/* Action */}
                                     <div>
-                                        <div style={{ fontWeight: 500, color: 'var(--text-primary)', fontSize: '0.85rem' }}>
-                                            {log.target_name}
+                                        <span style={{
+                                            display: 'inline-block',
+                                            padding: '3px 8px',
+                                            fontSize: '0.65rem',
+                                            fontWeight: 500,
+                                            background: getActionBadgeColour(entry.action.actionType).bg,
+                                            color: getActionBadgeColour(entry.action.actionType).fg,
+                                            borderRadius: '2px',
+                                        }}>
+                                            {entry.action.actionLabel}
+                                        </span>
+                                    </div>
+
+                                    {/* Summary */}
+                                    <div>
+                                        <div style={{
+                                            fontSize: '0.8rem',
+                                            color: 'var(--text-primary)',
+                                            whiteSpace: 'nowrap',
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis',
+                                        }}>
+                                            {entry.summary}
                                         </div>
-                                        <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-                                            {targetLabels[log.target_type]}
-                                            {log.metadata && Object.keys(log.metadata).length > 0 && (
-                                                <span> • {JSON.stringify(log.metadata)}</span>
-                                            )}
+                                        <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>
+                                            {getCountyName(entry.jurisdictionId).replace(' County', '')}
                                         </div>
                                     </div>
-                                    <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: 'monospace' }}>
-                                        {log.ip_address}
+
+                                    {/* Integrity */}
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                        <div style={{
+                                            fontSize: '0.6rem',
+                                            fontFamily: 'monospace',
+                                            color: 'var(--text-secondary)',
+                                        }}>
+                                            <span style={{ color: 'var(--text-muted)' }}>hash:</span>{' '}
+                                            {truncateHash(entry.integrity.chainHash)}
+                                        </div>
+                                        <div style={{
+                                            fontSize: '0.6rem',
+                                            fontFamily: 'monospace',
+                                            color: 'var(--text-muted)',
+                                        }}>
+                                            <span>prev:</span>{' '}
+                                            {truncateHash(entry.integrity.chainPrevHash)}
+                                        </div>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
-                    )}
+
+                                {/* Expanded Details */}
+                                {expandedEntryId === entry.auditId && (
+                                    <div style={{
+                                        padding: '12px 16px 16px 16px',
+                                        background: 'var(--bg-surface)',
+                                        borderBottom: '1px solid var(--border-default)',
+                                    }}>
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'flex-start',
+                                            gap: '24px',
+                                        }}>
+                                            {/* Metadata */}
+                                            {entry.metadata && Object.keys(entry.metadata).length > 0 && (
+                                                <div style={{ flex: 1 }}>
+                                                    <div style={{
+                                                        fontSize: '0.65rem',
+                                                        textTransform: 'uppercase',
+                                                        color: 'var(--text-muted)',
+                                                        marginBottom: '8px',
+                                                        letterSpacing: '0.05em',
+                                                    }}>
+                                                        Metadata
+                                                    </div>
+                                                    <div style={{
+                                                        display: 'grid',
+                                                        gridTemplateColumns: 'auto 1fr',
+                                                        gap: '4px 12px',
+                                                        fontSize: '0.75rem',
+                                                    }}>
+                                                        {Object.entries(entry.metadata).map(([key, value]) => (
+                                                            <React.Fragment key={key}>
+                                                                <span style={{ color: 'var(--text-muted)', fontFamily: 'monospace' }}>
+                                                                    {key}:
+                                                                </span>
+                                                                <span style={{ color: 'var(--text-primary)' }}>
+                                                                    {String(value)}
+                                                                </span>
+                                                            </React.Fragment>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* View Event Button */}
+                                            {entry.eventId && (
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleViewEvent(entry.eventId!, entry.jurisdictionId);
+                                                    }}
+                                                    style={{
+                                                        padding: '6px 12px',
+                                                        fontSize: '0.7rem',
+                                                        fontWeight: 500,
+                                                        textTransform: 'uppercase',
+                                                        letterSpacing: '0.03em',
+                                                        background: 'var(--accent)',
+                                                        color: 'white',
+                                                        border: 'none',
+                                                        cursor: 'pointer',
+                                                        borderRadius: '2px',
+                                                        whiteSpace: 'nowrap',
+                                                    }}
+                                                >
+                                                    View Linked Event
+                                                </button>
+                                            )}
+                                        </div>
+
+                                        {/* Full Hashes */}
+                                        <div style={{
+                                            marginTop: '12px',
+                                            padding: '8px',
+                                            background: 'var(--bg-elevated)',
+                                            borderRadius: '4px',
+                                            fontSize: '0.65rem',
+                                            fontFamily: 'monospace',
+                                        }}>
+                                            <div style={{ color: 'var(--text-muted)', marginBottom: '4px' }}>
+                                                Full Chain Hash: <span style={{ color: 'var(--text-secondary)' }}>{entry.integrity.chainHash}</span>
+                                            </div>
+                                            <div style={{ color: 'var(--text-muted)' }}>
+                                                Previous Hash: <span style={{ color: 'var(--text-secondary)' }}>{entry.integrity.chainPrevHash || 'GENESIS'}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 </CardBody>
             </Card>
 
-            {/* TODO placeholder */}
-            <div style={{ marginTop: '24px', padding: '16px', background: 'var(--info-muted)', borderRadius: '0px', border: '1px solid var(--info)' }}>
-                <p style={{
-                    margin: 0,
-                    fontSize: '0.75rem',
-                    fontFamily: 'var(--font-body, inherit)',
-                    textTransform: 'uppercase',
-                    color: 'var(--info)'
-                }}>
-                    <strong>TODO:</strong> Connect to Supabase `audit_logs` table with pagination, date range filtering, and CSV export
-                </p>
-            </div>
+            {/* Responsive styles */}
+            <style>{`
+                @media (max-width: 1000px) {
+                    .audit-grid {
+                        grid-template-columns: 1fr !important;
+                    }
+                }
+            `}</style>
         </div>
     );
 };

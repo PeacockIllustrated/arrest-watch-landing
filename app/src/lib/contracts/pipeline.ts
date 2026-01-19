@@ -93,3 +93,77 @@ export interface CountyHealth {
     latencyMs: number;
     parserVersionLabel: string; // e.g., "v4.2 (Verified)"
 }
+
+// =============================================================================
+// AUDIT TRAIL CONTRACTS - Phase 4 "Black Box" flight recorder
+// =============================================================================
+
+/**
+ * Who performed the action
+ */
+export interface AuditActor {
+    actorType: 'system' | 'human';
+    actorId: string;      // 'system' or 'demo_user'
+    actorLabel: string;   // 'System' or 'Safety Ops'
+}
+
+/**
+ * System action types
+ */
+export type SystemActionType =
+    | 'snapshot_captured'
+    | 'record_parsed'
+    | 'diff_computed'
+    | 'confidence_scored'
+    | 'event_emitted';
+
+/**
+ * Human action types
+ */
+export type HumanActionType =
+    | 'viewed'
+    | 'reviewed'
+    | 'escalated';
+
+/**
+ * Combined action type
+ */
+export type AuditActionType = SystemActionType | HumanActionType;
+
+/**
+ * What action was taken
+ */
+export interface AuditAction {
+    actionType: AuditActionType;
+    actionLabel: string; // Human-readable label
+}
+
+/**
+ * Integrity chain for append-only behaviour
+ */
+export interface AuditIntegrity {
+    chainPrevHash?: string; // undefined for GENESIS
+    chainHash: string;
+}
+
+/**
+ * Full audit record with integrity chain
+ */
+export interface AuditEntry {
+    auditId: string;
+    atISO: string;
+    actor: AuditActor;
+    action: AuditAction;
+    jurisdictionId: string;
+    eventId?: string;
+    personId?: string;
+    summary: string;
+    metadata?: Record<string, string | number | boolean>;
+    integrity: AuditIntegrity;
+}
+
+/**
+ * Input for creating an audit entry (before auditId, atISO, integrity)
+ */
+export type AuditEntryInput = Omit<AuditEntry, 'auditId' | 'atISO' | 'integrity'>;
+

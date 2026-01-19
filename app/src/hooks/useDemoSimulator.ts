@@ -1,7 +1,8 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import type { SourceRef, Snapshot, ParsedRecord, Diff, ChangeEvent, CountyHealth } from '../lib/contracts/pipeline';
+import type { SourceRef, Snapshot, ParsedRecord, Diff, ChangeEvent, CountyHealth, AuditEntry, AuditEntryInput, SystemActionType } from '../lib/contracts/pipeline';
 import { DEMO_JURISDICTIONS, JURISDICTION_MAP } from '../lib/demo/demoJurisdictions';
 import { getRandomPersonFromJurisdiction, getRosterByJurisdiction } from '../lib/demo/demoRoster';
+import { buildAuditChainHash } from '../lib/utils/hash';
 
 // =============================================================================
 // DEMO SIMULATOR HOOK
@@ -9,6 +10,8 @@ import { getRandomPersonFromJurisdiction, getRosterByJurisdiction } from '../lib
 
 const PARSER_VERSION = 'v4.2';
 const MAX_EVENTS = 50;
+const MAX_AUDIT_ENTRIES = 200;
+const GENESIS_HASH = 'GENESIS';
 
 // Charge pools for variety
 const CHARGE_POOLS = {
@@ -59,6 +62,7 @@ export interface DemoSimulatorState {
     coverageByCounty: Array<{ jurisdictionId: string; monitoredCount: number; displayName: string }>;
     countyHealth: Record<string, CountyHealth>;
     activePulse: { jurisdictionId: string; atISO: string } | null;
+    audit: AuditEntry[];  // Newest first, capped at MAX_AUDIT_ENTRIES
 }
 
 export interface DemoSimulatorActions {
@@ -67,6 +71,7 @@ export interface DemoSimulatorActions {
     reset: () => void;
     pulse: (jurisdictionId: string) => void;
     markStatus: (eventId: string, status: 'new' | 'reviewed' | 'escalated') => void;
+    appendAudit: (entry: AuditEntryInput) => AuditEntry;
 }
 
 export type UseDemoSimulatorReturn = DemoSimulatorState & DemoSimulatorActions;
@@ -93,9 +98,127 @@ export function useDemoSimulator(): UseDemoSimulatorReturn {
         return initial;
     });
     const [activePulse, setActivePulse] = useState<{ jurisdictionId: string; atISO: string } | null>(null);
+    const [audit, setAudit] = useState<AuditEntry[]>([]);
 
     const intervalRef = useRef<number | null>(null);
     const healthDriftRef = useRef<number | null>(null);
+
+    // System action labels for audit trail
+    const SYSTEM_ACTION_LABELS: Record<SystemActionType, string> = {
+        snapshot_captured: 'Snapshot captured',
+        record_parsed: 'Record parsed',
+        diff_computed: 'Diff computed',
+        confidence_scored: 'Confidence scored',
+        event_emitted: 'Event emitted',
+    };
+
+    // Append audit entry with chain hash
+    const appendAudit = useCallback((input: AuditEntryInput): AuditEntry => {
+        const auditId = `AUD-${uid()}`;
+        const atISO = nowISO();
+
+        let entry: AuditEntry;
+        setAudit((prev) => {
+            const prevHash = prev.length > 0 ? prev[0].integrity.chainHash : undefined;
+            const chainHash = buildAuditChainHash(
+                prevHash || GENESIS_HASH,
+                { ...input, auditId, atISO }
+            );
+            entry = {
+                ...input,
+                auditId,
+                atISO,
+                integrity: {
+                    chainPrevHash: prevHash,
+                    chainHash,
+                },
+            };
+            return [entry, ...prev].slice(0, MAX_AUDIT_ENTRIES);
+        });
+
+        // Return a placeholder entry - the actual entry is in state
+        return entry!;
+    }, []);
+
+    // Append system audit entries for an event
+    const appendSystemAuditEntries = useCallback((event: ChangeEvent) => {
+        const systemActor = {
+            actorType: 'system' as const,
+            actorId: 'system',
+            actorLabel: 'System',
+        };
+        const health = countyHealth[event.jurisdictionId];
+        const latencyMs = health?.latencyMs || 100;
+
+        const systemActions: Array<{ type: SystemActionType; summary: string; metadata?: Record<string, string | number | boolean> }> = [
+            {
+                type: 'snapshot_captured',
+                summary: `Captured snapshot from ${event.evidence.source.label}`,
+                metadata: { fingerprintHash: event.evidence.snapshotAfter.fingerprintHash.slice(0, 10), latencyMs },
+            },
+            {
+                type: 'record_parsed',
+                summary: `Parsed record for ${event.evidence.recordAfter.person.displayName}`,
+                metadata: { parserVersion: PARSER_VERSION, bookingRef: event.evidence.recordAfter.bookingRef || 'N/A' },
+            },
+            {
+                type: 'diff_computed',
+                summary: `Computed diff: ${event.evidence.diff.highlight}`,
+                metadata: { changedFieldsCount: event.evidence.diff.changedFields.length },
+            },
+            {
+                type: 'confidence_scored',
+                summary: `Confidence scored at ${event.confidence}%`,
+                metadata: { confidence: event.confidence, reasonsCount: event.confidenceReasons.length },
+            },
+            {
+                type: 'event_emitted',
+                summary: `Event emitted: ${event.eventType.replace(/_/g, ' ')}`,
+                metadata: { eventType: event.eventType },
+            },
+        ];
+
+        // Use batch update to add all entries at once
+        setAudit((prev) => {
+            const newEntries: AuditEntry[] = [];
+            let currentPrev = prev;
+
+            for (const action of systemActions) {
+                const auditId = `AUD-${uid()}`;
+                const atISO = nowISO();
+                const prevHash = currentPrev.length > 0 ? currentPrev[0].integrity.chainHash : undefined;
+                const input: AuditEntryInput = {
+                    actor: systemActor,
+                    action: {
+                        actionType: action.type,
+                        actionLabel: SYSTEM_ACTION_LABELS[action.type],
+                    },
+                    jurisdictionId: event.jurisdictionId,
+                    eventId: event.eventId,
+                    personId: event.personId,
+                    summary: action.summary,
+                    metadata: action.metadata,
+                };
+                const chainHash = buildAuditChainHash(
+                    prevHash || GENESIS_HASH,
+                    { ...input, auditId, atISO }
+                );
+                const entry: AuditEntry = {
+                    ...input,
+                    auditId,
+                    atISO,
+                    integrity: {
+                        chainPrevHash: prevHash,
+                        chainHash,
+                    },
+                };
+                newEntries.push(entry);
+                currentPrev = [entry, ...currentPrev];
+            }
+
+            return [...newEntries, ...prev].slice(0, MAX_AUDIT_ENTRIES);
+        });
+    }, [countyHealth]);
 
     // Coverage by county (static based on roster)
     const coverageByCounty = DEMO_JURISDICTIONS.map((j) => ({
@@ -345,8 +468,11 @@ export function useDemoSimulator(): UseDemoSimulatorReturn {
                     latencyMs: randInt(50, 150),
                 },
             }));
+
+            // Auto-log system audit entries
+            appendSystemAuditEntries(event);
         }
-    }, [generateEvent]);
+    }, [generateEvent, appendSystemAuditEntries]);
 
     // Health drift - randomly degrade/heal counties
     const healthDrift = useCallback(() => {
@@ -425,6 +551,7 @@ export function useDemoSimulator(): UseDemoSimulatorReturn {
         stop();
         setEvents([]);
         setActivePulse(null);
+        setAudit([]);  // Clear audit trail on reset
         const now = nowISO();
         const resetHealth: Record<string, CountyHealth> = {};
         DEMO_JURISDICTIONS.forEach((j) => {
@@ -466,11 +593,13 @@ export function useDemoSimulator(): UseDemoSimulatorReturn {
         coverageByCounty,
         countyHealth,
         activePulse,
+        audit,
         start,
         stop,
         reset,
         pulse,
         markStatus,
+        appendAudit,
     };
 }
 

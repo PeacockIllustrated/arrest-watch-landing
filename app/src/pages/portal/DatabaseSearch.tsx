@@ -35,6 +35,17 @@ const SourceEvidence: React.FC = () => {
     const handleSelectEvent = (event: ChangeEvent) => {
         setSelectedEvent(event);
         sim.pulse(event.jurisdictionId);
+
+        // Log human "viewed" action to audit trail
+        sim.appendAudit({
+            actor: { actorType: 'human', actorId: 'demo_user', actorLabel: 'Safety Ops' },
+            action: { actionType: 'viewed', actionLabel: 'Viewed' },
+            jurisdictionId: event.jurisdictionId,
+            eventId: event.eventId,
+            personId: event.personId,
+            summary: 'Viewed event evidence bundle',
+            metadata: { location: 'source_evidence' },
+        });
     };
 
     // Handle navigate to dashboard

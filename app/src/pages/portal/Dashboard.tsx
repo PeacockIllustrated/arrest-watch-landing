@@ -2,21 +2,12 @@ import React, { useState } from 'react';
 import { PageHeader, Card, CardHeader, CardBody, Badge } from '../../components/ui';
 import DeepMapViz from '../../components/visuals/DeepMapViz';
 import { usePageTitle } from '../../hooks/usePageTitle';
-import { useDemoSim } from '../../context/DemoSimContext';
+import { usePortalData, type AlertCardModel } from '../../hooks/usePortalData';
 import { JURISDICTION_MAP } from '../../lib/demo/demoJurisdictions';
-import type { ChangeEvent } from '../../lib/contracts/pipeline';
 
 // =============================================================================
 // DASHBOARD - "Pulse" Home for Uber Demo
 // =============================================================================
-
-// Event type labels
-const EVENT_TYPE_LABELS: Record<ChangeEvent['eventType'], string> = {
-    booking_created: 'New Booking',
-    charge_updated: 'Charge Updated',
-    custody_status_changed: 'Status Changed',
-    release_detected: 'Release Detected',
-};
 
 // Confidence badge variant
 function getConfidenceBadgeVariant(confidence: number): 'success' | 'warning' | 'danger' | 'default' {
@@ -39,25 +30,54 @@ function formatRelativeTime(isoString: string): string {
 const Dashboard: React.FC = () => {
     usePageTitle('Pulse Dashboard');
 
-    const sim = useDemoSim();
-    const [selectedEvent, setSelectedEvent] = useState<ChangeEvent | null>(null);
+    const portal = usePortalData();
+    const [selectedAlert, setSelectedAlert] = useState<AlertCardModel | null>(null);
 
     // KPI calculations
-    const totalMonitored = sim.coverageByCounty.reduce((sum, c) => sum + c.monitoredCount, 0);
-    const alertCount = sim.events.length;
+    const totalMonitored = portal.coverageByCounty.reduce((sum, c) => sum + c.monitoredCount, 0);
+    const alertCount = portal.alerts.length;
     const confidenceBands = {
-        high: sim.events.filter((e) => e.confidence >= 80).length,
-        medium: sim.events.filter((e) => e.confidence >= 60 && e.confidence < 80).length,
-        low: sim.events.filter((e) => e.confidence < 60).length,
+        high: portal.alerts.filter((e) => e.confidenceScore >= 80).length,
+        medium: portal.alerts.filter((e) => e.confidenceScore >= 60 && e.confidenceScore < 80).length,
+        low: portal.alerts.filter((e) => e.confidenceScore < 60).length,
     };
-    const topCoverageCounties = [...sim.coverageByCounty]
+    const topCoverageCounties = [...portal.coverageByCounty]
         .sort((a, b) => b.monitoredCount - a.monitoredCount)
         .slice(0, 3);
 
-    // Handle event click
-    const handleEventClick = (event: ChangeEvent) => {
-        setSelectedEvent(event);
-        sim.pulse(event.jurisdictionId);
+    // Handle alert click
+    const handleAlertClick = (alert: AlertCardModel) => {
+        setSelectedAlert(alert);
+        portal.pulse(alert.jurisdictionId);
+
+        // Log human "viewed" action to audit trail
+        portal.appendAudit({
+            actor: { actorType: 'human', actorId: 'demo_user', actorLabel: 'Safety Ops' },
+            action: { actionType: 'viewed', actionLabel: 'Viewed' },
+            jurisdictionId: alert.jurisdictionId,
+            eventId: alert.escalationKey,
+            summary: 'Viewed alert evidence bundle',
+            metadata: { location: 'dashboard' },
+        });
+    };
+
+    // Handle status change with audit logging
+    const handleStatusChange = (alert: AlertCardModel, newStatus: 'reviewed' | 'escalated') => {
+        const oldStatus = alert.status;
+        portal.markStatus(alert.escalationKey, newStatus);
+
+        // Log human action to audit trail
+        portal.appendAudit({
+            actor: { actorType: 'human', actorId: 'demo_user', actorLabel: 'Safety Ops' },
+            action: {
+                actionType: newStatus,
+                actionLabel: newStatus === 'reviewed' ? 'Marked reviewed' : 'Escalated',
+            },
+            jurisdictionId: alert.jurisdictionId,
+            eventId: alert.escalationKey,
+            summary: newStatus === 'reviewed' ? 'Marked alert as reviewed' : 'Escalated alert to legal',
+            metadata: { fromStatus: oldStatus, toStatus: newStatus },
+        });
     };
 
     // Get county name
@@ -72,17 +92,17 @@ const Dashboard: React.FC = () => {
                 description="Real-time monitoring activity and change intelligence"
             />
 
-            {/* Sim Mode Control Bar */}
+            {/* Portal Control Bar */}
             <Card style={{ marginBottom: '16px' }}>
                 <CardBody>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 <button
-                                    onClick={() => (sim.isOn ? sim.stop() : sim.start())}
+                                    onClick={() => (portal.isOn ? portal.stop() : portal.start())}
                                     style={{
                                         padding: '8px 16px',
-                                        background: sim.isOn ? 'var(--danger)' : 'var(--accent)',
+                                        background: portal.isOn ? 'var(--danger)' : 'var(--accent)',
                                         border: 'none',
                                         color: 'white',
                                         fontWeight: 600,
@@ -93,10 +113,10 @@ const Dashboard: React.FC = () => {
                                         borderRadius: '2px',
                                     }}
                                 >
-                                    {sim.isOn ? 'Stop Sim' : 'Start Sim'}
+                                    {portal.isOn ? 'Stop' : 'Start'}
                                 </button>
                                 <button
-                                    onClick={sim.reset}
+                                    onClick={portal.reset}
                                     style={{
                                         padding: '8px 16px',
                                         background: 'transparent',
@@ -112,26 +132,28 @@ const Dashboard: React.FC = () => {
                                     Reset
                                 </button>
                             </div>
-                            {sim.isOn && (
+                            {portal.isOn && (
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                                     <div
                                         style={{
                                             width: '8px',
                                             height: '8px',
                                             borderRadius: '50%',
-                                            background: 'var(--accent)',
+                                            background: portal.connectionStatus === 'connected' ? 'var(--accent)' :
+                                                portal.connectionStatus === 'polling' ? 'var(--warning)' : 'var(--danger)',
                                             animation: 'pulse 1.5s infinite',
                                         }}
                                     />
                                     <span style={{ fontSize: '0.7rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                                        Sim Mode Live
+                                        {portal.connectionStatus === 'connected' ? 'Live' :
+                                            portal.connectionStatus === 'polling' ? 'Polling' : 'Disconnected'}
                                     </span>
                                 </div>
                             )}
                         </div>
-                        {sim.events.length > 0 && (
+                        {portal.alerts.length > 0 && (
                             <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-                                Last event: {formatRelativeTime(sim.events[0].createdAtISO)}
+                                Last alert: {formatRelativeTime(portal.alerts[0].createdAt)}
                             </div>
                         )}
                     </div>
@@ -157,7 +179,7 @@ const Dashboard: React.FC = () => {
                             {totalMonitored}
                         </div>
                         <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                            individuals across {sim.coverageByCounty.length} counties
+                            individuals across {portal.coverageByCounty.length} counties
                         </div>
                     </CardBody>
                 </Card>
@@ -227,7 +249,7 @@ const Dashboard: React.FC = () => {
                 {/* Map Section */}
                 <Card style={{ overflow: 'hidden', padding: 0 }}>
                     <DeepMapViz
-                        isScanning={sim.isOn}
+                        isScanning={portal.isOn}
                         height="28rem"
                         onStateSelect={() => { }}
                         onCountySelect={() => { }}
@@ -241,30 +263,30 @@ const Dashboard: React.FC = () => {
                     </CardHeader>
                     <CardBody cardPadding="0">
                         <div style={{ maxHeight: '26rem', overflowY: 'auto' }}>
-                            {sim.events.length === 0 ? (
+                            {portal.alerts.length === 0 ? (
                                 <div style={{ padding: '32px', textAlign: 'center', color: 'var(--text-muted)' }}>
                                     <p style={{ margin: 0, fontSize: '0.8rem' }}>No alerts yet</p>
-                                    <p style={{ margin: '8px 0 0 0', fontSize: '0.7rem' }}>Start Sim Mode to generate events</p>
+                                    <p style={{ margin: '8px 0 0 0', fontSize: '0.7rem' }}>Start monitoring to receive alerts</p>
                                 </div>
                             ) : (
-                                sim.events.slice(0, 20).map((event) => (
+                                portal.alerts.slice(0, 20).map((alert: AlertCardModel) => (
                                     <div
-                                        key={event.eventId}
-                                        onClick={() => handleEventClick(event)}
+                                        key={alert.escalationKey}
+                                        onClick={() => handleAlertClick(alert)}
                                         style={{
                                             padding: '12px 16px',
                                             borderBottom: '1px solid var(--border-subtle)',
                                             cursor: 'pointer',
                                             transition: 'all 0.15s ease',
-                                            background: selectedEvent?.eventId === event.eventId ? 'var(--accent-muted)' : 'transparent',
+                                            background: selectedAlert?.escalationKey === alert.escalationKey ? 'var(--accent-muted)' : 'transparent',
                                         }}
                                         onMouseEnter={(e) => {
-                                            if (selectedEvent?.eventId !== event.eventId) {
+                                            if (selectedAlert?.escalationKey !== alert.escalationKey) {
                                                 e.currentTarget.style.background = 'var(--sidebar-item-hover)';
                                             }
                                         }}
                                         onMouseLeave={(e) => {
-                                            if (selectedEvent?.eventId !== event.eventId) {
+                                            if (selectedAlert?.escalationKey !== alert.escalationKey) {
                                                 e.currentTarget.style.background = 'transparent';
                                             }
                                         }}
@@ -272,28 +294,78 @@ const Dashboard: React.FC = () => {
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
                                             <div>
                                                 <span style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.85rem' }}>
-                                                    {event.evidence.recordAfter.person.displayName}
+                                                    {alert.subject.subjectName}
                                                 </span>
-                                                <span style={{ color: 'var(--text-muted)', fontSize: '0.7rem', marginLeft: '8px' }}>
-                                                    ({event.evidence.recordAfter.person.dobYear})
-                                                </span>
+                                                {alert.subject.dobYear && (
+                                                    <span style={{ color: 'var(--text-muted)', fontSize: '0.7rem', marginLeft: '8px' }}>
+                                                        ({alert.subject.dobYear})
+                                                    </span>
+                                                )}
                                             </div>
-                                            <Badge variant={getConfidenceBadgeVariant(event.confidence)} size="sm">
-                                                {event.confidence}%
+                                            <Badge variant={getConfidenceBadgeVariant(alert.confidenceScore)} size="sm">
+                                                {alert.confidenceScore}%
                                             </Badge>
                                         </div>
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                                <Badge variant="default" size="sm">
-                                                    {EVENT_TYPE_LABELS[event.eventType]}
-                                                </Badge>
+                                                {alert.topCharge && (
+                                                    <Badge variant="default" size="sm">
+                                                        {alert.topCharge}
+                                                    </Badge>
+                                                )}
                                                 <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>
-                                                    {getCountyName(event.jurisdictionId).replace(' County', '')}
+                                                    {getCountyName(alert.jurisdictionId).replace(' County', '')}
                                                 </span>
                                             </div>
-                                            <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>
-                                                {formatRelativeTime(event.createdAtISO)}
-                                            </span>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                {/* Status action buttons */}
+                                                {alert.status === 'new' && (
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleStatusChange(alert, 'reviewed');
+                                                        }}
+                                                        style={{
+                                                            padding: '2px 6px',
+                                                            fontSize: '0.55rem',
+                                                            fontWeight: 500,
+                                                            textTransform: 'uppercase',
+                                                            letterSpacing: '0.03em',
+                                                            background: 'var(--success-muted)',
+                                                            color: 'var(--success)',
+                                                            border: '1px solid var(--success)',
+                                                            cursor: 'pointer',
+                                                            borderRadius: '2px',
+                                                        }}
+                                                    >
+                                                        Review
+                                                    </button>
+                                                )}
+                                                {(alert.status === 'new' || alert.status === 'reviewed') && (
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleStatusChange(alert, 'escalated');
+                                                        }}
+                                                        style={{
+                                                            padding: '2px 6px',
+                                                            fontSize: '0.55rem',
+                                                            fontWeight: 500,
+                                                            textTransform: 'uppercase',
+                                                            letterSpacing: '0.03em',
+                                                            background: 'var(--danger-muted)',
+                                                            color: 'var(--danger)',
+                                                            cursor: 'pointer',
+                                                            borderRadius: '2px',
+                                                        }}
+                                                    >
+                                                        Escalate
+                                                    </button>
+                                                )}
+                                                <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>
+                                                    {formatRelativeTime(alert.createdAt)}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 ))
@@ -303,13 +375,13 @@ const Dashboard: React.FC = () => {
                 </Card>
             </div>
 
-            {/* Event Details Panel (shown when event selected) */}
-            {selectedEvent && (
+            {/* Alert Details Panel (shown when alert selected) */}
+            {selectedAlert && (
                 <Card style={{ marginTop: '24px' }}>
                     <CardHeader
                         actions={
                             <button
-                                onClick={() => setSelectedEvent(null)}
+                                onClick={() => setSelectedAlert(null)}
                                 style={{
                                     background: 'transparent',
                                     border: 'none',
@@ -322,97 +394,144 @@ const Dashboard: React.FC = () => {
                             </button>
                         }
                     >
-                        Event Evidence
+                        Alert Summary
                     </CardHeader>
                     <CardBody>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '24px' }}>
-                            {/* Diff Summary */}
+                        <div style={{ display: 'grid', gridTemplateColumns: selectedAlert.subject.mugshotUrl ? 'auto 1fr 1fr 1fr' : '1fr 1fr 1fr', gap: '24px' }}>
+                            {/* Mugshot (if available) */}
+                            {selectedAlert.subject.mugshotUrl && (
+                                <div style={{ width: '120px' }}>
+                                    <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                                        Mugshot
+                                    </div>
+                                    <div style={{
+                                        width: '120px',
+                                        height: '144px',
+                                        borderRadius: '4px',
+                                        overflow: 'hidden',
+                                        border: '1px solid var(--border-subtle)',
+                                        background: 'var(--bg-surface)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>
+                                        <img
+                                            src={selectedAlert.subject.mugshotUrl}
+                                            alt={selectedAlert.subject.subjectName}
+                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                            onError={(e) => {
+                                                (e.target as HTMLImageElement).style.display = 'none';
+                                                (e.target as HTMLImageElement).parentElement!.innerHTML = '<span style="font-size: 0.6rem; color: var(--text-muted)">Image Unavailable</span>';
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Subject Info */}
                             <div>
                                 <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '8px' }}>
-                                    Change Detected
+                                    Subject
                                 </div>
                                 <div style={{
                                     padding: '12px',
                                     background: 'var(--bg-surface)',
                                     border: '1px solid var(--border-subtle)',
                                     borderRadius: '4px',
-                                    fontSize: '0.8rem',
-                                    color: 'var(--accent)',
-                                    fontFamily: 'monospace',
+                                    height: '144px',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'center'
                                 }}>
-                                    {selectedEvent.evidence.diff.highlight}
-                                </div>
-                                <div style={{ marginTop: '12px' }}>
-                                    {selectedEvent.evidence.diff.changedFields.map((cf, idx) => (
-                                        <div key={idx} style={{ fontSize: '0.7rem', marginBottom: '4px' }}>
-                                            <span style={{ color: 'var(--text-muted)' }}>{cf.field}:</span>{' '}
-                                            <span style={{ color: 'var(--danger)', textDecoration: 'line-through' }}>{cf.before}</span>{' '}
-                                            <span style={{ color: 'var(--success)' }}>{cf.after}</span>
+                                    <div style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '4px' }}>
+                                        {selectedAlert.subject.subjectName}
+                                    </div>
+                                    {selectedAlert.subject.dobYear && (
+                                        <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                                            Birth Year: {selectedAlert.subject.dobYear}
                                         </div>
-                                    ))}
+                                    )}
+                                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: 'auto', opacity: 0.7 }}>
+                                        Record ID: {selectedAlert.escalationKey.slice(0, 16)}...
+                                    </div>
                                 </div>
                             </div>
 
-                            {/* Snapshot Before */}
+                            {/* Top Charge */}
                             <div>
                                 <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '8px' }}>
-                                    Snapshot Before
+                                    Top Charge
                                 </div>
-                                <pre style={{
+                                <div style={{
                                     padding: '12px',
                                     background: 'var(--bg-surface)',
                                     border: '1px solid var(--border-subtle)',
                                     borderRadius: '4px',
-                                    fontSize: '0.65rem',
-                                    color: 'var(--text-secondary)',
-                                    fontFamily: 'monospace',
-                                    whiteSpace: 'pre-wrap',
-                                    margin: 0,
-                                    maxHeight: '150px',
-                                    overflowY: 'auto',
+                                    height: '144px',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'center'
                                 }}>
-                                    {selectedEvent.evidence.snapshotBefore.rawPreview}
-                                </pre>
-                                <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                                    {selectedEvent.evidence.snapshotBefore.capturedAtISO.slice(0, 19).replace('T', ' ')}
+                                    <div style={{ fontSize: '0.9rem', fontWeight: 500, color: 'var(--accent)', lineHeight: 1.4 }}>
+                                        {selectedAlert.topCharge || 'No charges listed'}
+                                    </div>
+                                    {selectedAlert.chargeCount > 1 && (
+                                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '8px' }}>
+                                            +{selectedAlert.chargeCount - 1} additional charge{selectedAlert.chargeCount > 2 ? 's' : ''}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 
-                            {/* Snapshot After */}
+                            {/* Scores */}
                             <div>
                                 <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '8px' }}>
-                                    Snapshot After
+                                    Status & Scores
                                 </div>
-                                <pre style={{
+                                <div style={{
                                     padding: '12px',
                                     background: 'var(--bg-surface)',
                                     border: '1px solid var(--border-subtle)',
                                     borderRadius: '4px',
-                                    fontSize: '0.65rem',
-                                    color: 'var(--text-secondary)',
-                                    fontFamily: 'monospace',
-                                    whiteSpace: 'pre-wrap',
-                                    margin: 0,
-                                    maxHeight: '150px',
-                                    overflowY: 'auto',
+                                    height: '144px',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'center',
+                                    gap: '12px'
                                 }}>
-                                    {selectedEvent.evidence.snapshotAfter.rawPreview}
-                                </pre>
-                                <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                                    {selectedEvent.evidence.snapshotAfter.capturedAtISO.slice(0, 19).replace('T', ' ')}
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Severity</span>
+                                        <Badge variant={getConfidenceBadgeVariant(selectedAlert.severityScore)} size="sm">
+                                            {selectedAlert.severityScore}%
+                                        </Badge>
+                                    </div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Confidence</span>
+                                        <Badge variant={getConfidenceBadgeVariant(selectedAlert.confidenceScore)} size="sm">
+                                            {selectedAlert.confidenceScore}%
+                                        </Badge>
+                                    </div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '8px', borderTop: '1px dashed var(--border-subtle)' }}>
+                                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Status</span>
+                                        <Badge variant={selectedAlert.status === 'new' ? 'warning' : 'success'} size="sm">
+                                            {selectedAlert.status.toUpperCase()}
+                                        </Badge>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Confidence Reasons */}
+                        {/* Source Info */}
                         <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid var(--border-subtle)' }}>
-                            <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '8px' }}>
-                                Confidence Reasons ({selectedEvent.confidence}%)
-                            </div>
-                            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                                {selectedEvent.confidenceReasons.map((reason, idx) => (
-                                    <Badge key={idx} variant="default" size="sm">{reason}</Badge>
-                                ))}
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div>
+                                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                                        {getCountyName(selectedAlert.jurisdictionId)} • Run: {selectedAlert.runId.slice(0, 12)}
+                                    </span>
+                                </div>
+                                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>
+                                    Reported: {formatRelativeTime(selectedAlert.createdAt)}
+                                </div>
                             </div>
                         </div>
                     </CardBody>

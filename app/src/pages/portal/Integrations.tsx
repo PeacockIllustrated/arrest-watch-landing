@@ -3,7 +3,7 @@ import { PageHeader, Card, CardBody, Badge } from '../../components/ui';
 import StateMapPreview from '../../components/visuals/StateMapPreview';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { useDemoSim } from '../../context/DemoSimContext';
-import { DEMO_JURISDICTIONS, type DemoJurisdiction } from '../../lib/demo/demoJurisdictions';
+import { DEMO_JURISDICTIONS } from '../../lib/demo/demoJurisdictions';
 import type { CountyHealth } from '../../lib/contracts/pipeline';
 import { formatRelativeTime, formatAbsoluteTime } from '../../lib/utils/time';
 
