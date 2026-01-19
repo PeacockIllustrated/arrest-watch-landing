@@ -7,7 +7,6 @@
 import type {
     AlertCardModel,
     EscalationDetailModel,
-    SubjectIdentity,
     ChargeEntry,
     BiometricResult,
     EvidenceArtifact,
@@ -241,16 +240,6 @@ export function toEscalationDetailModel(
     };
 }
 
-/**
- * Extract subject identity from payload
- */
-function extractSubjectIdentity(payload: RawEscalationPayload): SubjectIdentity {
-    return {
-        subjectName: payload.subject.name || 'Unknown Subject',
-        dobYear: payload.subject.dob_year || null,
-        mugshotUrl: null, // Populated via signed URL helper
-    };
-}
 
 // =============================================================================
 // BATCH ADAPTERS (For list views)

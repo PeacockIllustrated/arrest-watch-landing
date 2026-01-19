@@ -33,7 +33,7 @@ setTimeout(async () => {
 
         // Then test DB connectivity
         const startTime = Date.now();
-        const { data, error } = await supabase.from('escalations').select('count', { count: 'exact', head: true });
+        const { error } = await supabase.from('escalations').select('count', { count: 'exact', head: true });
         const duration = Date.now() - startTime;
         if (error) {
             console.error('[Supabase] Connectivity test failed:', error.message);
