@@ -17,8 +17,6 @@ import type {
   CountyModel,
   CountyDetailModel,
   CountySourceModel,
-  DemographicsBreakdown,
-  DailyTrendPoint,
   LoadingState,
 } from '../lib/types/viewModels';
 import { toCountyModel } from '../lib/adapters/recordAdapter';
@@ -31,7 +29,7 @@ import {
 // CONFIGURATION
 // =============================================================================
 
-const FETCH_TIMEOUT_MS = 15000;
+const _FETCH_TIMEOUT_MS = 15000;
 const TREND_DAYS = 30;
 
 // =============================================================================

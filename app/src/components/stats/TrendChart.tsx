@@ -108,7 +108,7 @@ export const TrendChart: React.FC<TrendChartProps> = ({
     const xLabelInterval = Math.ceil(data.length / 6);
     const xLabels = data
       .filter((_, i) => i % xLabelInterval === 0 || i === data.length - 1)
-      .map((point, filteredIndex) => {
+      .map((_point, filteredIndex) => {
         const originalIndex = filteredIndex * xLabelInterval;
         const actualIndex = Math.min(originalIndex, data.length - 1);
         const x = PADDING.left + (actualIndex / (data.length - 1 || 1)) * chartWidth;

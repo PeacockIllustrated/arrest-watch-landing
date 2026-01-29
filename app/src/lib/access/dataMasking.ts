@@ -107,7 +107,7 @@ export function maskRecordDetail(
  */
 export function maskSearchResult(
   result: RecordSearchResult,
-  role: UserRole | null
+  _role: UserRole | null
 ): RecordSearchResult {
   // Currently search results don't include highly sensitive fields
   // This is a placeholder for future expansion

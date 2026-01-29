@@ -7,7 +7,8 @@
 
 import { useState, useCallback, useRef, useMemo } from 'react';
 import { supabase } from '../lib/supabase';
-import type { EnrichedRecord, Charge, County } from '../lib/types/supabaseSchema';
+// Types from supabaseSchema not currently used - keeping import for future enriched_records support
+// import type { EnrichedRecord, Charge, County } from '../lib/types/supabaseSchema';
 import type {
   RecordSearchResult,
   RecordDetailModel,
@@ -17,12 +18,8 @@ import type {
   LoadingState,
 } from '../lib/types/viewModels';
 import {
-  toRecordSearchResults,
-  toRecordDetailModel,
   toCandidateSearchResults,
   toCandidateDetailModel,
-  type EnrichedRecordWithCounty,
-  type EnrichedRecordWithDetails,
   type CandidateRecordWithCounty,
 } from '../lib/adapters/recordAdapter';
 import { useRole } from './useRole';
@@ -39,7 +36,7 @@ import { maskRecordDetail } from '../lib/access/dataMasking';
 // =============================================================================
 
 const FETCH_TIMEOUT_MS = 20000; // 20 seconds
-const FALLBACK_PAGE_SIZE = 25; // Used when role check fails
+const _FALLBACK_PAGE_SIZE = 25; // Reserved for role check fallback
 
 // =============================================================================
 // TYPES

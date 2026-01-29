@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { Card, CardHeader, CardBody } from '../ui';
 import type { RecordDetailModel, ChargeModel } from '../../lib/types/viewModels';
-import type { TierPermissions, AccessTier } from '../../lib/access/tierConfig';
+import type { AccessTier } from '../../lib/access/tierConfig';
 import { isFieldRestricted } from '../../lib/access/dataMasking';
 import type { UserRole } from '../portal/AuthProvider';
 
@@ -555,7 +555,7 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
                   />
                   <InfoRow
                     label="Score"
-                    value={record.biometricScore?.toFixed(2)}
+                    value={record.biometricScore?.toFixed(2) ?? null}
                     mono
                     restricted={isBiometricRestricted}
                   />

@@ -16,7 +16,6 @@ import type {
   PipelineRun,
   ErrorEvent,
   CountyTrend,
-  County,
   ErrorCategory,
   ErrorSeverityLevel,
   SourceType,
@@ -643,7 +642,7 @@ export function toErrorEventModel(
   // Handle both ErrorEvent and RecentError types
   const timestamp =
     'event_timestamp' in event ? event.event_timestamp : event.error_timestamp;
-  const errorId = 'error_id' in event ? event.error_id : event.error_id;
+  const errorId = event.error_id;
   const handlerName = 'handler_name' in event ? event.handler_name : null;
   const isRetryable = 'is_retryable' in event ? event.is_retryable ?? false : false;
   const retryCount = 'retry_count' in event ? event.retry_count : 0;

@@ -55,8 +55,8 @@ const RecordSearch: React.FC = () => {
     return buildFipsToCountyIdMap(counties);
   }, [counties]);
 
-  // Build county ID to FIPS map (for heat map)
-  const countyIdToFips = useMemo(() => {
+  // Build county ID to FIPS map (for heat map) - reserved for future use
+  const _countyIdToFips = useMemo(() => {
     return buildCountyIdToFipsMap(counties);
   }, [counties]);
 
@@ -64,7 +64,7 @@ const RecordSearch: React.FC = () => {
   const [liveCountyRecordCounts, setLiveCountyRecordCounts] = useState<Map<string, number>>(
     new Map()
   );
-  const [countsLoading, setCountsLoading] = useState(false);
+  const [_countsLoading, setCountsLoading] = useState(false);
 
   // State for available sources
   const [availableSources, setAvailableSources] = useState<{ source_id: number; name: string; display_name: string }[]>([]);

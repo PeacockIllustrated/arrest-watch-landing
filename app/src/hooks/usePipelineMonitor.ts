@@ -15,7 +15,6 @@ import type {
 } from '../lib/types/supabaseSchema';
 import type {
   PipelineHealthModel,
-  PipelineRunModel,
   ErrorEventModel,
   LoadingState,
 } from '../lib/types/viewModels';

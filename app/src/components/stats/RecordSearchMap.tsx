@@ -146,7 +146,7 @@ const RecordSearchMap: React.FC<RecordSearchMapProps> = ({
 }) => {
   // Core state
   const [currentLevel, setCurrentLevel] = useState<ZoomLevel>('country');
-  const [hoveredElement, setHoveredElement] = useState<string | null>(null);
+  const [_hoveredElement, setHoveredElement] = useState<string | null>(null);
   const [tooltipData, setTooltipData] = useState<TooltipData | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
