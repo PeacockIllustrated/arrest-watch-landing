@@ -509,7 +509,7 @@ const DeepMapViz: React.FC<DeepMapVizProps> = ({
                         const feMorphology = document.createElementNS('http://www.w3.org/2000/svg', 'feMorphology');
                         feMorphology.setAttribute('in', 'SourceAlpha');
                         feMorphology.setAttribute('operator', 'dilate');
-                        feMorphology.setAttribute('radius', '1.2');
+                        feMorphology.setAttribute('radius', '0.6');
                         feMorphology.setAttribute('result', 'dilated');
                         filter.appendChild(feMorphology);
 

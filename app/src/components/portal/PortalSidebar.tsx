@@ -95,6 +95,27 @@ const Icons = {
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
         </svg>
     ),
+    // Data Dashboard Icons (Phase 9/10)
+    Analytics: () => (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 3v18h18" /><path d="M18 17V9" /><path d="M13 17V5" /><path d="M8 17v-3" />
+        </svg>
+    ),
+    Search: () => (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
+        </svg>
+    ),
+    Pipeline: () => (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+        </svg>
+    ),
+    Counties: () => (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
+        </svg>
+    ),
 };
 
 // Navigation groups aligned with MVP structure - Phase 0 Uber Demo
@@ -108,6 +129,14 @@ const navGroups: NavGroup[] = [
             { label: 'Source evidence', path: '/portal/database-search', icon: <Icons.DatabaseSearch /> },
             { label: 'Audit trail', path: '/portal/audit', icon: <Icons.Audit /> },
             { label: 'Source health', path: '/portal/integrations', icon: <Icons.Integrations /> },
+        ],
+    },
+    {
+        title: 'Data',
+        items: [
+            { label: 'Analytics', path: '/portal/analytics', icon: <Icons.Analytics /> },
+            { label: 'Record Search', path: '/portal/search', icon: <Icons.Search /> },
+            { label: 'Pipeline Health', path: '/portal/pipeline', icon: <Icons.Pipeline /> },
         ],
     },
 ];
@@ -190,20 +219,21 @@ export const PortalSidebar: React.FC<PortalSidebarProps> = ({ onClose }) => {
             <nav style={{ flex: 1, overflowY: 'auto', padding: '12px 0' }}>
                 {navGroups.map((group, groupIndex) => (
                     <div key={groupIndex} style={{ marginBottom: '8px' }}>
-                        {/* Phase 0: Hidden headers
-                        <div
-                            style={{
-                                padding: '8px 20px 4px',
-                                fontSize: '0.65rem',
-                                fontWeight: 600,
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.08em',
-                                color: 'var(--text-muted)',
-                            }}
-                        >
-                            {group.title}
-                        </div>
-                        */}
+                        {/* Group header - shown only when title exists */}
+                        {group.title && (
+                            <div
+                                style={{
+                                    padding: '8px 20px 4px',
+                                    fontSize: '0.65rem',
+                                    fontWeight: 600,
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.08em',
+                                    color: 'var(--text-muted)',
+                                }}
+                            >
+                                {group.title}
+                            </div>
+                        )}
                         {group.items.map((item) => {
                             const active = isActive(item.path);
                             return (

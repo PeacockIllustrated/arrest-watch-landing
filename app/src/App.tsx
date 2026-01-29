@@ -84,6 +84,12 @@ const PortalBilling = lazy(() => import('./pages/portal/Billing'));
 const PortalSettings = lazy(() => import('./pages/portal/Settings'));
 const PortalAdmin = lazy(() => import('./pages/portal/Admin'));
 
+// Portal - Data Dashboard Pages (Phase 9/10)
+const PortalAnalytics = lazy(() => import('./pages/portal/Analytics'));
+const PortalRecordSearch = lazy(() => import('./pages/portal/RecordSearch'));
+const PortalPipelineHealth = lazy(() => import('./pages/portal/PipelineHealth'));
+const PortalCountyDetail = lazy(() => import('./pages/portal/CountyDetail'));
+
 // Auth
 const AuthLogin = lazy(() => import('./pages/auth/Login'));
 const AuthCallback = lazy(() => import('./pages/auth/Callback'));
@@ -202,6 +208,12 @@ function App() {
 
               {/* Reporting */}
               <Route path="reports" element={<PortalReports />} />
+
+              {/* Data Dashboard (Phase 9/10) */}
+              <Route path="analytics" element={<PortalAnalytics />} />
+              <Route path="search" element={<PortalRecordSearch />} />
+              <Route path="pipeline" element={<PortalPipelineHealth />} />
+              <Route path="counties/:slug" element={<PortalCountyDetail />} />
 
               {/* System */}
               <Route path="integrations" element={<PortalIntegrations />} />
