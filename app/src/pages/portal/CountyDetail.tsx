@@ -205,14 +205,8 @@ const CountyDetail: React.FC = () => {
 
   const county = selectedCounty;
 
-  // Trend arrow and color
+  // Trend arrow
   const trendArrow = county.trend.direction === 'up' ? '▲' : county.trend.direction === 'down' ? '▼' : '─';
-  const _trendColor =
-    county.trend.direction === 'up'
-      ? 'var(--danger)'
-      : county.trend.direction === 'down'
-        ? 'var(--success)'
-        : 'var(--text-muted)';
 
   return (
     <div>

@@ -36,7 +36,6 @@ import { maskRecordDetail } from '../lib/access/dataMasking';
 // =============================================================================
 
 const FETCH_TIMEOUT_MS = 20000; // 20 seconds
-const _FALLBACK_PAGE_SIZE = 25; // Reserved for role check fallback
 
 // =============================================================================
 // TYPES

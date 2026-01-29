@@ -12,7 +12,6 @@ import {
   DEMO_COUNTY_RECORD_COUNTS,
   UNAVAILABLE_COUNTY_FIPS,
   buildFipsToCountyIdMap,
-  buildCountyIdToFipsMap,
 } from '../../lib/utils/fipsMapping';
 
 // =============================================================================
@@ -53,11 +52,6 @@ const RecordSearch: React.FC = () => {
   // Build FIPS to county ID map
   const fipsToCountyId = useMemo(() => {
     return buildFipsToCountyIdMap(counties);
-  }, [counties]);
-
-  // Build county ID to FIPS map (for heat map) - reserved for future use
-  const _countyIdToFips = useMemo(() => {
-    return buildCountyIdToFipsMap(counties);
   }, [counties]);
 
   // State for real county record counts
